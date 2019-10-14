@@ -1,0 +1,109 @@
+<!--宋润涵于2019-10-14编辑 用于查看所有申请-->
+<template>
+	<view id="lab-apply-list">
+		<cu-custom bgColor="bg-gradual-blue" :isBack="'/iuc/index/index'">
+			<block slot="backText">返回</block>
+			<block slot="content">查看所有申请表</block>
+			<view class="action" slot="right" @click="addApplication()">添加</view>
+		</cu-custom>
+		<view class="cu-list menu-avatar margin-top">
+			<template v-if="data.length > 0">
+				<view class="cu-item" v-for="(item,index) in data" :key="index" @click="toExecute(item)"
+				@touchstart="ListTouchStart" @touchmove="ListTouchMove" @touchend="ListTouchEnd" :data-target="'move-box-' + index"
+				:class="modalName=='move-box-'+ index?'move-cur':''">
+					<view class="cu-avatar round lg" :style="{ backgroundImage: `url('${icon}')` }">
+					</view>
+					<view class="content">
+						<view class="text-black text-lg">
+							<view class="cu-tag round sm margin-right-xs" :class="'bg-' + wColor[item.State]">{{ workflow[item.State] }}</view>
+							<view class="text-cut text-xl">{{item.ApplicationName || "还未填写"}}</view>
+						</view>
+						<view class="text-gray flex">
+							<view class="text-cut">
+								地址：{{item.RoomName}} 申请人：{{item.Owner}}
+							</view>
+						</view>
+					</view>
+					<view class="action">
+						<view class="text-black text-sm">{{ item.CreatedTime.slice(5) }}</view>
+					</view>
+					<view class="move">
+						<view class="bg-green" v-if="item.IsMyStep" @click.stop="toExecute(item)">执行</view>
+						<!--view class="bg-blue" @click.stop="toDetail(item.ID)">详细</view-->
+					</view>
+				</view>
+			</template>
+		</view>
+	</view>
+	
+</template>
+
+<script>
+	let app = require("@/config");
+	let enums = require("../enumsv1.js");
+	export default{
+		onLoad:function(){
+			this.getData(1);
+		},
+		methods:{
+			getData(p){
+				let page=p||this.page;
+				let pageSize=this.pageSize;
+				uni.post("/api/roomApp/v1/GetAllApplications",{
+					page,
+					pageSize
+				},msg=>{
+					if(msg.success){
+						console.log(msg.data);
+						this.data=msg.data;
+					}
+				})
+			},
+			addApplication(){
+				uni.navigateTo({
+					url: "/iuc/roomApplication/v1/create"
+				})
+			},
+			toExecute (item) {
+				uni.navigateTo({
+					url: item.RouteData
+				})
+			},
+			// ListTouch触摸开始
+			ListTouchStart(e) {
+				this.listTouchStart = e.touches[0].pageX
+			},
+			
+			// ListTouch计算方向
+			ListTouchMove(e) {
+				this.listTouchDirection = e.touches[0].pageX - this.listTouchStart > 0 ? 'right' : 'left'
+			},
+			
+			// ListTouch计算滚动
+			ListTouchEnd(e) {
+				if (this.listTouchDirection == 'left') {
+					this.modalName = e.currentTarget.dataset.target
+				} else {
+					this.modalName = null
+				}
+				this.listTouchDirection = null
+			}
+		},
+		data(){
+			return{
+				workflow: enums.workflow,
+				wColor: enums.workflowColor,
+				icon: app.webInfo.avatar,
+				page: 1,
+				pageSize: 10,
+				data:[],
+				modalName: null,
+				listTouchStart: 0,
+				listTouchDirection: null
+			}
+		}
+	}
+</script>
+
+<style>
+</style>

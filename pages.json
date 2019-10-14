@@ -1,0 +1,59 @@
+{
+	"pages": [
+		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "uc/login/login",
+			"style": {}
+		},
+		{
+			"path": "iuc/index/index",
+			"style": {}
+		},
+		{
+			"path":"iuc/softwareInstall/v1/create",
+			"style": {}
+		},
+		{
+			"path":"iuc/softwareInstall/v1/list",
+			"style": {}
+		},
+		{
+			"path":"iuc/softwareInstall/v1/detail",
+			"style": {}
+		},
+		{
+			"path":"iuc/softwareInstall/v1/allot",
+			"style":{}
+		},
+		{
+			"path":"iuc/softwareInstall/v1/process",
+			"style": {}
+		},
+		{
+			"path":"iuc/softwareInstall/v1/confirm",
+			"style": {}
+		}
+	],
+	"globalStyle": {
+		"mp-alipay": {
+			/* 支付宝小程序特有相关 */
+			"transparentTitle": "always",
+			"allowsBounceVertical": "NO"
+		},
+		"navigationBarBackgroundColor": "#0081ff",
+		"navigationBarTitleText": "信息学院平台",
+		"navigationStyle": "custom",
+		"navigationBarTextStyle": "white"
+	},
+	"usingComponts": true,
+		"condition": { //模式配置，仅开发期间生效
+		"current": 0, //当前激活的模式(list 的索引项)
+		"list": [{
+				"name": "表单", //模式名称
+				"path": "pages/component/form", //启动页面
+				"query": "" //启动参数
+			}
+		]
+	}
+
+}

@@ -1,0 +1,79 @@
+<template>
+	<view id="lab-apply-check">
+		<cu-custom bgColor="bg-gradual-blue" isBack="">
+			<block slot="backText">返回</block>
+			<block slot="content">指导老师审核</block>
+		</cu-custom>
+		<!--此处有一个自定义组件 -->
+		<form>
+			<view class="cu-form-group margin-top">
+				<view class="title">申请人</view>
+				<input :value="model.Owner" disabled />
+			</view>
+			<view class="cu-form-group">
+				<view class="title">申请原因</view>
+				<input :value="model.ApplicationReason" disabled />
+			</view>
+			<view class="cu-form-group">
+				<view class="title">起止时间</view>
+				<input :value="model.CreateTime" disabled />
+			</view>
+			<view class="cu-form-group">
+				<view class="title">申请房间号</view>
+				<input :value="model.Room" disabled />
+			</view>
+			<view class="action-list cu-list grid col-2 margin-top margin-bottom">
+				<view class="cu-item" @click="submit()">
+					<view class="cuIcon-roundcheckfill text-green"></view>
+					<text>审核通过</text>
+				</view>
+				<view class="cu-item" @click="submit('修改修改')">
+					<view class="cuIcon-writefill text-red"></view>
+					<text>修改申请</text>
+				</view>
+			</view>
+			
+		</form>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				id:"",
+				model:{}
+			}
+		},
+		onLoad(id){
+			this.id=id;
+			this.getData(id);
+		},
+		methods: {
+			submit(opinion){
+				let id =this.id;
+				console.log(this.id);
+				uni.post("/api/roomApp/v1/GuidTeacherChecking", {
+					ID:id,GuideTeacherOpinion:opinion}, msg => {
+					if(msg.success) {
+						console.log(msg);
+					}
+				})
+					
+				},
+				getData(id) {
+					uni.post("/api/roomApp/v1/GetApplication",
+					{id:id},msg=>{
+						if(msg.success) {
+							this.model=msg.data;
+						}
+					})
+				}
+				
+			}
+		}
+</script>
+
+<style>
+
+</style>
