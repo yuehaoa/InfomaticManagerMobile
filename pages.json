@@ -32,6 +32,30 @@
 		{
 			"path":"iuc/softwareInstall/v1/confirm",
 			"style": {}
+		},
+		{
+			"path":"iuc/roomApplication/v1/list",
+			"style": {}
+		},
+		{
+			"path":"iuc/roomApplication/v1/allot",
+			"style": {}
+		},
+		{
+			"path":"iuc/roomApplication/v1/check",
+			"style": {}
+		},
+		{
+			"path":"iuc/roomApplication/v1/detail",
+			"style": {}
+		},
+		{
+			"path":"iuc/roomApplication/v1/confirm",
+			"style": {}
+		},
+		{
+			"path":"iuc/roomApplication/v1/create",
+			"style": {}
 		}
 	],
 	"globalStyle": {
