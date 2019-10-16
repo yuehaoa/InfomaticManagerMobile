@@ -3,7 +3,7 @@
 	<view id="lab-apply-creat">
 		<cu-custom bgColor="bg-gradual-blue" :isBack="'/iuc/roomApplication/v1/list'">
 			<block slot="backText">返回</block>
-			<block slot="content">实验室申请表</block>
+			<block slot="content">创建申请表</block>
 		</cu-custom>
 		<form>
 			<view class="cu-steps magin-top">
@@ -14,7 +14,7 @@
 			</view>
 			<view class="cu-form-group margin-top">
 				<view class="title">申请原因</view>
-				<input name="input" v-model="model.ApplicationReason"></input>
+				<input name="input" v-model="model.ApplicationReason" maxlength="200"></input>
 			</view>
 			<view class="cu-form-group">
 				<view class="title">选择申请实验室</view>
@@ -46,7 +46,6 @@
 						{{currentTeacher}}
 					</view>
 				</picker>
-				<!--input name="input" v-model="model.GuideTeacherId"></input-->
 			</view>
 			<view class="padding flex flex-direction">
 				<button class="cu-btn bg-green lg" :disabled="isSubmitting" @click="submit()">提交</button>
@@ -60,7 +59,6 @@
 	export default{
 		onLoad(opt){
 			this.ID=opt.id;
-			this.model.State=2;
 			this.getInfo();
 		},
 		methods:{
@@ -80,6 +78,10 @@
 			},
 			selectDate2(e){
 				this.model.endDate=e.detail.value||"请选择结束日期";
+				if(Date.parse(this.model.startDate)>Date.parse(this.model.endDate))
+				{
+					uni.showToast({title:"结束时间不能早于开始时间"});
+				}
 			},
 			get(){
 				
@@ -90,9 +92,8 @@
 					if(msg.success==true)
 					{
 						this.model.ID=msg.data.ID;
-						console.log(this.model);
 						uni.post("/api/roomApp/v1/CreateApplication", this.model,msg=>{
-							console.log(msg);
+							this.isSubmitting = false;
 						})
 					}
 				})
@@ -102,6 +103,7 @@
 				uni.post("/api/roomApp/v1/GetCreateApplication", {},msg=>{
 					if(msg.success){
 						console.log(msg);
+						THIS.model.State=msg.data.State;
 						THIS.buildings = msg.buildings;
 						THIS.allRooms = msg.rooms;
 						THIS.teachers = msg.teachers;
@@ -126,6 +128,7 @@
 					RoomId:'',
 					GuideTeacherId:'',
 					startDate:'请选择开始日期',
+					State : 0,
 					endDate:'请选择结束日期'
 				},
 				isSubmitting:false,
