@@ -4,7 +4,7 @@
 			<block slot="backText">返回</block>
 			<block slot="content">分管领导分配</block>
 		</cu-custom>
-		<!--此处有一个自定义组件 -->
+		<lab-Steps v-model="model"/>
 		<form>
 			<view class="cu-form-group margin-top">
 				<view class="title">申请人</view>
