@@ -67,7 +67,7 @@
 						<template v-if="InStep([0, 1], v.State)">
 							{{ v.ExecutorName ? `${v.ExecutorName} 正在进行中` : "正在等待接手" }}
 						</template>
-						<template v-else-if="[2, 3]">
+						<template v-else-if="InStep([2, 3], v.State)">
 							由{{ v.Operator }}于{{ v.CreatedOn }}完成
 						</template>
 						<template v-else>
