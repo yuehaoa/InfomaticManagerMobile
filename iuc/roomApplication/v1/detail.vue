@@ -141,4 +141,15 @@
 			width: 6em;
 		}
 	}
+	.cu-timeline>.cu-item::after {
+		content: "";
+		display: block;
+		position: absolute;
+		width: 4upx;//加粗使得左边直线能够被看见
+		background-color: #ddd;
+		left: 60upx;
+		height: 100%;
+		top: 0;
+		z-index: 8;
+	}
 </style>

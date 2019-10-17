@@ -42,16 +42,17 @@
 						return "";
 					};
 					steps[0].FinalState = isComplete(value.ApplicateState);
-					steps[0].err = value.ReviewState === 30 ? err : "";//填写申请表
+					steps[0].err = value.ApplicateState === 30 ? err : "";//填写申请表
 					
 					steps[1].FinalState = isComplete(value.GuideTeacherState);
-					steps[1].err = value.ReviewState === 30 ? err : "";//指导老师审核
+					steps[1].err = value.GuideTeacherState === 30 ? err : "";//指导老师审核
 					
 					steps[2].FinalState = isComplete(value.ReviewState);
 					steps[2].err = value.HandleState === 30 ? err : "";//分管领导分配
 					
 					steps[3].FinalState = isComplete(value.HandleState);
 					steps[3].err = value.CheckState === 30 ? err : "";//管理员确认
+
 				}
 			}
 		}
