@@ -39,11 +39,11 @@
 					<text>取消流程</text>
 				</view>
 				<view class="cu-item" @click="submit('分配错误', '您是否确认分配错误？')">
-					<view class="cuIcon-roundclosefill text-red"></view>
+					<view class="cuIcon-warnfill text-red"></view>
 					<text>分配错误</text>
 				</view>
 				<view class="cu-item" @click="submit('修改', '执行该流程会将流程发回给申请人，是否继续？')">
-					<view class="cuIcon-roundclosefill text-red"></view>
+					<view class="cuIcon-writefill text-red"></view>
 					<text>需要修改</text>
 				</view>
 			</view>
