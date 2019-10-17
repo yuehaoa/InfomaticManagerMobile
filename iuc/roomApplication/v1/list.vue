@@ -57,7 +57,6 @@
 					pageSize
 				},msg=>{
 					if(msg.success){
-						console.log(msg.data);
 						this.data=msg.data;
 					}
 				})
@@ -74,7 +73,7 @@
 			},
 			toDetail (id) {
 				uni.navigateTo({
-					url: "/iuc/softwareInstall/v1/detail?id=" + id
+					url: "/iuc/roomApplication/v1/detail?id=" + id
 				})
 			},
 			// ListTouch触摸开始

@@ -71,7 +71,6 @@
 		},
 		methods:{
 			getAssignData(ID) {
-				console.log(this.ID);
 				uni.post("/api/roomApp/v1/GetAssignApplication",{ID},msg=>{
 					if(msg.success) {
 						console.log(msg);
