@@ -1,6 +1,6 @@
 <!--邵良颖于2019年10月14日编辑 用于查看实验室申请流程-->
 <template>
-	<view id="lab-detail">
+	<view id="lab-apply-detail">
 		<cu-custom bgColor="bg-gradual-blue" :isBack="'/iuc/roomApplication/v1/list'">
 			<block slot="backText">返回</block>
 			<block slot="content">实验室申请表</block>
@@ -23,38 +23,22 @@
 				<input :value="model.Owner" disabled />
 			</view>
 			<view class="cu-form-group">
-				<view class="title">联系方式</view>
-				<input :value="model.Telephone" disabled />
-				<view class="cu-capsule radius">
-					<view class='cu-tag bg-blue '>
-						+86
-					</view>
-					<view class="cu-tag line-blue">
-						中国大陆
-					</view>
-				</view>
+				<view class="title">申请事由</view>
+				<input :value="model.ApplicationReason" disabled />
 			</view>
 			<view class="cu-form-group">
-				<view class="title">所属部门</view>
-				<input :value="model.BelongDepart" disabled />
+				<view class="title">起止时间</view>
+				<input disabled="true" :value="model.CreatedTime+'-'+model.EndDate"></input>
 			</view>
 			<view class="cu-form-group">
-				<view class="title">申请时间</view>
-				<input disabled="true" :value="model.CreatedTime"></input>
-			</view>
-			<view class="cu-form-group margin-top">
-				<view class="title">选择实验室</view>
+				<view class="title">申请房间号</view>
 				<input :value="model.RoomName" disabled />
 			</view>
 			<view class="cu-form-group">
-				<view class="title">申请原因</view>
-				<input :value="model.ApplicationReason" disabled />
-			</view>
-			<view class="cu-form-group margin-top">
 				<view class="title">指导老师</view>
 				<input :value="model.GuideTeacher" disabled />
 			</view>
-			<view class="cu-form-group">
+			<!--view class="cu-form-group">
 				<view class="title">审核时间</view>
 				<input :value="model.GuideTeacherTime" disabled />
 			</view>
@@ -65,7 +49,7 @@
 			<view class="cu-form-group">
 				<view class="title">确认时间</view>
 				<input :value="model.HandleTime" disabled />
-			</view>
+			</view-->
 		</view>
 		<view v-show="state === 'timeline'" class="margin-top">
 			<view class="cu-timeline" v-for="(item, index) in timeline" :key="index">
@@ -83,7 +67,7 @@
 						<template v-if="InStep([0, 1], v.State)">
 							{{ v.ExecutorName ? `${v.ExecutorName} 正在进行中` : "正在等待接手" }}
 						</template>
-						<template v-else-if="[2, 3]">
+						<template v-else-if="InStep([2, 3], v.State)">
 							由{{ v.Operator }}于{{ v.CreatedOn }}完成
 						</template>
 						<template v-else>
@@ -97,35 +81,34 @@
 </template>
 
 <script>
-let guidEmpty = '00000000-0000-0000-0000-000000000000';
+	let guidEmpty = '00000000-0000-0000-0000-000000000000';
 	let enums = require("../enumsv1.js");
 	let app = require("@/config");
 	export default {
-		onLoad (opt) {
+		onLoad(opt) {
 			this.id = opt.id;
 			this.getData();
 		},
 		methods: {
-			getData () {
+			getData() {
 				let id = this.id;
 				if (!id || id === guidEmpty) {
 					uni.navigateTo({
 						url: '/iuc/roomApplication/v1/list'
 					})
 					return;
-				}
+				};
 				uni.post("/api/roomApp/v1/GetApplication", {id}, msg => {
 					this.model = msg.data;
 					this.timeline = msg.timeline;
 					this.currentStep = msg.currentStep;
 					this.isMyStep = msg.currentStep.IsMyStep;
-				})
+				});
 			},
-			changeState () {
+			changeState() {
 				this.state = this.state === "detail" ? "timeline" : "detail";
 			},
-			exeStep () {
-				console.log(this.currentStep);
+			exeStep() {
 				uni.navigateTo({
 					url: this.currentStep.ToAction
 				})
@@ -135,7 +118,7 @@ let guidEmpty = '00000000-0000-0000-0000-000000000000';
 				return steps.indexOf(s) > -1;
 			}
 		},
-		data () {
+		data() {
 			return {
 				id: guidEmpty,
 				isloading: false,
@@ -153,9 +136,20 @@ let guidEmpty = '00000000-0000-0000-0000-000000000000';
 </script>
 
 <style lang='less'>
-	#lab-detail {
+	#lab-apply-detail {
 		view .title {
 			width: 6em;
 		}
+	}
+	.cu-timeline>.cu-item::after {
+		content: "";
+		display: block;
+		position: absolute;
+		width: 4upx;//加粗使得左边直线能够被看见
+		background-color: #ddd;
+		left: 60upx;
+		height: 100%;
+		top: 0;
+		z-index: 8;
 	}
 </style>
