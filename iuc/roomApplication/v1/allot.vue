@@ -8,23 +8,23 @@
 		<form>
 			<view class="cu-form-group margin-top">
 				<view class="title">申请人</view>
-				<input value="" disabled />
+				<input :value="model.Owner" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">申请原因</view>
-				<input value="" disabled />
+				<input :value="model.ApplicationReason" disabled />
 			</view>
 			<view class="cu-form-group margin-top">
 				<view class="title">起止时间</view>
-				<input value="" disabled />
+				<input :value="time" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">申请房间号</view>
-				<input value="" disabled />
+				<input :value="model.RoomName" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">指导老师</view>
-				<input value="" disabled />
+				<input :value="model.GuideTeacher" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">机房管理员</view>
@@ -51,26 +51,43 @@
 </template>
 <script>
 	export default {
-		onLoad:function(id) {
-			this.ID=id;
-			this.getData(id);
+		onLoad:function(opt) {
+			this.ID=opt.id;
+			this.getAssignData(this.ID);
+			this.getData(this.ID);
 		},
 		data () {
 			return {
-				array:['未设置','宋润涵','补补还能用','不言骑'],
+				managerIDs:[],
+				array:[],
 				index:0,//picker的数组
 				ID:"",//申请表
 				HandlerId:"",//被分配的执行人ID
-				model:{}
+				model:{},
+				assignModel:{},
+				time:"",
+				
 			}
 		},
 		methods:{
-			getData(ID) {
+			getAssignData(ID) {
 				console.log(this.ID);
 				uni.post("/api/roomApp/v1/GetAssignApplication",{ID},msg=>{
 					if(msg.success) {
 						console.log(msg);
+						this.Assignmodel=msg.data;
+						this.SetManager(msg);
+					}
+				}
+				)
+			},
+			getData(ID) {
+				console.log(this.ID);
+				uni.post("/api/roomApp/v1/GetApplication",{ID},msg=>{
+					if(msg.success) {
+						console.log(msg);
 						this.model=msg.data;
+						this.TimeCombine();
 					}
 				}
 				)
@@ -78,14 +95,37 @@
 			},
 			managerChange (e) {
 				this.index=e.target.value;
+				this.getManagerID(e.target.value);
 			},
 			submit (opinion) {
 				uni.post("/api/roomApp/v1/AssignForm", {
 					ID:this.ID,HandlerId:this.HandlerId,ReviewOpinion:opinion},msg=>{
 						if(msg.success) {
-							
+							console.log(msg);
 						}
 					})
+			},
+			TimeCombine(){
+				this.time=this.model.StartDate+" — "+this.model.EndDate;
+			},
+			SetManager(msg){
+				this.array=["未设置"];
+				this.managerArray=msg.users;
+				console.log(this.managerArray);
+				for(var i=1;i<=msg.users.length;i++){
+					this.array[i]=msg.users[i-1].RealName;
+				}
+			},
+			getManagerID(value){
+				for(var i=0;i<this.managerArray.length;i++)
+				{
+					if(this.managerArray[i].RealName==this.array[value])
+					{
+						this.HandlerId=this.managerArray[i].ID;
+						console.log(this.HandlerId);
+						break;
+					}
+				}
 			}
 			
 		}

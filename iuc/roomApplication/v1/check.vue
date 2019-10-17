@@ -16,14 +16,14 @@
 			</view>
 			<view class="cu-form-group">
 				<view class="title">起止时间</view>
-				<input :value="model.CreateTime" disabled />
+				<input :value="time" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">申请房间号</view>
-				<input :value="model.Room" disabled />
+				<input :value="model.RoomName" disabled />
 			</view>
 			<view class="action-list cu-list grid col-2 margin-top margin-bottom">
-				<view class="cu-item" @click="submit()">
+				<view class="cu-item" @click="submit('通过')">
 					<view class="cuIcon-roundcheckfill text-green"></view>
 					<text>审核通过</text>
 				</view>
@@ -42,12 +42,14 @@
 		data() {
 			return {
 				id:"",
-				model:{}
+				model:{},
+				time:""
 			}
 		},
-		onLoad(id){
-			this.id=id;
-			this.getData(id);
+		onLoad(opt){
+			this.id=opt.id;
+			this.getData(this.id);
+			//console.log(this.id);
 		},
 		methods: {
 			submit(opinion){
@@ -66,8 +68,12 @@
 					{id:id},msg=>{
 						if(msg.success) {
 							this.model=msg.data;
+							this.TimeCombine();
 						}
 					})
+				},
+				TimeCombine(){
+					this.time=this.model.StartDate+" — "+this.model.EndDate;
 				}
 				
 			}
