@@ -47,10 +47,10 @@
 					steps[1].FinalState = isComplete(value.GuideTeacherState);
 					steps[1].err = value.ReviewState === 30 ? err : "";//指导老师审核
 					
-					steps[2].FinalState = isComplete(value.HandleState);
+					steps[2].FinalState = isComplete(value.ReviewState);
 					steps[2].err = value.HandleState === 30 ? err : "";//分管领导分配
 					
-					steps[3].FinalState = isComplete(value.ReviewState);
+					steps[3].FinalState = isComplete(value.HandleState);
 					steps[3].err = value.CheckState === 30 ? err : "";//管理员确认
 				}
 			}
