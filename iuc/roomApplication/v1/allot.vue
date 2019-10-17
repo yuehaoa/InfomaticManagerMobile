@@ -41,7 +41,7 @@
 					<view class="cuIcon-writefill text-red"></view>
 					<text>需要修改</text>
 				</view>
-				<view class="cu-item" @click="submit('取消')">
+				<view class="cu-item" @click="submit('无法')">
 					<view class="cuIcon-roundclosefill text-red"></view>
 					<text>取消流程</text>
 				</view>
@@ -98,13 +98,56 @@
 				this.getManagerID(e.target.value);
 			},
 			submit (opinion) {
-				uni.post("/api/roomApp/v1/AssignForm", {
-					ID:this.ID,HandlerId:this.HandlerId,ReviewOpinion:opinion},msg=>{
-						if(msg.success) {
-							console.log(msg);
-						}
-					})
-			},
+							if(opinion=='确认'){
+								if(this.HandlerId==""){
+									uni.showToast({
+										title:"管理员不能为空"
+									})
+									return;
+								}
+								uni.post("/api/roomApp/v1/AssignForm", {
+									ID:this.ID,HandlerId:this.HandlerId,ReviewOpinion:opinion},msg=>{
+									if(msg.success) {
+										uni.showToast({
+										title: '分配成功'
+										})
+										setTimeout(function() {
+										uni.navigateBack({
+										
+										});
+										uni.hideToast();
+										}, 1500);
+									}
+							})}
+							else if(opinion=='修改'){
+								uni.showModal({   
+								title:"是否确认修改",
+								success: function (res) {
+								        if (res.confirm) {
+											uni.post("/api/roomApp/v1/AssignForm", {
+												ID:this.ID,HandlerId:this.HandlerId,ReviewOpinion:opinion},msg=>{
+												if(msg.success) {
+													uni.navigateBack({
+											
+												})
+											}})
+									}
+								}})
+							}
+							else if(opinion=='无法'){
+								uni.showModal({
+									title:"是否确认取消",
+									success: function (res) {
+									        if (res.confirm) {
+												uni.post("/api/roomApp/v1/AssignForm", {
+												ID:this.ID,HandlerId:this.HandlerId,ReviewOpinion:opinion},msg=>{
+													if(msg.success) {
+													uni.navigateBack({
+													})
+												}})
+										}}})
+							}
+					},
 			TimeCombine(){
 				this.time=this.model.StartDate+" — "+this.model.EndDate;
 			},
@@ -112,12 +155,12 @@
 				this.array=["未设置"];
 				this.managerArray=msg.users;
 				console.log(this.managerArray);
-				for(var i=1;i<=msg.users.length;i++){
+				for(let i=1;i<=msg.users.length;i++){
 					this.array[i]=msg.users[i-1].RealName;
 				}
 			},
 			getManagerID(value){
-				for(var i=0;i<this.managerArray.length;i++)
+				for(let i=0;i<this.managerArray.length;i++)
 				{
 					if(this.managerArray[i].RealName==this.array[value])
 					{

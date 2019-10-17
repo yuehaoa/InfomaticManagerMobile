@@ -27,7 +27,7 @@
 					<view class="cuIcon-roundcheckfill text-green"></view>
 					<text>审核通过</text>
 				</view>
-				<view class="cu-item" @click="submit('修改修改')">
+				<view class="cu-item" @click="submit('修改')">
 					<view class="cuIcon-writefill text-red"></view>
 					<text>修改申请</text>
 				</view>
@@ -54,14 +54,41 @@
 		methods: {
 			submit(opinion){
 				let id =this.id;
-				console.log(this.id);
-				uni.post("/api/roomApp/v1/GuidTeacherChecking", {
-					ID:id,GuideTeacherOpinion:opinion}, msg => {
-					if(msg.success) {
-						console.log(msg);
-					}
-				})
-					
+						if(opinion=='通过')
+						{
+							uni.post("/api/roomApp/v1/GuidTeacherChecking", {
+								ID:id,GuideTeacherOpinion:opinion}, msg => {
+									if(msg.success){
+										console.log(msg);
+										uni.showToast({
+												title:'通过成功'
+											});
+											setTimeout(function() {
+												uni.navigateBack({
+													
+												});
+												uni.hideToast();
+											}, 1500);
+										}
+									});
+							}	
+						else if(opinion=='修改'){
+							uni.showModal({
+								title:"是否确认修改",
+								success: function (res) {
+									if (res.confirm) {
+										uni.post("/api/roomApp/v1/GuidTeacherChecking", {
+												ID:id,GuideTeacherOpinion:opinion}, msg => {
+													if(msg.success){
+														console.log(msg);
+														uni.navigateBack({
+														});
+													}
+												});
+								        }
+								}
+							});
+						}
 				},
 				getData(id) {
 					uni.post("/api/roomApp/v1/GetApplication",
