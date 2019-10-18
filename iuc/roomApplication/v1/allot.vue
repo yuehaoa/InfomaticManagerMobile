@@ -118,33 +118,56 @@
 										}, 1500);
 									}
 							})}
+							
 							else if(opinion=='修改'){
-								uni.showModal({   
-								title:"是否确认修改",
-								success: function (res) {
-								        if (res.confirm) {
+								let id=this.ID;
+								let handID=this.HandlerId;
+								uni.showModal({
+									title:"是否确认修改",
+									success: function(res) {
+										if(res.confirm){
 											uni.post("/api/roomApp/v1/AssignForm", {
-												ID:this.ID,HandlerId:this.HandlerId,ReviewOpinion:opinion},msg=>{
+												ID:id,HandlerId:handID,ReviewOpinion:opinion},msg=>{
 												if(msg.success) {
+													uni.showToast({
+													title: '修改成功'
+													})
+													setTimeout(function() {
 													uni.navigateBack({
-											
-												})
-											}})
+													
+													});
+													uni.hideToast();
+													}, 1500);
+												}
+										})}
 									}
-								}})
+								})
+								
 							}
 							else if(opinion=='无法'){
+								let id=this.ID;
+								let handID=this.HandlerId;
 								uni.showModal({
 									title:"是否确认取消",
-									success: function (res) {
-									        if (res.confirm) {
-												uni.post("/api/roomApp/v1/AssignForm", {
-												ID:this.ID,HandlerId:this.HandlerId,ReviewOpinion:opinion},msg=>{
-													if(msg.success) {
-													uni.navigateBack({
+									success: function(res) {
+										if(res.confirm){
+											uni.post("/api/roomApp/v1/AssignForm", {
+												ID:id,HandlerId:handID,ReviewOpinion:opinion},msg=>{
+												if(msg.success) {
+													uni.showToast({
+													title: '取消成功'
 													})
-												}})
-										}}})
+													setTimeout(function() {
+													uni.navigateBack({
+													
+													});
+													uni.hideToast();
+													}, 1500);
+												}
+										})}
+									}
+								})
+								
 							}
 					},
 			TimeCombine(){
@@ -154,12 +177,12 @@
 				this.array=["未设置"];
 				this.managerArray=msg.users;
 				console.log(this.managerArray);
-				for(let i=1;i<=msg.users.length;i++){
+				for(var i=1;i<=msg.users.length;i++){
 					this.array[i]=msg.users[i-1].RealName;
 				}
 			},
 			getManagerID(value){
-				for(let i=0;i<this.managerArray.length;i++)
+				for(var i=0;i<this.managerArray.length;i++)
 				{
 					if(this.managerArray[i].RealName==this.array[value])
 					{

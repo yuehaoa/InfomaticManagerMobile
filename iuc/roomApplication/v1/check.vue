@@ -73,6 +73,7 @@
 									});
 							}	
 						else if(opinion=='修改'){
+							let id =this.id;
 							uni.showModal({
 								title:"是否确认修改",
 								success: function (res) {
@@ -80,9 +81,15 @@
 										uni.post("/api/roomApp/v1/GuidTeacherChecking", {
 												ID:id,GuideTeacherOpinion:opinion}, msg => {
 													if(msg.success){
-														console.log(msg);
+														uni.showToast({
+														title: '修改成功'
+														})
+														setTimeout(function() {
 														uni.navigateBack({
+														
 														});
+														uni.hideToast();
+														}, 1500);
 													}
 												});
 								        }
