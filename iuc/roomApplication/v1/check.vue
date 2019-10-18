@@ -4,7 +4,7 @@
 			<block slot="backText">返回</block>
 			<block slot="content">指导老师审核</block>
 		</cu-custom>
-		<!--此处有一个自定义组件 -->
+		<lab-Steps v-model="model"/>
 		<form>
 			<view class="cu-form-group margin-top">
 				<view class="title">申请人</view>
@@ -16,18 +16,18 @@
 			</view>
 			<view class="cu-form-group">
 				<view class="title">起止时间</view>
-				<input :value="model.CreateTime" disabled />
+				<input :value="time" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">申请房间号</view>
-				<input :value="model.Room" disabled />
+				<input :value="model.RoomName" disabled />
 			</view>
 			<view class="action-list cu-list grid col-2 margin-top margin-bottom">
-				<view class="cu-item" @click="submit()">
+				<view class="cu-item" @click="submit('通过')">
 					<view class="cuIcon-roundcheckfill text-green"></view>
 					<text>审核通过</text>
 				</view>
-				<view class="cu-item" @click="submit('修改修改')">
+				<view class="cu-item" @click="submit('修改')">
 					<view class="cuIcon-writefill text-red"></view>
 					<text>修改申请</text>
 				</view>
@@ -42,32 +42,72 @@
 		data() {
 			return {
 				id:"",
-				model:{}
+				model:{},
+				time:""
 			}
 		},
-		onLoad(id){
-			this.id=id;
-			this.getData(id);
+		onLoad(opt){
+			this.id=opt.id;
+			this.getData(this.id);
+			//console.log(this.id);
 		},
 		methods: {
 			submit(opinion){
 				let id =this.id;
-				console.log(this.id);
-				uni.post("/api/roomApp/v1/GuidTeacherChecking", {
-					ID:id,GuideTeacherOpinion:opinion}, msg => {
-					if(msg.success) {
-						console.log(msg);
-					}
-				})
-					
+						if(opinion=='通过')
+						{
+							uni.post("/api/roomApp/v1/GuidTeacherChecking", {
+								ID:id,GuideTeacherOpinion:opinion}, msg => {
+									if(msg.success){
+										console.log(msg);
+										uni.showToast({
+												title:'通过成功'
+											});
+											setTimeout(function() {
+												uni.navigateBack({
+													
+												});
+												uni.hideToast();
+											}, 1500);
+										}
+									});
+							}	
+						else if(opinion=='修改'){
+							let id =this.id;
+							uni.showModal({
+								title:"是否确认修改",
+								success: function (res) {
+									if (res.confirm) {
+										uni.post("/api/roomApp/v1/GuidTeacherChecking", {
+												ID:id,GuideTeacherOpinion:opinion}, msg => {
+													if(msg.success){
+														uni.showToast({
+														title: '修改成功'
+														})
+														setTimeout(function() {
+														uni.navigateBack({
+														
+														});
+														uni.hideToast();
+														}, 1500);
+													}
+												});
+								        }
+								}
+							});
+						}
 				},
 				getData(id) {
 					uni.post("/api/roomApp/v1/GetApplication",
 					{id:id},msg=>{
 						if(msg.success) {
 							this.model=msg.data;
+							this.TimeCombine();
 						}
 					})
+				},
+				TimeCombine(){
+					this.time=this.model.StartDate+" — "+this.model.EndDate;
 				}
 				
 			}

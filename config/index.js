@@ -17,7 +17,7 @@ let appSetting = {
         subtitle: "",
         title: ""
     },
-	domain: process.env.NODE_ENV === "production" ? "http://item.ricebird.cn" : "http://localhost:2034",
+	domain: "http://item.ricebird.cn",
     dashboard: "/iuc/index/index",
     ueditor: {
         serverUrl: "/ueditor/process",

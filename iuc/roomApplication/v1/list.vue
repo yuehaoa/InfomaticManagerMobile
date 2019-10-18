@@ -1,4 +1,4 @@
-<!--宋润涵于2019-10-14编辑 用于查看所有申请-->
+<!--宋润涵于2019-10-16编辑 用于查看所有申请-->
 <template>
 	<view id="lab-apply-list">
 		<cu-custom bgColor="bg-gradual-blue" :isBack="'/iuc/index/index'">
@@ -11,25 +11,25 @@
 				<view class="cu-item" v-for="(item,index) in data" :key="index" @click="toExecute(item)"
 				@touchstart="ListTouchStart" @touchmove="ListTouchMove" @touchend="ListTouchEnd" :data-target="'move-box-' + index"
 				:class="modalName=='move-box-'+ index?'move-cur':''">
-					<view class="cu-avatar round lg" :style="{ backgroundImage: `url('${icon}')` }">
-					</view>
+					<view class="cu-avatar round lg" :style="{ backgroundImage: `url('${icon}')` }"></view>
 					<view class="content">
 						<view class="text-black text-lg">
-							<view class="cu-tag round sm margin-right-xs" :class="'bg-' + wColor[item.State]">{{ workflow[item.State] }}</view>
-							<view class="text-cut text-xl">{{item.ApplicationName || "还未填写"}}</view>
+							<view class="text-cut text-xl">{{item.RoomName}}申请表</view>
+							<view class="cu-tag round sm" :class="'bg-' + wColor[item.State]">{{ workflow[item.State] }}</view>
 						</view>
 						<view class="text-gray flex">
 							<view class="text-cut">
-								地址：{{item.RoomName}} 申请人：{{item.Owner}}
+								<text>申请人：{{item.Owner}}\n申请原因：{{item.ApplicationReason}}</text>
 							</view>
 						</view>
 					</view>
 					<view class="action">
-						<view class="text-black text-sm">{{ item.CreatedTime.slice(5) }}</view>
+						<view class="cu-tag round sm bg-green light" style="margin: 6rpx 0;">{{item.StartDate.slice(5)}}</view>
+						<view class="cu-tag round sm bg-red light" style="margin: 6rpx 0;">{{item.EndDate.slice(5)}}</view>
 					</view>
 					<view class="move">
 						<view class="bg-green" v-if="item.IsMyStep" @click.stop="toExecute(item)">执行</view>
-						<!--view class="bg-blue" @click.stop="toDetail(item.ID)">详细</view-->
+						<view class="bg-blue" @click.stop="toDetail(item.ID)">详细</view>
 					</view>
 				</view>
 			</template>
@@ -42,7 +42,10 @@
 	let app = require("@/config");
 	let enums = require("../enumsv1.js");
 	export default{
-		onLoad:function(){
+		onShow() {
+			this.getData(1);
+		},
+		onLoad() {
 			this.getData(1);
 		},
 		methods:{
@@ -54,7 +57,6 @@
 					pageSize
 				},msg=>{
 					if(msg.success){
-						console.log(msg.data);
 						this.data=msg.data;
 					}
 				})
@@ -67,6 +69,11 @@
 			toExecute (item) {
 				uni.navigateTo({
 					url: item.RouteData
+				})
+			},
+			toDetail (id) {
+				uni.navigateTo({
+					url: "/iuc/roomApplication/v1/detail?id=" + id
 				})
 			},
 			// ListTouch触摸开始

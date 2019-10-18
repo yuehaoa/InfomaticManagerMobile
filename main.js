@@ -19,6 +19,9 @@ require("./init");
 import mixin from './config/mixin.js'
 Vue.mixin(mixin);
 
+import labSteps from './iuc/roomApplication/v1/LabStepInfo.vue'
+Vue.component('lab-Steps',labSteps)
+
 Vue.config.productionTip = false
 
 App.mpType = 'app'

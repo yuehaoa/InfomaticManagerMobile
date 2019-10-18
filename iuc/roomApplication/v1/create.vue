@@ -1,9 +1,9 @@
-<!--宋润涵于2019-10-14编辑 用于创建新申请-->
+<!--宋润涵于2019-10-16编辑 用于创建新申请-->
 <template>
 	<view id="lab-apply-creat">
 		<cu-custom bgColor="bg-gradual-blue" :isBack="'/iuc/roomApplication/v1/list'">
 			<block slot="backText">返回</block>
-			<block slot="content">实验室申请表</block>
+			<block slot="content">创建申请表</block>
 		</cu-custom>
 		<form>
 			<view class="cu-steps magin-top">
@@ -14,12 +14,12 @@
 			</view>
 			<view class="cu-form-group margin-top">
 				<view class="title">申请原因</view>
-				<input name="input" v-model="model.ApplicationReason"></input>
+				<input name="input" v-model="model.ApplicationReason" maxlength="200"></input>
 			</view>
 			<view class="cu-form-group">
 				<view class="title">选择申请实验室</view>
-				<picker mode="multiSelector" :range="[buildings, rooms]" range-key="Name" 
-				@columnchange="columnChange" @change="selectRoom" v-model="roomIndex">
+				<picker mode="multiSelector" :range="[buildings, rooms]" range-key="Name" @columnchange="columnChange" @change="selectRoom"
+				 v-model="roomIndex">
 					<view class="content">
 						{{currentRoom}}
 					</view>
@@ -27,18 +27,17 @@
 			</view>
 			<view class="cu-form-group">
 				<view class="title">选择起止日期</view>
-				<picker mode="date" :start="'2019-10-14'" v-model="model.startDate" @change="selectDate1">
+				<picker mode="date" start="1990-01-01" end="2099-12-31" v-model="model.startDate" @change="selectDate1">
 					<view class="content">
 						{{model.startDate}}
 					</view>
 				</picker>
-				<picker mode="date" :start="model.startDate" v-model="model.endDate" @change="selectDate2">
+				<picker mode="date" :start="model.startDate" end="2099-12-31" v-model="model.endDate" @change="selectDate2">
 					<view class="content">
 						{{model.endDate}}
 					</view>
 				</picker>
 			</view>
-			
 			<view class="cu-form-group">
 				<view class="title">选择指导老师</view>
 				<picker :range="teachers" range-key="RealName" @change="selectTeacher">
@@ -46,98 +45,117 @@
 						{{currentTeacher}}
 					</view>
 				</picker>
-				<!--input name="input" v-model="model.GuideTeacherId"></input-->
 			</view>
 			<view class="padding flex flex-direction">
-				<button class="cu-btn bg-green lg" :disabled="isSubmitting" @click="submit()">提交</button>
+				<button class="cu-btn bg-green lg" :loading="isSubmitting" @click="submit()">提交</button>
 			</view>
 		</form>
 	</view>
 </template>
 
 <script>
-	let steps=require("../stepsv1.js")
-	export default{
-		onLoad(opt){
-			this.ID=opt.id;
-			this.model.State=2;
+	let steps = require("../stepsv1.js")
+	export default {
+		onLoad(opt) {
+			this.ID = opt.id;
 			this.getInfo();
 		},
-		methods:{
-			selectTeacher(e){
+		methods: {
+			selectTeacher(e) {
 				let u = this.teachers[e.detail.value];
 				this.currentTeacher = u.RealName || "请选择指导教师";
 				this.model.GuideTeacherId = u.ID || guidEmpty;
 			},
-			selectRoom(e){
+			selectRoom(e) {
 				let index = e.detail.value[1];
 				let v = this.rooms[index];
 				this.currentRoom = v.ID === this.guidEmpty ? "选择实验室" : `${v.Building.Name} ${v.Name}`;
 				this.model.RoomId = v.ID;
 			},
-			selectDate1(e){
-				this.model.startDate=e.detail.value||"请选择开始日期";
+			selectDate1(e) {
+				this.model.startDate = e.detail.value || "请选择开始日期";
+				if (Date.parse(this.model.startDate) > Date.parse(this.model.endDate)) {
+					this.model.endDate=this.model.startDate;
+					uni.showToast({
+						title: "结束时间不能早于开始时间"
+					});
+				}
 			},
-			selectDate2(e){
-				this.model.endDate=e.detail.value||"请选择结束日期";
+			selectDate2(e) {
+				this.model.endDate = e.detail.value || "请选择结束日期";
+				if (Date.parse(this.model.startDate) > Date.parse(this.model.endDate)) {
+					uni.showToast({
+						title: "结束时间不能早于开始时间"
+					});
+				}
 			},
-			get(){
-				
-			},
-			submit(){
+			submit() {
 				this.isSubmitting = true;
-				uni.post("/api/roomApp/v1/GetApplication",{},msg=>{
-					if(msg.success==true)
-					{
-						this.model.ID=msg.data.ID;
-						console.log(this.model);
-						uni.post("/api/roomApp/v1/CreateApplication", this.model,msg=>{
-							console.log(msg);
+				uni.post("/api/roomApp/v1/GetApplication", {}, msg => {
+					if (msg.success == true) {
+						this.model.ID = msg.data.ID;
+						uni.post("/api/roomApp/v1/CreateApplication", this.model, msg => {
+							this.isSubmitting = false;
+							if (msg.success) {
+								uni.showToast({
+									title: '提交成功',
+									icon: 'success',
+									position: 'center'
+								})
+								setTimeout(function() {
+									uni.navigateBack({
+										
+									});
+									uni.hideToast();
+								}, 1500);
+							}
 						})
 					}
 				})
 			},
-			getInfo(){
-				let THIS=this;
-				uni.post("/api/roomApp/v1/GetCreateApplication", {},msg=>{
-					if(msg.success){
+			getInfo() {
+				let THIS = this;
+				uni.post("/api/roomApp/v1/GetCreateApplication", {}, msg => {
+					if (msg.success) {
 						console.log(msg);
+						THIS.model.State = msg.data.State;
 						THIS.buildings = msg.buildings;
 						THIS.allRooms = msg.rooms;
 						THIS.teachers = msg.teachers;
 					}
 				})
 			},
-			columnChange(e){
+			columnChange(e) {
 				let column = e.detail.column
 				let value = e.detail.value;
 				if (column) return;
-				
+
 				let buildingId = this.buildings[value].ID;
 				//逐个查找
 				this.rooms = this.allRooms.filter(e => e.BuildingId === buildingId);
 			}
 		},
-		data () {
-			return{
-				model:{
-					ID:'',
-					ApplicationReason:'',
-					RoomId:'',
-					GuideTeacherId:'',
-					startDate:'请选择开始日期',
-					endDate:'请选择结束日期'
+		data() {
+			return {
+				model: {
+					ID: '',
+					ApplicationReason: '',
+					RoomId: '',
+					GuideTeacherId: '',
+					startDate: '请选择开始日期',
+					State: 0,
+					endDate: '请选择结束日期'
 				},
-				isSubmitting:false,
-				buildings:[],
-				allrooms:[],
-				guidEmpty : '00000000-0000-0000-0000-000000000000',
+				isSubmitting: false,
+				buildings: [],
+				allrooms: [],
+				guidEmpty: '00000000-0000-0000-0000-000000000000',
 				rooms: [],
-				teachers:[],
-				currentTeacher:"请选择指导教师",
-				currentRoom:"请选择房间号",
-				ID:'',
-				roomIndex:[0,0],
+				teachers: [],
+				currentTeacher: "请选择指导教师",
+				currentRoom: "请选择房间号",
+				ID: '',
+				roomIndex: [0, 0],
 				steps
 			}
 		}
