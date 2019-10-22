@@ -19,6 +19,7 @@
 		},
 		data () {
 			let steps = JSON.parse(JSON.stringify(stp));
+			console.log(steps);
 			return {
 				steps,
 				bindSteps: []
@@ -29,6 +30,7 @@
 				deep: true,
 				immediate: true,
 				handler (value) {
+					console.log(value);
 					let tb = "text-blue", err = "err";
 					let steps = this.steps;
 					//steps[0].FinalState = value.State > 0 ? tb : "";
@@ -50,6 +52,7 @@
 					
 					steps[3].FinalState = isComplete(value.HandleState);
 					steps[3].err = value.HandleState === 30 ? err : "";//管理员确认
+
 				}
 			}
 		}

@@ -27,7 +27,7 @@
 			</view>
 			<view class="cu-form-group">
 				<view class="title">选择起止日期</view>
-				<picker mode="date" start="1990-01-01" end="2099-12-31" v-model="model.startDate" @change="selectDate1">
+				<picker mode="date" :start="model.startDate" end="2099-12-31" v-model="model.startDate" @change="selectDate1">
 					<view class="content">
 						{{model.startDate}}
 					</view>
@@ -117,8 +117,10 @@
 				let THIS = this;
 				uni.post("/api/roomApp/v1/GetCreateApplication", {}, msg => {
 					if (msg.success) {
-						console.log(msg);
 						THIS.model.State = msg.data.State;
+						console.log(msg.data.CreatedTime);
+						THIS.model.startDate = msg.data.CreatedTime.
+							replace("年","-").replace("月","-").replace("日","");
 						THIS.buildings = msg.buildings;
 						THIS.allRooms = msg.rooms;
 						THIS.teachers = msg.teachers;

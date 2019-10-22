@@ -97,21 +97,18 @@
 						url: '/iuc/roomApplication/v1/list'
 					})
 					return;
-				}
-				uni.post("/api/roomApp/v1/GetApplication", {
-					id
-				}, msg => {
+				};
+				uni.post("/api/roomApp/v1/GetApplication", {id}, msg => {
 					this.model = msg.data;
 					this.timeline = msg.timeline;
 					this.currentStep = msg.currentStep;
 					this.isMyStep = msg.currentStep.IsMyStep;
-				})
+				});
 			},
 			changeState() {
 				this.state = this.state === "detail" ? "timeline" : "detail";
 			},
 			exeStep() {
-				console.log(this.currentStep);
 				uni.navigateTo({
 					url: this.currentStep.ToAction
 				})
