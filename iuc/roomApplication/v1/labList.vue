@@ -1,0 +1,73 @@
+<template>
+	<view class="bg-white">
+		<cu-custom bgColor="bg-gradual-blue" isBack="">
+			<block slot="backText">返回</block>
+			<block slot="content">实验室列表页</block>
+		</cu-custom>
+		<scroll-view scroll-x class="bg-white nav text-center" scroll-with-animation :scroll-left="scrollLeft">
+			<view class="cu-item" :class="index==TabCur?'text-green cur':''" v-for="(item,index) in buildings" :key="index" @tap="tabSelect" @click="getLabs(item.ID)" :data-id="index">
+				<span>{{item.Name}}</span>
+			</view>
+		</scroll-view>
+		<view class="cu-list menu">
+			<view class="cu-item margin-tb-sm bg-white" v-for="(item,index) in labs" :key="index" @click="labDetai(item.ID)">
+				<view class="content">
+					<view>
+						<view class="text-cut">{{item.Name}}</view>
+						<view class="cu-tag round bg-orange sm">{{item.Administrator}}&nbsp;&nbsp;{{item.AdminTelephone}}</view>
+					</view>
+					<view class="text-gray text-sm flex"> <view class="text-cut">
+						Lorem ipsum dolor sit amet, consectetur adipisicing elitduiqua.
+					</view></view>
+				</view>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		onLoad() {
+			this.getBuildings(true);
+		},
+		data() {
+			return {
+				TabCur: 0,
+				scrollLeft: 0,
+				buildings: [],
+				buidingDic: {},
+				labs: {}
+			};
+		},
+		methods: {
+			tabSelect(e) {
+				this.TabCur = e.currentTarget.dataset.id;
+				this.scrollLeft = (e.currentTarget.dataset.id - 1)*60
+			},
+			getBuildings() {
+				uni.post("/api/building/GetBuildings",{},msg => {
+					this.buildings = msg.data;
+					this.buildings = this.buildings.filter(e => e.ID !== '00000000-0000-0000-0000-000000000000');
+					this.buildings.map(e=>this.buidingDic[e.ID]=e.Name);
+					uni.setStorage({
+						key: 'buidingDic',
+						data: this.buidingDic,
+					});
+					this.getLabs(this.buildings[0].ID);
+				});
+			},
+			getLabs(id) {
+				uni.post("/api/building/GetRooms", {id}, msg => {
+					this.labs=msg.data;
+					this.labs = this.labs.filter(e => e.ID !== '00000000-0000-0000-0000-000000000000');
+				})
+			},
+			labDetai(id) {
+				//跳转至实验室详细页面
+			}
+		}
+	}
+</script>
+
+<style>
+</style>
