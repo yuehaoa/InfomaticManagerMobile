@@ -41,7 +41,7 @@
 					<view class="cuIcon-writefill text-red"></view>
 					<text>需要修改</text>
 				</view>
-				<view class="cu-item" @click="submit('取消')">
+				<view class="cu-item" @click="submit('无法')">
 					<view class="cuIcon-roundclosefill text-red"></view>
 					<text>取消流程</text>
 				</view>
@@ -71,7 +71,6 @@
 		},
 		methods:{
 			getAssignData(ID) {
-				console.log(this.ID);
 				uni.post("/api/roomApp/v1/GetAssignApplication",{ID},msg=>{
 					if(msg.success) {
 						console.log(msg);
@@ -98,13 +97,79 @@
 				this.getManagerID(e.target.value);
 			},
 			submit (opinion) {
-				uni.post("/api/roomApp/v1/AssignForm", {
-					ID:this.ID,HandlerId:this.HandlerId,ReviewOpinion:opinion},msg=>{
-						if(msg.success) {
-							console.log(msg);
-						}
-					})
-			},
+							if(opinion=='确认'){
+								if(this.HandlerId==""){
+									uni.showToast({
+										title:"管理员不能为空"
+									})
+									return;
+								}
+								uni.post("/api/roomApp/v1/AssignForm", {
+									ID:this.ID,HandlerId:this.HandlerId,ReviewOpinion:opinion},msg=>{
+									if(msg.success) {
+										uni.showToast({
+										title: '分配成功'
+										})
+										setTimeout(function() {
+										uni.navigateBack({
+										
+										});
+										uni.hideToast();
+										}, 1500);
+									}
+							})}
+							
+							else if(opinion=='修改'){
+								let id=this.ID;
+								let handID=this.HandlerId;
+								uni.showModal({
+									title:"是否确认修改",
+									success: function(res) {
+										if(res.confirm){
+											uni.post("/api/roomApp/v1/AssignForm", {
+												ID:id,HandlerId:handID,ReviewOpinion:opinion},msg=>{
+												if(msg.success) {
+													uni.showToast({
+													title: '修改成功'
+													})
+													setTimeout(function() {
+													uni.navigateBack({
+													
+													});
+													uni.hideToast();
+													}, 1500);
+												}
+										})}
+									}
+								})
+								
+							}
+							else if(opinion=='无法'){
+								let id=this.ID;
+								let handID=this.HandlerId;
+								uni.showModal({
+									title:"是否确认取消",
+									success: function(res) {
+										if(res.confirm){
+											uni.post("/api/roomApp/v1/AssignForm", {
+												ID:id,HandlerId:handID,ReviewOpinion:opinion},msg=>{
+												if(msg.success) {
+													uni.showToast({
+													title: '取消成功'
+													})
+													setTimeout(function() {
+													uni.navigateBack({
+													
+													});
+													uni.hideToast();
+													}, 1500);
+												}
+										})}
+									}
+								})
+								
+							}
+					},
 			TimeCombine(){
 				this.time=this.model.StartDate+" — "+this.model.EndDate;
 			},
