@@ -1,3 +1,4 @@
+<!--邵良颖于2019-10-16编辑 用于查看实验室-->
 <template>
 	<view class="bg-white">
 		<cu-custom bgColor="bg-gradual-blue" isBack="">
@@ -5,12 +6,12 @@
 			<block slot="content">实验室列表页</block>
 		</cu-custom>
 		<scroll-view scroll-x class="bg-white nav text-center" scroll-with-animation :scroll-left="scrollLeft">
-			<view class="cu-item" :class="index==TabCur?'text-green cur':''" v-for="(item,index) in buildings" :key="index" @tap="tabSelect" @click="getLabs(item.ID)" :data-id="index">
+			<view class="cu-item" :class="index==TabCur?'text-green cur':''" v-for="(item,index) in buildings" :key="index" @tap="tabSelect($event, item.ID)" :data-id="index">
 				<span>{{item.Name}}</span>
 			</view>
 		</scroll-view>
 		<view class="cu-list menu">
-			<view class="cu-item margin-tb-sm bg-white" v-for="(item,index) in labs" :key="index" @click="labDetai(item.ID)">
+			<view class="cu-item margin-tb-sm bg-white" v-for="(item,index) in labs" :key="index" @click="labDetail(item.ID)">
 				<view class="content">
 					<view>
 						<view class="text-cut">{{item.Name}}</view>
@@ -35,35 +36,38 @@
 				TabCur: 0,
 				scrollLeft: 0,
 				buildings: [],
-				buidingDic: {},
+				buildingDic: {},
 				labs: {}
 			};
 		},
 		methods: {
-			tabSelect(e) {
+			tabSelect(e, ID) {
 				this.TabCur = e.currentTarget.dataset.id;
-				this.scrollLeft = (e.currentTarget.dataset.id - 1)*60
+				this.scrollLeft = (e.currentTarget.dataset.id - 1)*60;
+				this.getLabs(ID);
 			},
 			getBuildings() {
 				uni.post("/api/building/GetBuildings",{},msg => {
 					this.buildings = msg.data;
 					this.buildings = this.buildings.filter(e => e.ID !== '00000000-0000-0000-0000-000000000000');
-					this.buildings.map(e=>this.buidingDic[e.ID]=e.Name);
+					this.buildings.map(e=>this.buildingDic[e.ID]=e.Name);
 					uni.setStorage({
-						key: 'buidingDic',
-						data: this.buidingDic,
+						key: 'buildingDic',
+						data: this.buildingDic,
 					});
 					this.getLabs(this.buildings[0].ID);
 				});
 			},
-			getLabs(id) {
-				uni.post("/api/building/GetRooms", {id}, msg => {
+			getLabs(pid) {
+				uni.post("/api/building/GetRooms", {pid}, msg => {
 					this.labs=msg.data;
 					this.labs = this.labs.filter(e => e.ID !== '00000000-0000-0000-0000-000000000000');
 				})
 			},
-			labDetai(id) {
-				//跳转至实验室详细页面
+			labDetail(id) {
+				uni.navigateTo({
+					url:'./roomDetail?id=' + id
+				})
 			}
 		}
 	}
