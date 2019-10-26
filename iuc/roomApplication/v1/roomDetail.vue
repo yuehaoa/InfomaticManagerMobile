@@ -11,7 +11,7 @@
 			</view>
 			<view class="cu-form-group">
 				<view class="title">所在楼栋</view>
-				<input :value="labInfo.BuildingId" disabled></input>
+				<input :value="buildingDic[labInfo.BuildingId]" disabled></input>
 			</view>
 			<view class="cu-form-group">
 				<view class="title">实验室联系人</view>
@@ -52,9 +52,14 @@
 <script>
 	export default{
 		onLoad(opt) {
-			//临时设置，不要忘了删除
-			this.labInfo.ID = '2fa15095-52c1-4d98-8dd5-6ef921a790ae';
+			this.labInfo.ID = opt.id;
 			this.getData();
+			uni.getStorage({
+				key: 'buildingDic',
+				success: res =>{
+					this.buildingDic = res.data;
+				}
+			})
 		},
 		methods:{
 			getData(){
@@ -77,7 +82,8 @@
 					DisplayOrder: "",
 					CreatedOn: "",
 					RoomType: ""
-				}
+				},
+				buildingDic: {}
 			}
 		}
 	}
