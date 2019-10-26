@@ -18,7 +18,7 @@
 						<view class="cu-tag round bg-orange sm">{{item.Administrator}}&nbsp;&nbsp;{{item.AdminTelephone}}</view>
 					</view>
 					<view class="text-gray text-sm flex"> <view class="text-cut">
-						Lorem ipsum dolor sit amet, consectetur adipisicing elitduiqua.
+						暂无设置
 					</view></view>
 				</view>
 			</view>
