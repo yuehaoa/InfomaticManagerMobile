@@ -9,7 +9,7 @@
 		<a href="javascript:;" class="cu-btn bg-green lg margin-top" @click="go('d9824e8c-c998-45e2-8156-34d723049855','softwareInstall')">以普通老师身份登录</a>
 		<a href="javascript:;" class="cu-btn bg-green lg margin-top" @click="go('8094cf84-01e6-484d-bb01-04a299f5ef5b','softwareInstall')">以维修者主管身份登录</a>
 		<a href="javascript:;" class="cu-btn bg-green lg margin-top" @click="go('b15f7cdb-9f96-4041-a7b2-4cfeebabaa8d','softwareInstall')">以普通维修者身份登录</a>
-		<a href="javascript:;" class="cu-btn bg-blue lg margin-top" @click="goLabList()">到实验室列表页面</a>
+		<a href="javascript:;" class="cu-btn bg-blue lg margin-top" @click="goProfile()">到个人中心页面</a>
 	</view>
 </template>
 
@@ -17,9 +17,9 @@
 	let app = require("@/config");
 	export default {
 		methods: {
-			goLabList () {
+			goProfile () {
 				uni.navigateTo({
-					url: "/iuc/roomApplication/v1/labList"
+					url: "/iuc/roomApplication/v1/profile"
 				})
 			},
 			go (id,where) {

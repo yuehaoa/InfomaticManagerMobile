@@ -14,7 +14,7 @@
 		</view>
 			
 		<view class="iconCon">
-			<view>
+			<view @click="goLabList">
 				<i class="iconfont icon-yanjing icon_comment"></i>
 				<p>实验室列表</p>
 			</view>
@@ -62,7 +62,11 @@
 			
 		},
 		methods: {
-			
+			goLabList () {
+				uni.navigateTo({
+					url: "./labList"
+				})
+			},
 		},
 	}
 </script>
