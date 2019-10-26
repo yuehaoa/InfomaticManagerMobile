@@ -61,6 +61,10 @@
 			"path": "iuc/roomApplication/v1/labList",
 			"style": {}
 		}
+		{
+			"path":"iuc/roomApplication/v1/roomDetail",
+			"style": {}
+		}
 	],
 	"globalStyle": {
 		"mp-alipay": {
