@@ -2,6 +2,7 @@ let appSetting = {
     debug: true,
     api: "",
     currentUserGuid: "",
+	buildingDic : {},
     titlePerfix: " - ",
     title: "登录",
     nav: "",
@@ -44,6 +45,9 @@ try {
 	appSetting.currentUserGuid = getQueryVariable("currentUserGuid") || "";
 	if (!appSetting.currentUserGuid) {
 		appSetting.currentUserGuid = uni.getStorageSync("currentUserGuid");
+	}
+	if(!appSetting.buildingDic) {
+		appSetting.buildingDic = uni.getStorageSync("buildingDic");
 	}
 } catch {}
 module.exports = appSetting;

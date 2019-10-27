@@ -56,6 +56,18 @@
 		{
 			"path":"iuc/roomApplication/v1/create",
 			"style": {}
+		},
+		{
+			"path": "iuc/roomApplication/v1/labList",
+			"style": {}
+		},
+		{
+			"path":"iuc/roomApplication/v1/roomDetail",
+			"style": {}
+		},
+		{
+			"path":"iuc/roomApplication/v1/profile",
+			"style": {}
 		}
 	],
 	"globalStyle": {
