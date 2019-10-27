@@ -2,7 +2,7 @@
 	<view class="content">
 		<view class="head">
 			<p>
-				<span><navigator class="cuIcon-home"></navigator></span>
+				<span><navigator class="cuIcon-home" url="../../index/index" open-type="reLaunch"></navigator></span>
 				<span><navigator class="cuIcon-settings"></navigator></span>
 			</p>
 		</view>	
@@ -33,11 +33,11 @@
 		</view>
 		
 		<view class="ui-table">
-			<navigator class="ui-table-cell" url="list">
+			<navigator class="ui-table-cell" url="labList">
 				<span>实验室列表</span>
 				<i class="iconfont icon-you1"></i>
 			</navigator>
-			<navigator url="../../index/index">
+			<navigator url="list">
 				<span>我的申请流程</span>
 				<i class="iconfont icon-you1"></i>
 			</navigator>
@@ -73,7 +73,6 @@
 
 <style lang="less">
 	@import'../../../colorui/icon.css';
-	
 	*{
 		margin: 0;
 		padding: 0;
@@ -107,6 +106,7 @@
 		font-size: 36rpx;
 	}
 	.head > p > span> navigator{
+		text-align: center;
 		font-size: 44rpx;
 		width: 90rpx;
 		margin-right: 20rpx;
