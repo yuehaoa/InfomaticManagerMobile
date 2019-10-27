@@ -21,6 +21,11 @@
 					url: "/iuc/roomApplication/v1/profile"
 				})
 			},
+			goCreate () {
+				uni.navigateTo({
+					url: "/iuc/roomApplication/v1/list"
+				})
+			},
 			go (id,where) {
 				uni.post("/uc/getCurrentUserGuid", {id}, msg => {
 					uni.setStorage({
@@ -33,12 +38,18 @@
 					app.checkPermission = (p) => {
 						return ps && ps.indexOf(p) >= 0;
 					};
-					
-					uni.navigateTo({
-						url: "/iuc/"+where+"/v1/profile"
-					})
+					if(where == 'softwareInstall')
+					{uni.navigateTo({
+						url: "/iuc/"+where+"/v1/list"
+					})}
+					else if(where == 'roomApplication') {
+						uni.navigateTo({
+							url: "/iuc/"+where+"/v1/profile"
+						})
+					}
 				});
 			}
+			
 		},
 		data () {
 			return {

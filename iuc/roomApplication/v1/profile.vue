@@ -15,19 +15,19 @@
 			
 		<view class="iconCon">
 			<view @click="goLabList">
-				<i class="iconfont icon-yanjing icon_comment"></i>
+				<text class="cuIcon-list icon_comment icon-list"></text>
 				<p>实验室列表</p>
 			</view>
 			<view>
-				<i class="iconfont icon-shaixuan icon_comment"></i>
+				<i class="cuIcon-edit icon-edit icon_comment"></i>
 				<p>我的待办</p>
 			</view>
 			<view>
-				<i class="iconfont icon-xiezuo icon_comment"></i>
+				<i class="cuIcon-write icon-write icon_comment"></i>
 				<p>我的申请</p>
 			</view>
 			<view>
-				<i class="iconfont icon-search icon_comment"></i>
+				<i class="cuIcon-search icon_comment icon-search"></i>
 				<p>我的机位</p>
 			</view>
 		</view>
@@ -35,11 +35,11 @@
 		<view class="ui-table">
 			<navigator class="ui-table-cell" url="labList">
 				<span>实验室列表</span>
-				<i class="iconfont icon-you1"></i>
+				<i class="cuIcon-right"></i>
 			</navigator>
 			<navigator url="list">
 				<span>我的申请流程</span>
-				<i class="iconfont icon-you1"></i>
+				<i class="cuIcon-right"></i>
 			</navigator>
 		</view>
 	</view>
@@ -117,9 +117,10 @@
 		/* 存放个人信息的 */
 		width: calc( 100% - 32px );
 		background-color: #FFFFFF;
-		margin-left: 16px;
+		margin-left: 18px;
 		margin-top: -48px;
-		float: left;
+		float: left; 
+		height:180rpx;
 		border-radius: 8px;
 		box-shadow: 0 0 6px rgba(255,218,25,0.6);
 	}
@@ -147,7 +148,8 @@
 		float: left;
 		overflow: hidden;
 		margin-top: 32rpx;
-		margin-bottom: 32rpx;
+		margin-bottom: 20rpx;
+		margin-left:2px;
 		padding: 0rpx 15rpx;
 	}
 	.iconCon > view{
@@ -184,18 +186,19 @@
 		display: inline-block;
 		line-height: 70rpx;
 		color: #FFFFFF;
+		margin-bottom:12rpx;
 	}
 	
-	.icon-xiezuo{
+	.icon-write{
 		background-color: #fbdc58;
 	}
-	.icon-yanjing{
+	.icon-list{
 		background-color: #94ede2;
 	}
 	.icon-search{
 		background-color: #bceccd;
 	}
-	.icon-shaixuan{
+	.icon-edit{
 		background-color: #ffbadc;
 	}
 </style>
