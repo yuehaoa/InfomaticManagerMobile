@@ -46,6 +46,17 @@
 				<input :value="labInfo.CreatedOn" disabled></input>
 			</view>
 		</form>
+		<scroll-view scroll-x class="bg-white nav text-center">
+			<view class="cu-item" :class="index==TabCur?'text-blue cur':''" v-for="(item,index) in arrays" :key="index" @tap="tabSelect" :data-id="index">
+				{{item}}
+			</view>
+			<view class="margin-tb">
+				<text>暂无内容</text>
+			</view>
+		</scroll-view>
+		<view class="padding flex flex-direction" @click="create()">
+			<button class="cu-btn bg-blue lg">申请</button>
+		</view>
 	</view>
 </template>
 
@@ -62,6 +73,15 @@
 			})
 		},
 		methods:{
+			tabSelect(e) {
+				this.TabCur = e.currentTarget.dataset.id;
+				this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60
+			},
+			create() {
+				uni.navigateTo({
+					url: "./create?buildingID="+this.labInfo.BuildingId+"&roomID="+this.labInfo.ID
+				})
+			},
 			getData(){
 				if (!this.labInfo.ID) return;
 				uni.post("/api/building/GetRoom", { ID: this.labInfo.ID }, msg => {
@@ -71,6 +91,14 @@
 		},
 		data(){
 			return{
+				arrays: [
+					"实验室详情",
+					"空闲状态",
+					"时间安排表",
+					"申请记录"
+				],
+				TabCur: 0,
+				scrollLeft: 0,
 				labInfo: {
 					ID: "",
 					Name: "",
