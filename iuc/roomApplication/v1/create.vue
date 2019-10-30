@@ -30,7 +30,7 @@
 				<Date placeholder="请选择开始日期" @getData="selectDate1" :minSelect="currentDate"></Date>
 				<Date placeholder="请选择结束日期" @getData="selectDate2" :minSelect="model.startDate"></Date>
 			</view>
-			<view class="cu-form-group">
+			<view class="cu-form-group" v-if="isStudent">
 				<view class="title">选择指导老师<text class="text-red">*</text></view>
 				<picker :range="teachers" range-key="RealName" @change="selectTeacher">
 					<view class="content">
@@ -126,6 +126,7 @@
 				let THIS = this;
 				uni.post("/api/roomApp/v1/GetCreateApplication", {}, msg => {
 					if (msg.success) {
+						THIS.isStudent = msg.isStudent;
 						THIS.model.State = msg.data.State;
 						THIS.currentDate = msg.data.CreatedTime.
 						replace("年", "/").replace("月", "/").replace("日", "");
@@ -165,6 +166,7 @@
 				currentDate: '',
 				currentTeacher: "请选择指导教师",
 				currentRoom: "请选择房间号",
+				isStudent: true,
 				ID: '',
 				roomIndex: [0, 0],
 				steps
