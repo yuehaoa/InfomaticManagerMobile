@@ -1,7 +1,7 @@
 <!--邵良颖于2019年10月14日编辑 用于查看实验室申请流程-->
 <template>
 	<view id="lab-apply-detail">
-		<cu-custom bgColor="bg-gradual-blue" :isBack="'/iuc/roomApplication/v1/list'">
+		<cu-custom bgColor="bg-gradual-blue" isBack="">
 			<block slot="backText">返回</block>
 			<block slot="content">实验室申请表</block>
 		</cu-custom>
