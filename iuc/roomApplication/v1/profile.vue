@@ -7,7 +7,7 @@
 			</p>
 		</view>	
 		<view class="info">
-			<image v-bind:src="avtar"/>
+			<image v-bind:src="avatar"/>
 			<p class="info_name">
 				<span style="font-size: 40upx;">{{realName}}</span>
 			</p>
@@ -51,7 +51,7 @@
 		data() {
 			return {
 				realName:"",
-				avtar:"",
+				avatar:"",
 				
 		}},
 		onLoad() {
