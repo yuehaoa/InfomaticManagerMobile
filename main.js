@@ -13,6 +13,9 @@ Vue.component('plugin',plugin)
 import cuCustom from './colorui/components/cu-custom.vue'
 Vue.component('cu-custom',cuCustom)
 
+import date from './components/dy-Date/dy-Date.vue'
+Vue.component('Date',date)
+
 let app = require("@/config");
 require("./init");
 
