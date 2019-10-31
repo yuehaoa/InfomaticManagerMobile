@@ -39,7 +39,7 @@
 					})}
 					else if(where == 'roomApplication') {
 						uni.navigateTo({
-							url: "/iuc/profile/profile"
+							url: "/iuc/"+where+"/v1/profile"
 						})
 					}
 				});
