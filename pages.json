@@ -66,7 +66,23 @@
 			"style": {}
 		},
 		{
-			"path":"iuc/roomApplication/v1/profile",
+			"path":"iuc/profile/profile",
+			"style": {}
+		},
+		{
+			"path":"iuc/userInfo/userInfo",
+			"style": {}
+		},
+		{
+			"path":"iuc/userInfo/modifyRealName",
+			"style": {}
+		},
+		{
+			"path":"iuc/userInfo/modifyGrade",
+			"style": {}
+		},
+		{
+			"path":"iuc/userInfo/modifyMobile",
 			"style": {}
 		}
 	],

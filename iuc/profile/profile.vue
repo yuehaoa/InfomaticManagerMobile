@@ -2,42 +2,42 @@
 	<view class="content">
 		<view class="head">
 			<p>
-				<span><navigator class="cuIcon-home" url="../../index/index" open-type="reLaunch"></navigator></span>
-				<span><navigator class="cuIcon-settings"></navigator></span>
+				<span><navigator class="cuIcon-home" url="../index/index" open-type="reLaunch"></navigator></span>
+				<span><navigator class="cuIcon-settings" url="../userInfo/userInfo"></navigator></span>
 			</p>
 		</view>	
 		<view class="info">
-			<image v-bind:src="avatar"/>
+			<image v-bind:src="avatar" v-on:click="NavToInfor()"/>
 			<p class="info_name">
 				<span style="font-size: 40upx;">{{realName}}</span>
 			</p>
 		</view>
 			
 		<view class="iconCon">
-			<view @click="goLabList">
+			<navigator url="../roomApplication/v1/labList">
 				<text class="cuIcon-list icon_comment icon-list"></text>
 				<p>实验室列表</p>
-			</view>
-			<view>
+			</navigator>
+			<navigator>
 				<i class="cuIcon-edit icon-edit icon_comment"></i>
 				<p>我的待办</p>
-			</view>
-			<view>
+			</navigator>
+			<navigator  url="../roomApplication/v1/list">
 				<i class="cuIcon-write icon-write icon_comment"></i>
 				<p>我的申请</p>
-			</view>
-			<view>
+			</navigator>
+			<navigator>
 				<i class="cuIcon-search icon_comment icon-search"></i>
 				<p>我的机位</p>
-			</view>
+			</navigator>
 		</view>
 		
 		<view class="ui-table">
-			<navigator class="ui-table-cell" url="labList">
+			<navigator class="ui-table-cell" url="../roomApplication/v1/labList">
 				<span>实验室列表</span>
 				<i class="cuIcon-right"></i>
 			</navigator>
-			<navigator url="list">
+			<navigator url="../roomApplication/v1/list">
 				<span>我的申请流程</span>
 				<i class="cuIcon-right"></i>
 			</navigator>
@@ -52,19 +52,35 @@
 			return {
 				realName:"",
 				avatar:"",
+				currentUserGuid:"",
 				
 		}},
 		onLoad() {
-			this.realName = app.userInfo.realName;
+			//this.realName = app.userInfo.realName;
 			this.avatar = app.userInfo.avatar;
+			this.currentUserGuid = app.userInfo.token;
 		},
 		onShow() {
-			
+			this.GetInfo();
 		},
 		methods: {
-			goLabList () {
+			GetInfo () {
+				uni.request({
+					url: 'http://hh.ricebird.cn/uc/GetUserInfo',
+					method: 'POST',
+					data: {
+						currentUserGuid:this.currentUserGuid,
+					},
+					success: res => {
+						this.realName = res.data.data.RealName;
+					},
+					fail: () => {},
+					complete: () => {}
+				});
+			},
+			NavToInfor(){
 				uni.navigateTo({
-					url: "./labList"
+					url:'../userInfo/userInfo',
 				})
 			},
 		},
@@ -72,7 +88,7 @@
 </script>
 
 <style lang="less">
-	@import'../../../colorui/icon.css';
+	@import'../../colorui/icon.css';
 	*{
 		margin: 0;
 		padding: 0;
@@ -152,7 +168,7 @@
 		margin-left:2px;
 		padding: 0rpx 15rpx;
 	}
-	.iconCon > view{
+	.iconCon > navigator{
 		float: left;
 		width: calc( 100% / 4 );
 		text-align: center;
