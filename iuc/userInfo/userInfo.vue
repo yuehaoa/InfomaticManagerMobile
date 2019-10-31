@@ -16,28 +16,28 @@
 				<navigator class="menu_item" url="./modifyRealName">
 					<text style="flex:1;">昵称</text>
 					<view class="detail-info">
-						<text>{{userInfo.RealName}}</text>
+						<text>{{userInfo.RealName?userInfo.RealName:"未填写"}}</text>
 					</view>
 					<view class="cuIcon-right"></view>
 				</navigator>
 				<navigator class="menu_item" url="./modifyMobile">
 					<text style="flex:1;">手机号码</text>
 					<view class="detail-info">
-						<text>{{userInfo.Mobile}}</text>
+						<text>{{userInfo.Mobile?userInfo.Mobile:"未填写"}}</text>
 					</view>
 					<view class="cuIcon-right"></view>
 				</navigator>
 				<navigator class="menu_item">
 					<text style="flex:1;">邮箱</text>
 					<view class="detail-info">
-						<text>{{userInfo.Email}}</text>
+						<text>{{userInfo.Email?userInfo.Email:"未填写"}}</text>
 					</view>
 					<view class="cuIcon-right"></view>
 				</navigator>
 				<navigator class="menu_item" url="./modifyGrade">
 					<text style="flex:1;">年龄</text>
 					<view class="detail-info">
-						<text>{{userInfo.Grade}}</text>
+						<text>{{userInfo.Grade?userInfo.Grade:"未填写"}}</text>
 					</view>
 					<view class="cuIcon-right"></view>
 				</navigator>
@@ -82,23 +82,17 @@
 		},
 		methods: {
 			GetInfo () {
-				uni.request({
-					url: 'http://hh.ricebird.cn/uc/GetUserInfo',
-					method: 'POST',
-					data: {
-						currentUserGuid:this.currentUserGuid,
-					},
-					success: res => {
-						console.log(res);
-						this.userInfo = res.data.data;
+				let currentUserGuid = this.currentUserGuid;
+				uni.post("/uc/GetUserInfo",{currentUserGuid},msg=>{
+					if(msg.success) {
+						this.userInfo = msg.data;
 						uni.setStorage({
 							key:'userInfo',
-							data:res.data.data,
+							data:msg.data,
 						});
-					},
-					fail: () => {},
-					complete: () => {}
-				});
+					}
+				}
+				)
 			}
 		},
 		

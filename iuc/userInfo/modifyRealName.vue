@@ -36,6 +36,7 @@
 			uni.getStorage({
 				key:'userInfo',
 				success:(res)=>{
+					console.log(res);
 				this.preNickName = res.data.RealName;
 				}
 			});
@@ -44,30 +45,26 @@
 		{
 			ModifyNickName()
 			{
-				uni.request({
-					url: 'http://hh.ricebird.cn/uc/ModifyNickName',//接口地址
-					method: 'POST',//方法
-					data: {
-						currentUserGuid:this.currentUserGuid,
-						userName:this.nickname,
-					},//参数
-					header:{
-						'content-type':"application/x-www-form-urlencoded",
-					},
-					success: res => {
-						this.tip=res.data.msg;
+				let currentUserGuid = this.currentUserGuid;
+				let userName = this.nickname;
+				uni.post("/uc/ModifyNickName",{currentUserGuid,userName},msg=>{
+					if(msg.success) {
+						console.log(msg);
+						this.tip=msg.msg;
 						uni.showToast({
-							icon: 'none',
-							title: this.tip,
-							duration:3000,
-							position:'center',
-						})
-						this.preNickName=this.nickname;
-					},//成功之后操作
-				});
-			},
+								icon: 'none',
+								title: this.tip,
+								duration:3000,
+								position:'center',
+							})
+							this.preNickName=this.nickname;
+						}
+					}
+					);
+			}
 		}
 	}
+	
 </script>
 
 <style>

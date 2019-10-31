@@ -11,7 +11,7 @@
 			</view>
 			<view class="text-lg margin-lr-lg margin-top-xs">请输入新手机号</view>
 			<view class="padding flex flex-direction margin-top-lg">
-				<button class="cu-btn bg-blue lg" v-on:click="modifytele" >保存</button>
+				<button class="cu-btn bg-blue lg" v-on:click="Modifytele" >保存</button>
 			</view>
 		</view>
 	</view>
@@ -42,31 +42,34 @@
 		},
 		methods:
 		{
-			modifytele()
+			Modifytele()
 			{
-				uni.request
-				({
-					url: 'http://hh.ricebird.cn/uc/ModifyMobile',//接口地址
-					method: 'POST',//方法
-					data: {
-						currentUserGuid:this.currentUserGuid,
-						mobile:this.telenum,
-					},//参数
-					header:{
-						'content-type':"application/x-www-form-urlencoded",
-					},
-					success: res => {
-						this.tip=res.data.msg;
+				let currentUserGuid = this.currentUserGuid;
+				let mobile = this.telenum;
+				uni.post("/uc/ModifyMobile",{currentUserGuid,mobile},msg=>{
+					if(msg.success) {
+						console.log(msg);
+						this.tip=msg.msg;
 						uni.showToast({
-							icon: 'none',
-							title: this.tip,
-							duration:3000,
-							position:'center',
-						})
-						this.preMobile=this.telenum;
-					},//成功之后操作
-				});
-			},
+								icon: 'none',
+								title: this.tip,
+								duration:3000,
+								position:'center',
+							})
+							this.preMobile=this.telenum;
+						}
+						else {
+							this.tip=msg.msg;
+							uni.showToast({
+									icon: 'none',
+									title: this.tip,
+									duration:3000,
+									position:'center',
+								})
+						}
+					}
+					);
+			}
 		}
 	}
 </script>

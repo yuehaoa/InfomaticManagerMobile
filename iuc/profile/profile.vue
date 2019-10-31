@@ -56,7 +56,6 @@
 				
 		}},
 		onLoad() {
-			//this.realName = app.userInfo.realName;
 			this.avatar = app.userInfo.avatar;
 			this.currentUserGuid = app.userInfo.token;
 		},
@@ -65,18 +64,14 @@
 		},
 		methods: {
 			GetInfo () {
-				uni.request({
-					url: 'http://hh.ricebird.cn/uc/GetUserInfo',
-					method: 'POST',
-					data: {
-						currentUserGuid:this.currentUserGuid,
-					},
-					success: res => {
-						this.realName = res.data.data.RealName;
-					},
-					fail: () => {},
-					complete: () => {}
-				});
+				let currentUserGuid = this.currentUserGuid;
+				uni.post("/uc/GetUserInfo",{currentUserGuid},msg=>{
+					if(msg.success) {
+						this.userInfo = msg.data;
+						this.realName = msg.data.RealName;
+					}
+				}
+				)
 			},
 			NavToInfor(){
 				uni.navigateTo({
