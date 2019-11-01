@@ -27,6 +27,11 @@ const enums = {
 		2: '已执行',
 		3: '已完成',
 		4: '已取消'
+	},
+	RoomType: {
+		1: "整体申请",
+		10: "部分申请",
+		0: "未设置"
 	}
 }
 module.exports = enums;

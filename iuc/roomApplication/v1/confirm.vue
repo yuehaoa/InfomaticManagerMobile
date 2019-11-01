@@ -44,7 +44,7 @@
 				</view>
 				<view class="cu-item" @click="submit('修改', '执行该流程会将流程发回给申请人，是否继续？')">
 					<view class="cuIcon-writefill text-red"></view>
-					<text>需要修改</text>
+					<text>退回修改</text>
 				</view>
 			</view>
 		</form>
@@ -73,7 +73,6 @@
 						url: '/iuc/roomApplication/v1/list' //回到list列表页
 					})
 				})
-				debugger;
 			},
 			getData() {
 				let id = this.id;

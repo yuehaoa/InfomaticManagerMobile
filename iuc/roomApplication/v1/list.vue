@@ -54,6 +54,7 @@
 				},msg=>{
 					if(msg.success){
 						this.data=msg.data;
+						this.data=this.data.filter(e => e.IsMyStep == true);
 					}
 				})
 			},

@@ -39,7 +39,7 @@
 				</view>
 				<view class="cu-item" @click="submit('修改')">
 					<view class="cuIcon-writefill text-red"></view>
-					<text>需要修改</text>
+					<text>退回修改</text>
 				</view>
 				<view class="cu-item" @click="submit('无法')">
 					<view class="cuIcon-roundclosefill text-red"></view>
