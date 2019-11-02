@@ -16,7 +16,7 @@
 		props: {
 			timeType: {
 				type: String,
-				default: () => 'day'
+				default: () => ''
 			},
 			disabled: {
 				type: Boolean,
@@ -40,11 +40,11 @@
 			},
 			minSelect: {
 				type: String,
-				default: () => '1900/01/01'
+				default: () => '1900/01/01 00:00:00'
 			},
 			maxSelect: {
 				type: String,
-				default: () => '2050/12/31'
+				default: () => '2050/12/31 00:00:00'
 			}
 		},
 		data() {
