@@ -3,7 +3,7 @@
 	<view id="lab-apply-list">
 		<cu-custom bgColor="bg-gradual-blue" isBack="">
 			<block slot="backText">返回</block>
-			<block slot="content">查看与我相关的申请</block>
+			<block slot="content">我的待办</block>
 			<view class="action" slot="right" @click="addApplication()">添加</view>
 		</cu-custom>
 		<view class="cu-list menu-avatar margin-top">

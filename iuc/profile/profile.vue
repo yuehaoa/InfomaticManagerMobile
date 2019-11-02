@@ -24,7 +24,7 @@
 			</navigator>
 			<navigator  url="../roomApplication/v1/list">
 				<i class="cuIcon-write icon-write icon_comment"></i>
-				<p>我的申请</p>
+				<p>所有申请</p>
 			</navigator>
 			<navigator>
 				<i class="cuIcon-search icon_comment icon-search"></i>
