@@ -62,6 +62,10 @@
 			"style": {}
 		},
 		{
+			"path": "iuc/roomApplication/v1/alllist",
+			"style": {}
+		},
+		{
 			"path":"iuc/roomApplication/v1/roomDetail",
 			"style": {}
 		},

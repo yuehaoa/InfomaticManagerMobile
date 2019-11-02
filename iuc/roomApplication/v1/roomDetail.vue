@@ -91,7 +91,6 @@
 				roomType: enums.RoomType,
 				arrays: [
 					"实验室详情",
-					"空闲状态",
 					"时间安排表",
 					"申请记录"
 				],

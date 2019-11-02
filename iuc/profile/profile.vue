@@ -18,11 +18,11 @@
 				<text class="cuIcon-list icon_comment icon-list"></text>
 				<p>实验室列表</p>
 			</navigator>
-			<navigator>
+			<navigator url="../roomApplication/v1/list">
 				<i class="cuIcon-edit icon-edit icon_comment"></i>
 				<p>我的待办</p>
 			</navigator>
-			<navigator  url="../roomApplication/v1/list">
+			<navigator  url="../roomApplication/v1/alllist">
 				<i class="cuIcon-write icon-write icon_comment"></i>
 				<p>所有申请</p>
 			</navigator>
