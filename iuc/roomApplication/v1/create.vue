@@ -26,9 +26,12 @@
 				</picker>
 			</view>
 			<view class="cu-form-group">
-				<view class="title">起止日期<text class="text-red">*</text></view>
-				<Date placeholder="请选择开始日期" @getData="selectDate1" :minSelect="currentDate"></Date>
-				<Date placeholder="请选择结束日期" @getData="selectDate2" :minSelect="model.startDate"></Date>
+				<view class="title">开始日期<text class="text-red">*</text></view>
+				<Time placeholder="请选择开始日期" @change="selectDate1"></Time>
+			</view>
+			<view class="cu-form-group">
+				<view class="title">结束日期<text class="text-red">*</text></view>
+				<Time placeholder="请选择结束日期" @change="selectDate2"></Time>
 			</view>
 			<view class="cu-form-group" v-if="isStudent">
 				<view class="title">选择指导老师<text class="text-red">*</text></view>
@@ -76,16 +79,19 @@
 			},
 			selectDate1(e) {
 				this.model.startDate = e || "请选择开始日期";
+				this.model.startDate = this.model.startDate.replace("年", "/").replace("月", "/").replace("日","").replace("时",":").replace("分","");
 				if (Date.parse(this.model.startDate) > Date.parse(this.model.endDate)) {
 					this.model.endDate = this.model.startDate;
 					uni.showToast({
 						title: "结束时间不能早于开始时间"
 					});
 				}
-				this.model.startDate = this.model.startDate.replace("-", "/").replace("-", "/");
+				
+				console.log(this.model.startDate);
 			},
 			selectDate2(e) {
 				this.model.endDate = e || "请选择结束日期";
+				this.model.endDate = this.model.endDate.replace("年", "/").replace("月", "/").replace("日","").replace("时",":").replace("分","");
 				if (Date.parse(this.model.startDate) > Date.parse(this.model.endDate)) {
 					uni.showToast({
 						title: "结束时间不能早于开始时间"
@@ -97,7 +103,7 @@
 				uni.post("/api/roomApp/v1/GetApplication", {}, msg => {
 					if (msg.success == true) {
 						this.model.ID = msg.data.ID;
-						uni.post("/api/roomApp/v1/CreateApplication", this.model, msg => {
+						uni.post("/api/roomApp/v1/CreateApplication",this.model,msg => {
 							this.isSubmitting = false;
 							if (msg.success) {
 								uni.showToast({
@@ -126,6 +132,7 @@
 				let THIS = this;
 				uni.post("/api/roomApp/v1/GetCreateApplication", {}, msg => {
 					if (msg.success) {
+						console.log(msg);
 						THIS.isStudent = msg.isStudent;
 						THIS.model.State = msg.data.State;
 						THIS.currentDate = msg.data.CreatedTime.
@@ -155,7 +162,8 @@
 					GuideTeacherId: '',
 					startDate: '请选择开始日期',
 					State: 0,
-					endDate: '请选择结束日期'
+					endDate: '请选择结束日期',
+					isDateTime: true
 				},
 				isSubmitting: false,
 				buildings: [],
