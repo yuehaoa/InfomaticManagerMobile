@@ -36,20 +36,8 @@
 					<input :value="labInfo.SOTelephone" disabled></input>
 				</view>
 				<view class="cu-form-group">
-					<view class="title">实验室ID</view>
-					<input :value="labInfo.ID" disabled></input>
-				</view>
-				<view class="cu-form-group">
 					<view class="title">实验室类型</view>
 					<input :value="roomType[labInfo.RoomType]" disabled></input>
-				</view>
-				<view class="cu-form-group">
-					<view class="title">排序号</view>
-					<input :value="labInfo.DisplayOrder" disabled></input>
-				</view>
-				<view class="cu-form-group">
-					<view class="title">创建日期</view>
-					<input :value="labInfo.CreatedOn" disabled></input>
 				</view>
 			</form>
 		</view>

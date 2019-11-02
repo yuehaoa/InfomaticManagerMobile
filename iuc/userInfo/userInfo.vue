@@ -14,7 +14,7 @@
 					<view class="cuIcon-right"></view>
 				</navigator>
 				<navigator class="menu_item" url="./modifyRealName">
-					<text style="flex:1;">昵称</text>
+					<text style="flex:1;">姓名</text>
 					<view class="detail-info">
 						<text>{{userInfo.RealName?userInfo.RealName:"未填写"}}</text>
 					</view>
@@ -48,17 +48,7 @@
 					</view>
 					<view class="cuIcon-right"></view>
 				</navigator>
-				<navigator class="menu_item" >
-					<text style="flex:1;">地址</text>
-					<view class="detail-info">
-						<text>{{userInfo.Loaction?userInfo.Location:"未填写"}}</text>
-					</view>
-					<view class="cuIcon-right"></view>
-				</navigator>
 			</view>
-		</view>
-		<view class="padding flex flex-direction">
-			<button class="cu-btn bg-red margin-tb-sm lg text-xl" @tap="logout()" >退出</button>
 		</view>
 	</view>
 </template>
