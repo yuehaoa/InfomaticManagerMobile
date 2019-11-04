@@ -29,7 +29,7 @@
 				</view>
 				<view class="cu-item" @click="submit('修改')">
 					<view class="cuIcon-writefill text-red"></view>
-					<text>修改申请</text>
+					<text>退回修改</text>
 				</view>
 			</view>
 			

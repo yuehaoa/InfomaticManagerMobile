@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "cu-custom": "/colorui/components/cu-custom",
+    "step-info": "/iuc/softwareInstall/v1/StepInfo"
+  }
+}

@@ -3,7 +3,7 @@
 	<view id="lab-apply-list">
 		<cu-custom bgColor="bg-gradual-blue" isBack="">
 			<block slot="backText">返回</block>
-			<block slot="content">查看所有申请表</block>
+			<block slot="content">我的待办</block>
 			<view class="action" slot="right" @click="addApplication()">添加</view>
 		</cu-custom>
 		<view class="cu-list menu-avatar margin-top">
@@ -12,20 +12,16 @@
 				@touchstart="ListTouchStart" @touchmove="ListTouchMove" @touchend="ListTouchEnd" :data-target="'move-box-' + index"
 				:class="modalName=='move-box-'+ index?'move-cur':''">
 					<view class="cu-avatar round lg" :style="{ backgroundImage: `url('${icon}')` }"></view>
-					<view class="content">
+					<view class="margin-left content">
 						<view class="text-black text-lg">
 							<view class="text-cut text-xl">{{item.RoomName}}申请表</view>
 							<view class="cu-tag round sm" :class="'bg-' + wColor[item.State]">{{ workflow[item.State] }}</view>
 						</view>
 						<view class="text-gray flex">
 							<view class="text-cut">
-								<text>申请人：{{item.Owner}}\n申请原因：{{item.ApplicationReason}}</text>
+								<text>申请人：{{item.Owner}}\n申请原因：{{item.ApplicationReason}}\n申请时段：{{item.StartDate.slice(5)}}-{{item.EndDate.slice(5)}}</text>
 							</view>
 						</view>
-					</view>
-					<view class="action">
-						<view class="cu-tag round sm bg-green light" style="margin: 6rpx 0;">{{item.StartDate.slice(5)}}</view>
-						<view class="cu-tag round sm bg-red light" style="margin: 6rpx 0;">{{item.EndDate.slice(5)}}</view>
 					</view>
 					<view class="move">
 						<view class="bg-green" v-if="item.IsMyStep" @click.stop="toExecute(item)">执行</view>
@@ -52,7 +48,7 @@
 			getData(p){
 				let page=p||this.page;
 				let pageSize=this.pageSize;
-				uni.post("/api/roomApp/v1/GetAllApplications",{
+				uni.post("/api/roomApp/v1/GetMyPending",{
 					page,
 					pageSize
 				},msg=>{
@@ -113,4 +109,13 @@
 </script>
 
 <style>
+	.cu-list.menu-avatar>.cu-item {
+		position: relative;
+		display: flex;
+		padding-right: 10upx;
+		height: 200upx;
+		background-color: #ffffff;
+		justify-content: flex-end;
+		align-items: center
+	}
 </style>

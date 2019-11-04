@@ -1,7 +1,7 @@
 <!--宋润涵于2019-10-16编辑 用于创建新申请-->
 <template>
 	<view id="lab-apply-creat">
-		<cu-custom bgColor="bg-gradual-blue" :isBack="'/iuc/roomApplication/v1/list'">
+		<cu-custom bgColor="bg-gradual-blue" isBack="">
 			<block slot="backText">返回</block>
 			<block slot="content">创建申请表</block>
 		</cu-custom>
@@ -13,11 +13,11 @@
 				</view>
 			</view>
 			<view class="cu-form-group margin-top">
-				<view class="title">申请原因</view>
+				<view class="title">申请原因<text class="text-red">*</text></view>
 				<input name="input" v-model="model.ApplicationReason" maxlength="200"></input>
 			</view>
 			<view class="cu-form-group">
-				<view class="title">选择申请实验室</view>
+				<view class="title">选择申请实验室<text class="text-red">*</text></view>
 				<picker mode="multiSelector" :range="[buildings, rooms]" range-key="Name" @columnchange="columnChange" @change="selectRoom"
 				 v-model="roomIndex">
 					<view class="content">
@@ -26,20 +26,15 @@
 				</picker>
 			</view>
 			<view class="cu-form-group">
-				<view class="title">选择起止日期</view>
-				<picker mode="date" :start="model.startDate" end="2099-12-31" v-model="model.startDate" @change="selectDate1">
-					<view class="content">
-						{{model.startDate}}
-					</view>
-				</picker>
-				<picker mode="date" :start="model.startDate" end="2099-12-31" v-model="model.endDate" @change="selectDate2">
-					<view class="content">
-						{{model.endDate}}
-					</view>
-				</picker>
+				<view class="title">开始日期<text class="text-red">*</text></view>
+				<Time placeholder="请选择开始日期" @change="selectDate1"></Time>
 			</view>
 			<view class="cu-form-group">
-				<view class="title">选择指导老师</view>
+				<view class="title">结束日期<text class="text-red">*</text></view>
+				<Time placeholder="请选择结束日期" @change="selectDate2"></Time>
+			</view>
+			<view class="cu-form-group" v-if="isStudent">
+				<view class="title">选择指导老师<text class="text-red">*</text></view>
 				<picker :range="teachers" range-key="RealName" @change="selectTeacher">
 					<view class="content">
 						{{currentTeacher}}
@@ -60,6 +55,16 @@
 			this.ID = opt.id;
 			this.getInfo();
 		},
+		/*
+		watch:{
+			model:{
+				handler(val){
+					console.log(val);
+				},
+				immediate:true,
+				deep:true
+			}
+		},*/
 		methods: {
 			selectTeacher(e) {
 				let u = this.teachers[e.detail.value];
@@ -73,16 +78,20 @@
 				this.model.RoomId = v.ID;
 			},
 			selectDate1(e) {
-				this.model.startDate = e.detail.value || "请选择开始日期";
+				this.model.startDate = e || "请选择开始日期";
+				this.model.startDate = this.model.startDate.replace("年", "/").replace("月", "/").replace("日","").replace("时",":").replace("分","");
 				if (Date.parse(this.model.startDate) > Date.parse(this.model.endDate)) {
-					this.model.endDate=this.model.startDate;
+					this.model.endDate = this.model.startDate;
 					uni.showToast({
 						title: "结束时间不能早于开始时间"
 					});
 				}
+				
+				console.log(this.model.startDate);
 			},
 			selectDate2(e) {
-				this.model.endDate = e.detail.value || "请选择结束日期";
+				this.model.endDate = e || "请选择结束日期";
+				this.model.endDate = this.model.endDate.replace("年", "/").replace("月", "/").replace("日","").replace("时",":").replace("分","");
 				if (Date.parse(this.model.startDate) > Date.parse(this.model.endDate)) {
 					uni.showToast({
 						title: "结束时间不能早于开始时间"
@@ -94,20 +103,26 @@
 				uni.post("/api/roomApp/v1/GetApplication", {}, msg => {
 					if (msg.success == true) {
 						this.model.ID = msg.data.ID;
-						uni.post("/api/roomApp/v1/CreateApplication", this.model, msg => {
+						uni.post("/api/roomApp/v1/CreateApplication",this.model,msg => {
 							this.isSubmitting = false;
 							if (msg.success) {
 								uni.showToast({
 									title: '提交成功',
 									icon: 'success',
 									position: 'center'
-								})
+								});
 								setTimeout(function() {
 									uni.navigateBack({
-										
+
 									});
 									uni.hideToast();
 								}, 1500);
+							} else {
+								uni.showToast({
+									title: msg.msg,
+									icon: 'none',
+									position: 'bottom'
+								})
 							}
 						})
 					}
@@ -117,10 +132,11 @@
 				let THIS = this;
 				uni.post("/api/roomApp/v1/GetCreateApplication", {}, msg => {
 					if (msg.success) {
+						console.log(msg);
+						THIS.isStudent = msg.isStudent;
 						THIS.model.State = msg.data.State;
-						console.log(msg.data.CreatedTime);
-						THIS.model.startDate = msg.data.CreatedTime.
-							replace("年","-").replace("月","-").replace("日","");
+						THIS.currentDate = msg.data.CreatedTime.
+						replace("年", "/").replace("月", "/").replace("日", "");
 						THIS.buildings = msg.buildings;
 						THIS.allRooms = msg.rooms;
 						THIS.teachers = msg.teachers;
@@ -146,7 +162,8 @@
 					GuideTeacherId: '',
 					startDate: '请选择开始日期',
 					State: 0,
-					endDate: '请选择结束日期'
+					endDate: '请选择结束日期',
+					isDateTime: true
 				},
 				isSubmitting: false,
 				buildings: [],
@@ -154,8 +171,10 @@
 				guidEmpty: '00000000-0000-0000-0000-000000000000',
 				rooms: [],
 				teachers: [],
+				currentDate: '',
 				currentTeacher: "请选择指导教师",
 				currentRoom: "请选择房间号",
+				isStudent: true,
 				ID: '',
 				roomIndex: [0, 0],
 				steps
