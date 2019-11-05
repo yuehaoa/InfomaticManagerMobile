@@ -8,11 +8,11 @@
 		<form>
 			<view class="cu-form-group margin-top">
 				<view class="title">申请人</view>
-				<input :value="model.Owner" disabled />
+				<input :value="model.owner" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">申请原因</view>
-				<input :value="model.ApplicationReason" disabled />
+				<input :value="model.applicationReason" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">起止时间</view>
@@ -20,7 +20,7 @@
 			</view>
 			<view class="cu-form-group">
 				<view class="title">申请房间号</view>
-				<input :value="model.RoomName" disabled />
+				<input :value="model.roomName" disabled />
 			</view>
 			<view class="action-list cu-list grid col-2 margin-top margin-bottom">
 				<view class="cu-item" @click="submit('通过')">
@@ -49,7 +49,6 @@
 		onLoad(opt){
 			this.id=opt.id;
 			this.getData(this.id);
-			//console.log(this.id);
 		},
 		methods: {
 			submit(opinion){
@@ -59,7 +58,6 @@
 							uni.post("/api/roomApp/v1/GuidTeacherChecking", {
 								ID:id,GuideTeacherOpinion:opinion}, msg => {
 									if(msg.success){
-										console.log(msg);
 										uni.showToast({
 												title:'通过成功'
 											});
@@ -102,12 +100,12 @@
 					{id:id},msg=>{
 						if(msg.success) {
 							this.model=msg.data;
-							this.TimeCombine();
+							this.timeCombine();
 						}
 					})
 				},
-				TimeCombine(){
-					this.time=this.model.StartDate+" — "+this.model.EndDate;
+				timeCombine(){
+					this.time=this.model.startDate+" — "+this.model.endDate;
 				}
 				
 			}

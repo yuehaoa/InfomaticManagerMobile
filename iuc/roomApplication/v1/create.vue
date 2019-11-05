@@ -7,14 +7,14 @@
 		</cu-custom>
 		<form>
 			<view class="cu-steps magin-top">
-				<view class="cu-item" :class="item.id < model.State ? 'text-blue':''" v-for="(item,index) in steps" :key="item.id">
+				<view class="cu-item" :class="item.id < model.state ? 'text-blue':''" v-for="(item,index) in steps" :key="item.id">
 					<text class="num" :data-index="index+1"></text>
 					{{item.name}}
 				</view>
 			</view>
 			<view class="cu-form-group margin-top">
 				<view class="title">申请原因<text class="text-red">*</text></view>
-				<input name="input" v-model="model.ApplicationReason" maxlength="200"></input>
+				<input name="input" v-model="model.applicationReason" maxlength="200"></input>
 			</view>
 			<view class="cu-form-group">
 				<view class="title">选择申请实验室<text class="text-red">*</text></view>
@@ -59,7 +59,6 @@
 		watch:{
 			model:{
 				handler(val){
-					console.log(val);
 				},
 				immediate:true,
 				deep:true
@@ -68,14 +67,14 @@
 		methods: {
 			selectTeacher(e) {
 				let u = this.teachers[e.detail.value];
-				this.currentTeacher = u.RealName || "请选择指导教师";
-				this.model.GuideTeacherId = u.ID || guidEmpty;
+				this.currentTeacher = u.realName || "请选择导教师";
+				this.model.guideTeacherId = u.ID || guidEmpty;
 			},
 			selectRoom(e) {
 				let index = e.detail.value[1];
 				let v = this.rooms[index];
 				this.currentRoom = v.ID === this.guidEmpty ? "选择实验室" : `${v.Building.Name} ${v.Name}`;
-				this.model.RoomId = v.ID;
+				this.model.roomId = v.ID;
 			},
 			selectDate1(e) {
 				this.model.startDate = e || "请选择开始日期";
@@ -86,8 +85,6 @@
 						title: "结束时间不能早于开始时间"
 					});
 				}
-				
-				console.log(this.model.startDate);
 			},
 			selectDate2(e) {
 				this.model.endDate = e || "请选择结束日期";
@@ -132,7 +129,6 @@
 				let THIS = this;
 				uni.post("/api/roomApp/v1/GetCreateApplication", {}, msg => {
 					if (msg.success) {
-						console.log(msg);
 						THIS.isStudent = msg.isStudent;
 						THIS.model.State = msg.data.State;
 						THIS.currentDate = msg.data.CreatedTime.
@@ -150,24 +146,24 @@
 
 				let buildingId = this.buildings[value].ID;
 				//逐个查找
-				this.rooms = this.allRooms.filter(e => e.BuildingId === buildingId);
+				this.rooms = this.allRooms.filter(e => e.buildingId === buildingId);
 			}
 		},
 		data() {
 			return {
 				model: {
 					ID: '',
-					ApplicationReason: '',
-					RoomId: '',
-					GuideTeacherId: '',
+					applicationReason: '',
+					roomId: '',
+					guideTeacherId: '',
 					startDate: '请选择开始日期',
-					State: 0,
+					state: 0,
 					endDate: '请选择结束日期',
 					isDateTime: true
 				},
 				isSubmitting: false,
 				buildings: [],
-				allrooms: [],
+				allRooms: [],
 				guidEmpty: '00000000-0000-0000-0000-000000000000',
 				rooms: [],
 				teachers: [],

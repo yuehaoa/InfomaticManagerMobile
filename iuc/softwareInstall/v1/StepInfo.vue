@@ -1,6 +1,6 @@
 <template>
 	<view class="cu-steps margin-top">
-		<view class="cu-item" :class="item.FinalState" v-for="(item, index) in steps" :key="item.id">
+		<view class="cu-item" :class="item.finalState" v-for="(item, index) in steps" :key="item.id">
 			<text class="num" :class="item.err" :data-index="index + 1"></text>
 			{{item.name}}
 		</view>
