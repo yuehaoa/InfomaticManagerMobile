@@ -85,7 +85,6 @@
 			};
 		},
 		onShow() {
-			console.log("success")
 		}
 	}
 </script>

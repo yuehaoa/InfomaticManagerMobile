@@ -86,7 +86,6 @@
 					id
 				}, msg => {
 					this.model = msg.data;
-					console.log("msg=", msg);
 				})
 			}
 		},
