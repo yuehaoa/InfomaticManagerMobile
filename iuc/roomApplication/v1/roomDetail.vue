@@ -5,11 +5,11 @@
 			<block slot="content">实验室详细信息</block>
 		</cu-custom>
 		<scroll-view scroll-x class="bg-white nav text-center">
-			<view class="cu-item" :class="index==TabCur?'text-blue cur':''" v-for="(item,index) in arrays" :key="index" @tap="tabSelect" :data-id="index">
+			<view class="cu-item" :class="index==tabCur?'text-blue cur':''" v-for="(item,index) in arrays" :key="index" @tap="tabSelect" :data-id="index">
 				{{item}}
 			</view>
 		</scroll-view>
-		<view class="margin-tb bg-white" v-if="TabCur==0">
+		<view class="margin-tb bg-white" v-if="tabCur==0">
 			<form>
 				<view class="cu-form-group margin-top">
 					<view class="title">实验室名称</view>
@@ -21,7 +21,7 @@
 				</view>
 				<view class="cu-form-group">
 					<view class="title">实验室联系人</view>
-					<input :value="labInfo.Administrator" disabled></input>
+					<input :value="labInfo.administrator" disabled></input>
 				</view>
 				<view class="cu-form-group">
 					<view class="title">实验室联系人电话</view>
@@ -41,13 +41,13 @@
 				</view>
 			</form>
 		</view>
-		<view class="margin-tb padding bg-white text-center" v-else-if="TabCur==1">
+		<view class="margin-tb padding bg-white text-center" v-else-if="tabCur==1">
 			<text>1暂无内容</text>
 		</view>
-		<view class="margin-tb padding bg-white text-center" v-else-if="TabCur==2">
+		<view class="margin-tb padding bg-white text-center" v-else-if="tabCur==2">
 			<text>2暂无内容</text>
 		</view>
-		<view class="margin-tb padding bg-white text-center" v-else-if="TabCur==3">
+		<view class="margin-tb padding bg-white text-center" v-else-if="tabCur==3">
 			<text>3暂无内容</text>
 		</view>
 		<view class="padding flex flex-direction" @click="create()">
@@ -71,7 +71,7 @@
 		},
 		methods:{
 			tabSelect(e) {
-				this.TabCur = e.currentTarget.dataset.id;
+				this.tabCur = e.currentTarget.dataset.id;
 				this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60
 			},
 			create() {
@@ -94,17 +94,17 @@
 					"时间安排表",
 					"申请记录"
 				],
-				TabCur: 0,
+				tabCur: 0,
 				scrollLeft: 0,
 				labInfo: {
 					ID: "",
 					Name: "",
 					BuildingId: "",
-					Administrator: "",
+					administrator: "",
 					AdminTelephone: "",
 					SecurityOfficer: "",
 					SOTelephone: "",
-					DisplayOrder: "",
+					displayOrder: "",
 					CreatedOn: "",
 					RoomType: ""
 				},

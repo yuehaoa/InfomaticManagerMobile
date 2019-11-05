@@ -48,7 +48,6 @@
 				let mobile = this.telenum;
 				uni.post("/uc/ModifyMobile",{currentUserGuid,mobile},msg=>{
 					if(msg.success) {
-						console.log(msg);
 						this.tip=msg.msg;
 						uni.showToast({
 								icon: 'none',

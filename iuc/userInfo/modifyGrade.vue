@@ -47,7 +47,6 @@
 				let grade = this.age;
 				uni.post("/uc/ModifyGrade",{currentUserGuid,grade},msg=>{
 					if(msg.success) {
-						console.log(msg);
 						this.tip=msg.msg;
 						uni.showToast({
 								icon: 'none',

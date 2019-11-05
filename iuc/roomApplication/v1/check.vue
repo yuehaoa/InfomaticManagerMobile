@@ -4,7 +4,7 @@
 			<block slot="backText">返回</block>
 			<block slot="content">指导老师审核</block>
 		</cu-custom>
-		<lab-Steps v-model="model"/>
+		<lab-Steps v-model="model" />
 		<form>
 			<view class="cu-form-group margin-top">
 				<view class="title">申请人</view>
@@ -32,7 +32,7 @@
 					<text>退回修改</text>
 				</view>
 			</view>
-			
+
 		</form>
 	</view>
 </template>
@@ -41,77 +41,80 @@
 	export default {
 		data() {
 			return {
-				id:"",
-				model:{},
-				time:""
+				id: "",
+				model: {},
+				time: ""
 			}
 		},
-		onLoad(opt){
-			this.id=opt.id;
+		onLoad(opt) {
+			this.id = opt.id;
 			this.getData(this.id);
 			//console.log(this.id);
 		},
 		methods: {
-			submit(opinion){
-				let id =this.id;
-						if(opinion=='通过')
-						{
-							uni.post("/api/roomApp/v1/GuidTeacherChecking", {
-								ID:id,GuideTeacherOpinion:opinion}, msg => {
-									if(msg.success){
-										console.log(msg);
-										uni.showToast({
-												title:'通过成功'
-											});
-											setTimeout(function() {
-												uni.navigateBack({
-													
-												});
-												uni.hideToast();
-											}, 1500);
-										}
-									});
-							}	
-						else if(opinion=='修改'){
-							let id =this.id;
-							uni.showModal({
-								title:"是否确认修改",
-								success: function (res) {
-									if (res.confirm) {
-										uni.post("/api/roomApp/v1/GuidTeacherChecking", {
-												ID:id,GuideTeacherOpinion:opinion}, msg => {
-													if(msg.success){
-														uni.showToast({
-														title: '修改成功'
-														})
-														setTimeout(function() {
-														uni.navigateBack({
-														
-														});
-														uni.hideToast();
-														}, 1500);
-													}
-												});
-								        }
-								}
+			submit(opinion) {
+				let id = this.id;
+				if (opinion == '通过') {
+					uni.post("/api/roomApp/v1/GuidTeacherChecking", {
+						ID: id,
+						GuideTeacherOpinion: opinion
+					}, msg => {
+						if (msg.success) {
+							console.log(msg);
+							uni.showToast({
+								title: '通过成功'
 							});
+							setTimeout(function() {
+								uni.navigateBack({
+
+								});
+								uni.hideToast();
+							}, 1500);
 						}
-				},
-				getData(id) {
-					uni.post("/api/roomApp/v1/GetApplication",
-					{id:id},msg=>{
-						if(msg.success) {
-							this.model=msg.data;
-							this.TimeCombine();
+					});
+				} else if (opinion == '修改') {
+					let id = this.id;
+					uni.showModal({
+						title: "是否确认修改",
+						success: function(res) {
+							if (res.confirm) {
+								uni.post("/api/roomApp/v1/GuidTeacherChecking", {
+									ID: id,
+									GuideTeacherOpinion: opinion
+								}, msg => {
+									if (msg.success) {
+										uni.showToast({
+											title: '修改成功'
+										})
+										setTimeout(function() {
+											uni.navigateBack({
+
+											});
+											uni.hideToast();
+										}, 1500);
+									}
+								});
+							}
 						}
-					})
-				},
-				TimeCombine(){
-					this.time=this.model.StartDate+" — "+this.model.EndDate;
+					});
 				}
-				
+			},
+			getData(id) {
+				uni.post("/api/roomApp/v1/GetApplication", {
+					id: id
+				}, msg => {
+					if (msg.success) {
+						this.model = msg.data;
+						this.TimeCombine();
+					}
+				})
+			},
+			TimeCombine() {
+				this.time = this.model.StartDate + " — " + this.model.EndDate;
 			}
+
 		}
+	}
 </script>
 
 <style>

@@ -73,7 +73,6 @@
 			getAssignData(ID) {
 				uni.post("/api/roomApp/v1/GetAssignApplication",{ID},msg=>{
 					if(msg.success) {
-						console.log(msg);
 						this.Assignmodel=msg.data;
 						this.SetManager(msg);
 					}
@@ -81,10 +80,8 @@
 				)
 			},
 			getData(ID) {
-				console.log(this.ID);
 				uni.post("/api/roomApp/v1/GetApplication",{ID},msg=>{
 					if(msg.success) {
-						console.log(msg);
 						this.model=msg.data;
 						this.TimeCombine();
 					}
@@ -176,7 +173,6 @@
 			SetManager(msg){
 				this.array=["未设置"];
 				this.managerArray=msg.users;
-				console.log(this.managerArray);
 				for(var i=1;i<=msg.users.length;i++){
 					this.array[i]=msg.users[i-1].RealName;
 				}
@@ -187,7 +183,6 @@
 					if(this.managerArray[i].RealName==this.array[value])
 					{
 						this.HandlerId=this.managerArray[i].ID;
-						console.log(this.HandlerId);
 						break;
 					}
 				}
