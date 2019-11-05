@@ -78,7 +78,8 @@
 			},
 			selectDate1(e) {
 				this.model.startDate = e || "请选择开始日期";
-				this.model.startDate = this.model.startDate.replace("年", "/").replace("月", "/").replace("日","").replace("时",":").replace("分","");
+				this.model.startDate = this.model.startDate.replace("年", "/").replace("月", "/").replace("日", "").replace("时", ":").replace(
+					"分", "");
 				if (Date.parse(this.model.startDate) > Date.parse(this.model.endDate)) {
 					this.model.endDate = this.model.startDate;
 					uni.showToast({
@@ -88,7 +89,8 @@
 			},
 			selectDate2(e) {
 				this.model.endDate = e || "请选择结束日期";
-				this.model.endDate = this.model.endDate.replace("年", "/").replace("月", "/").replace("日","").replace("时",":").replace("分","");
+				this.model.endDate = this.model.endDate.replace("年", "/").replace("月", "/").replace("日", "").replace("时", ":").replace(
+					"分", "");
 				if (Date.parse(this.model.startDate) > Date.parse(this.model.endDate)) {
 					uni.showToast({
 						title: "结束时间不能早于开始时间"
@@ -100,7 +102,7 @@
 				uni.post("/api/roomApp/v1/GetApplication", {}, msg => {
 					if (msg.success == true) {
 						this.model.ID = msg.data.ID;
-						uni.post("/api/roomApp/v1/CreateApplication",this.model,msg => {
+						uni.post("/api/roomApp/v1/CreateApplication", this.model, msg => {
 							this.isSubmitting = false;
 							if (msg.success) {
 								uni.showToast({

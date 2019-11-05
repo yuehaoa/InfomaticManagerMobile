@@ -31,7 +31,7 @@
 				handler (value) {
 					let tb = "text-blue", err = "err";
 					let steps = this.steps;
-					steps[0].FinalState = value.State > 0 ? tb : "";
+					steps[0].finalState = value.State > 0 ? tb : "";
 					steps[0].err = "";
 					
 					let isComplete = (v) => {
@@ -39,13 +39,13 @@
 						if (v === 30) return "text-red";
 						return "";
 					};
-					steps[1].FinalState = isComplete(value.ReviewState);
+					steps[1].finalState = isComplete(value.ReviewState);
 					steps[1].err = value.ReviewState === 30 ? err : "";
 					
-					steps[2].FinalState = isComplete(value.HandleState);
+					steps[2].finalState = isComplete(value.HandleState);
 					steps[2].err = value.HandleState === 30 ? err : "";
 					
-					steps[3].FinalState = isComplete(value.CheckState);
+					steps[3].finalState = isComplete(value.CheckState);
 					steps[3].err = value.CheckState === 30 ? err : "";
 				}
 			}

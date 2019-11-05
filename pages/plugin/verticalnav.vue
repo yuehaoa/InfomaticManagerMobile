@@ -14,7 +14,7 @@
 		</swiper>
 		<view class="VerticalBox">
 			<scroll-view class="VerticalNav nav" scroll-y scroll-with-animation :scroll-top="verticalNavTop" style="height:calc(100vh - 375upx)">
-				<view class="cu-item" :class="index==tabCur?'text-green cur':''" v-for="(item,index) in list" :key="index" @tap="TabSelect"
+				<view class="cu-item" :class="index==TabCur?'text-green cur':''" v-for="(item,index) in list" :key="index" @tap="TabSelect"
 				 :data-id="index">
 					Tab-{{item.name}}
 				</view>
@@ -115,7 +115,7 @@
 		data() {
 			return {
 				list: [],
-				tabCur: 0,
+				TabCur: 0,
 				mainCur: 0,
 				verticalNavTop: 0,
 				load: true
@@ -140,13 +140,13 @@
 		},
 		methods: {
 			TabSelect(e) {
-				this.tabCur = e.currentTarget.dataset.id;
+				this.TabCur = e.currentTarget.dataset.id;
 				this.mainCur = e.currentTarget.dataset.id;
 				this.verticalNavTop = (e.currentTarget.dataset.id - 1) * 50
 			},
 			VerticalMain(e) {
 				// #ifdef MP-ALIPAY
-				   return false  //支付宝小程序暂时不支持双向联动 
+				return false //支付宝小程序暂时不支持双向联动 
 				// #endif
 				let that = this;
 				let tabHeight = 0;
@@ -168,6 +168,8 @@
 					if (scrollTop > this.list[i].top && scrollTop < this.list[i].bottom) {
 						this.verticalNavTop = (this.list[i].id - 1) * 50
 						this.tabCur = this.list[i].id
+						this.TabCur = this.list[i].id
+						console.log(scrollTop)
 						return false
 					}
 				}

@@ -183,6 +183,7 @@
 					if(this.managerArray[i].realName==this.array[value])
 					{
 						this.handlerId=this.managerArray[i].ID;
+						this.HandlerId=this.managerArray[i].ID;
 						break;
 					}
 				}
