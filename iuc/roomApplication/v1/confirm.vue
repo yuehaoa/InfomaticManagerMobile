@@ -9,23 +9,23 @@
 		<form>
 			<view class="cu-form-group margin-top">
 				<view class="title">申请人</view>
-				<input :value="model.Owner" disabled />
+				<input :value="model.owner" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">申请事由</view>
-				<input :value="model.ApplicationReason" disabled />
+				<input :value="model.applicationReason" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">起止时间</view>
-				<input disabled="true" :value="model.CreatedTime+'-'+model.EndDate"></input>
+				<input disabled="true" :value="model.createdTime+'-'+model.endDate"></input>
 			</view>
 			<view class="cu-form-group">
 				<view class="title">申请房间号</view>
-				<input :value="model.RoomName" disabled />
+				<input :value="model.roomName" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">指导老师</view>
-				<input :value="model.GuideTeacher" disabled />
+				<input :value="model.guideTeacher" disabled />
 			</view>
 
 			<!--confirm操作-->
@@ -92,7 +92,7 @@
 		data() {
 			return {
 				id: guidEmpty,
-				isloading: false,
+				isLoading: false,
 				model: {}
 			};
 		}

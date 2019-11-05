@@ -57,7 +57,7 @@
 				<view class="title">下载地址</view>
 				<input :value="model.download || '未设置'" disabled />
 			</view>
-			<view class="margin-top" v-if="model.ReviewOpinion">
+			<view class="margin-top" v-if="model.reviewOpinion">
 				<view class="cu-form-group">
 					<view class="title">安装人</view>
 					<input :value="model.handlerName || '未设置'" disabled />
@@ -94,25 +94,25 @@
 		</view>
 		<view v-show="state === 'timeline'" class="margin-top">
 			<view class="cu-timeline" v-for="(item, index) in timeline" :key="index">
-				<view class="cu-time">{{item.Key}}</view>
-				<view class="cu-item" :class="'text-' + stepColor[v.State]" v-for="(v, k) in item.steps" :key="k">
+				<view class="cu-time">{{item.key}}</view>
+				<view class="cu-item" :class="'text-' + stepColor[v.state]" v-for="(v, k) in item.steps" :key="k">
 					<view class="content">
 						<view class="cu-capsule radius">
-							<view class="cu-tag" :class="'bg-' + stepColor[v.State]">{{ v.ExecutorName }}{{ stepInfo[v.State] }}</view>
-							<view class="cu-tag" :class="'line-' + stepColor[v.State]">{{v.Time}}</view>
+							<view class="cu-tag" :class="'bg-' + stepColor[v.state]">{{ v.executorName }}{{ stepInfo[v.state] }}</view>
+							<view class="cu-tag" :class="'line-' + stepColor[v.state]">{{v.time}}</view>
 						</view>
 						<view class="margin-top">
-							{{v.StepName}}
+							{{v.stepName}}
 						</view>
 						<view class="text-grey text-sm margin-top">
-							<template v-if="InStep([0, 1], v.State)">
-								{{ v.ExecutorName ? `${v.ExecutorName} 正在进行中` : "正在等待接手" }}
+							<template v-if="InStep([0, 1], v.state)">
+								{{ v.executorName ? `${v.executorName} 正在进行中` : "正在等待接手" }}
 							</template>
 							<template v-else-if="[2, 3]">
-								由{{ v.Operator }}于{{ v.CreatedOn }}完成
+								由{{ v.operator }}于{{ v.createdOn }}完成
 							</template>
 							<template v-else>
-								由{{ v.Operator }}于{{ v.CreatedOn }}取消
+								由{{ v.operator }}于{{ v.createdOn }}取消
 							</template>
 						</view>
 					</view>
@@ -154,18 +154,18 @@
 			},
 			exeStep () {
 				uni.navigateTo({
-					url: this.currentStep.ToAction
+					url: this.currentStep.toAction
 				})
 			},
-			InStep(steps, state) {
-				let s = state || this.model.State;
+			inStep(steps, state) {
+				let s = state || this.model.state;
 				return steps.indexOf(s) > -1;
 			}
 		},
 		data () {
 			return {
 				id: guidEmpty,
-				isloading: false,
+				isLoading: false,
 				isAdmin: app.checkPermission("ItemManager.ManageAllSoftwareInstallWorkflow"),
 				isMyStep: false,
 				model: {},

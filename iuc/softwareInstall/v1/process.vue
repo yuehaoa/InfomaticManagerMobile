@@ -8,7 +8,7 @@
 		<form>
 			<view class="cu-form-group margin-top">
 				<view class="title">申请人</view>
-				<input :value="model.Owner" disabled />
+				<input :value="model.owner" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">联系方式</view>
@@ -111,7 +111,7 @@
 		data () {
 			return {
 				id: guidEmpty,
-				isloading: false,
+				isLoading: false,
 				model: {}
 			};
 		}

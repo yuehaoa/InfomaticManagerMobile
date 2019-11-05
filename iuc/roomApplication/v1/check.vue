@@ -8,11 +8,11 @@
 		<form>
 			<view class="cu-form-group margin-top">
 				<view class="title">申请人</view>
-				<input :value="model.Owner" disabled />
+				<input :value="model.owner" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">申请原因</view>
-				<input :value="model.ApplicationReason" disabled />
+				<input :value="model.applicationReason" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">起止时间</view>
@@ -20,7 +20,7 @@
 			</view>
 			<view class="cu-form-group">
 				<view class="title">申请房间号</view>
-				<input :value="model.RoomName" disabled />
+				<input :value="model.roomName" disabled />
 			</view>
 			<view class="action-list cu-list grid col-2 margin-top margin-bottom">
 				<view class="cu-item" @click="submit('通过')">
@@ -49,9 +49,49 @@
 		onLoad(opt) {
 			this.id = opt.id;
 			this.getData(this.id);
-			//console.log(this.id);
 		},
 		methods: {
+			submit(opinion){
+				let id =this.id;
+						if(opinion=='通过')
+						{
+							uni.post("/api/roomApp/v1/GuidTeacherChecking", {
+								ID:id,GuideTeacherOpinion:opinion}, msg => {
+									if(msg.success){
+										uni.showToast({
+												title:'通过成功'
+											});
+											setTimeout(function() {
+												uni.navigateBack({
+													
+												});
+												uni.hideToast();
+											}, 1500);
+										}
+									});
+							}	
+						else if(opinion=='修改'){
+							let id =this.id;
+							uni.showModal({
+								title:"是否确认修改",
+								success: function (res) {
+									if (res.confirm) {
+										uni.post("/api/roomApp/v1/GuidTeacherChecking", {
+												ID:id,GuideTeacherOpinion:opinion}, msg => {
+													if(msg.success){
+														uni.showToast({
+														title: '修改成功'
+														})
+														setTimeout(function() {
+														uni.navigateBack({
+														
+														});
+														uni.hideToast();
+														}, 1500);
+													}
+												});
+								        }
+								}
 			submit(opinion) {
 				let id = this.id;
 				if (opinion == '通过') {
@@ -71,6 +111,18 @@
 								uni.hideToast();
 							}, 1500);
 						}
+				},
+				getData(id) {
+					uni.post("/api/roomApp/v1/GetApplication",
+					{id:id},msg=>{
+						if(msg.success) {
+							this.model=msg.data;
+							this.timeCombine();
+						}
+					})
+				},
+				timeCombine(){
+					this.time=this.model.startDate+" — "+this.model.endDate;
 					});
 				} else if (opinion == '修改') {
 					let id = this.id;

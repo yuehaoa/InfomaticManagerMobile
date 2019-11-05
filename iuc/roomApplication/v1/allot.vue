@@ -8,11 +8,11 @@
 		<form>
 			<view class="cu-form-group margin-top">
 				<view class="title">申请人</view>
-				<input :value="model.Owner" disabled />
+				<input :value="model.owner" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">申请原因</view>
-				<input :value="model.ApplicationReason" disabled />
+				<input :value="model.applicationReason" disabled />
 			</view>
 			<view class="cu-form-group margin-top">
 				<view class="title">起止时间</view>
@@ -20,11 +20,11 @@
 			</view>
 			<view class="cu-form-group">
 				<view class="title">申请房间号</view>
-				<input :value="model.RoomName" disabled />
+				<input :value="model.roomName" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">指导老师</view>
-				<input :value="model.GuideTeacher" disabled />
+				<input :value="model.guideTeacher" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">机房管理员</view>
@@ -62,7 +62,7 @@
 				array:[],
 				index:0,//picker的数组
 				ID:"",//申请表
-				HandlerId:"",//被分配的执行人ID
+				handlerId:"",//被分配的执行人ID
 				model:{},
 				assignModel:{},
 				time:"",
@@ -95,7 +95,7 @@
 			},
 			submit (opinion) {
 							if(opinion=='确认'){
-								if(this.HandlerId==""){
+								if(this.handlerId==""){
 									uni.showToast({
 										title:"管理员不能为空"
 									})
@@ -118,7 +118,7 @@
 							
 							else if(opinion=='修改'){
 								let id=this.ID;
-								let handID=this.HandlerId;
+								let handID=this.handlerId;
 								uni.showModal({
 									title:"是否确认修改",
 									success: function(res) {
@@ -143,7 +143,7 @@
 							}
 							else if(opinion=='无法'){
 								let id=this.ID;
-								let handID=this.HandlerId;
+								let handID=this.handlerId;
 								uni.showModal({
 									title:"是否确认取消",
 									success: function(res) {
@@ -167,21 +167,22 @@
 								
 							}
 					},
-			TimeCombine(){
-				this.time=this.model.StartDate+" — "+this.model.EndDate;
+			timeCombine(){
+				this.time=this.model.startDate+" — "+this.model.endDate;
 			},
-			SetManager(msg){
+			setManager(msg){
 				this.array=["未设置"];
 				this.managerArray=msg.users;
 				for(var i=1;i<=msg.users.length;i++){
-					this.array[i]=msg.users[i-1].RealName;
+					this.array[i]=msg.users[i-1].realName;
 				}
 			},
 			getManagerID(value){
 				for(var i=0;i<this.managerArray.length;i++)
 				{
-					if(this.managerArray[i].RealName==this.array[value])
+					if(this.managerArray[i].realName==this.array[value])
 					{
+						this.handlerId=this.managerArray[i].ID;
 						this.HandlerId=this.managerArray[i].ID;
 						break;
 					}

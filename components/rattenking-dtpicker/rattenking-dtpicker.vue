@@ -208,7 +208,6 @@
 						let timesIndex = GetDate.getNewArray(this.timesIndex);
 						timesIndex[e.detail.column] = e.detail.value;
 // 						let arr = GetDate.getCompare(GetDate.format(GetDate.getChooseArr(this.times,timesIndex)),this.start,this.end,this.times);
-
 						this.timesIndex = timesIndex;
 					}
 				}

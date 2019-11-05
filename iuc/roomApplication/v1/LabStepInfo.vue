@@ -19,7 +19,6 @@
 		},
 		data() {
 			let steps = JSON.parse(JSON.stringify(stp));
-
 			return {
 				steps,
 				bindSteps: []
@@ -29,10 +28,13 @@
 			value: {
 				deep: true,
 				immediate: true,
+				handler (value) {
+					let tb = "text-blue", err = "err";
 				handler(value) {
 
 					let tb = "text-blue",
 						err = "err";
+
 					let steps = this.steps;
 					//steps[0].FinalState = value.State > 0 ? tb : "";
 					//steps[0].err = "";
