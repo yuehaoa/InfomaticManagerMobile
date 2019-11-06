@@ -37,7 +37,7 @@
 				</view>
 				<view class="cu-form-group">
 					<view class="title">实验室类型</view>
-					<input :value="labInfo.RoomType" disabled></input>
+					<input :value="roomType[labInfo.RoomType]" disabled></input>
 				</view>
 			</form>
 		</view>
