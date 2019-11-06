@@ -21,7 +21,7 @@
 				</view>
 				<view class="cu-form-group">
 					<view class="title">实验室联系人</view>
-					<input :value="labInfo.administrator" disabled></input>
+					<input :value="labInfo.Administrator" disabled></input>
 				</view>
 				<view class="cu-form-group">
 					<view class="title">实验室联系人电话</view>
@@ -37,7 +37,7 @@
 				</view>
 				<view class="cu-form-group">
 					<view class="title">实验室类型</view>
-					<input :value="roomType[labInfo.RoomType]" disabled></input>
+					<input :value="labInfo.RoomType" disabled></input>
 				</view>
 			</form>
 		</view>

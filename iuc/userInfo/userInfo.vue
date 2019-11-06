@@ -16,14 +16,14 @@
 				<navigator class="menu_item" url="./modifyRealName">
 					<text style="flex:1;">姓名</text>
 					<view class="detail-info">
-						<text>{{userInfo.realName?userInfo.realName:"未填写"}}</text>
+						<text>{{userInfo.RealName?userInfo.RealName:"未填写"}}</text>
 					</view>
 					<view class="cuIcon-right"></view>
 				</navigator>
 				<navigator class="menu_item" url="./modifyMobile">
 					<text style="flex:1;">手机号码</text>
 					<view class="detail-info">
-						<text>{{userInfo.mobile?userInfo.mobile:"未填写"}}</text>
+						<text>{{userInfo.Mobile?userInfo.Mobile:"未填写"}}</text>
 					</view>
 					<view class="cuIcon-right"></view>
 				</navigator>
@@ -37,14 +37,14 @@
 				<navigator class="menu_item" url="./modifyGrade">
 					<text style="flex:1;">年龄</text>
 					<view class="detail-info">
-						<text>{{userInfo.grade?userInfo.grade:"未填写"}}</text>
+						<text>{{userInfo.Grade?userInfo.Grade:"未填写"}}</text>
 					</view>
 					<view class="cuIcon-right"></view>
 				</navigator>
 				<navigator class="menu_item">
 					<text style="flex:1;">性别</text>
 					<view class="detail-info">
-						<text>{{userInfo.gender?userInfo.grender:"未填写"}}</text>
+						<text>{{userInfo.Gender?userInfo.Gender:"未填写"}}</text>
 					</view>
 					<view class="cuIcon-right"></view>
 				</navigator>

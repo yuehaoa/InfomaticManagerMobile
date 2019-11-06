@@ -67,7 +67,7 @@
 		methods: {
 			selectTeacher(e) {
 				let u = this.teachers[e.detail.value];
-				this.currentTeacher = u.realName || "请选择导教师";
+				this.currentTeacher = u.RealName || "请选择导教师";
 				this.model.guideTeacherId = u.ID || guidEmpty;
 			},
 			selectRoom(e) {
@@ -148,7 +148,7 @@
 
 				let buildingId = this.buildings[value].ID;
 				//逐个查找
-				this.rooms = this.allRooms.filter(e => e.buildingId === buildingId);
+				this.rooms = this.allRooms.filter(e => e.BuildingId === buildingId);
 			}
 		},
 		data() {

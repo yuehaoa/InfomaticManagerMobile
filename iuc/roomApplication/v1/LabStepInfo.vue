@@ -28,8 +28,6 @@
 			value: {
 				deep: true,
 				immediate: true,
-				handler (value) {
-					let tb = "text-blue", err = "err";
 				handler(value) {
 
 					let tb = "text-blue",

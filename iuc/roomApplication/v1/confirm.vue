@@ -9,23 +9,23 @@
 		<form>
 			<view class="cu-form-group margin-top">
 				<view class="title">申请人</view>
-				<input :value="model.owner" disabled />
+				<input :value="model.Owner" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">申请事由</view>
-				<input :value="model.applicationReason" disabled />
+				<input :value="model.ApplicationReason" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">起止时间</view>
-				<input disabled="true" :value="model.createdTime+'-'+model.endDate"></input>
+				<input disabled="true" :value="model.CreatedTime+'-'+model.EndDate"></input>
 			</view>
 			<view class="cu-form-group">
 				<view class="title">申请房间号</view>
-				<input :value="model.roomName" disabled />
+				<input :value="model.RoomName" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">指导老师</view>
-				<input :value="model.guideTeacher" disabled />
+				<input :value="model.GuideTeacher" disabled />
 			</view>
 
 			<!--confirm操作-->

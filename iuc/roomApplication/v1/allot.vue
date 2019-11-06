@@ -8,11 +8,11 @@
 		<form>
 			<view class="cu-form-group margin-top">
 				<view class="title">申请人</view>
-				<input :value="model.owner" disabled />
+				<input :value="model.Owner" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">申请原因</view>
-				<input :value="model.applicationReason" disabled />
+				<input :value="model.ApplicationReason" disabled />
 			</view>
 			<view class="cu-form-group margin-top">
 				<view class="title">起止时间</view>
@@ -20,11 +20,11 @@
 			</view>
 			<view class="cu-form-group">
 				<view class="title">申请房间号</view>
-				<input :value="model.roomName" disabled />
+				<input :value="model.RoomName" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">指导老师</view>
-				<input :value="model.guideTeacher" disabled />
+				<input :value="model.GuideTeacher" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">机房管理员</view>
@@ -73,8 +73,8 @@
 			getAssignData(ID) {
 				uni.post("/api/roomApp/v1/GetAssignApplication",{ID},msg=>{
 					if(msg.success) {
-						this.Assignmodel=msg.data;
-						this.SetManager(msg);
+						this.assignmodel=msg.data;
+						this.setManager(msg);
 					}
 				}
 				)
@@ -83,7 +83,7 @@
 				uni.post("/api/roomApp/v1/GetApplication",{ID},msg=>{
 					if(msg.success) {
 						this.model=msg.data;
-						this.TimeCombine();
+						this.timeCombine();
 					}
 				}
 				)
@@ -102,7 +102,7 @@
 									return;
 								}
 								uni.post("/api/roomApp/v1/AssignForm", {
-									ID:this.ID,HandlerId:this.HandlerId,ReviewOpinion:opinion},msg=>{
+									ID:this.ID,HandlerId:this.handlerId,ReviewOpinion:opinion},msg=>{
 									if(msg.success) {
 										uni.showToast({
 										title: '分配成功'
@@ -168,22 +168,22 @@
 							}
 					},
 			timeCombine(){
-				this.time=this.model.startDate+" — "+this.model.endDate;
+				this.time=this.model.StartDate+" — "+this.model.EndDate;
 			},
 			setManager(msg){
 				this.array=["未设置"];
 				this.managerArray=msg.users;
 				for(var i=1;i<=msg.users.length;i++){
-					this.array[i]=msg.users[i-1].realName;
+					this.array[i]=msg.users[i-1].RealName;
 				}
 			},
 			getManagerID(value){
 				for(var i=0;i<this.managerArray.length;i++)
 				{
-					if(this.managerArray[i].realName==this.array[value])
+					if(this.managerArray[i].RealName==this.array[value])
 					{
 						this.handlerId=this.managerArray[i].ID;
-						this.HandlerId=this.managerArray[i].ID;
+						this.handlerId=this.managerArray[i].ID;
 						break;
 					}
 				}

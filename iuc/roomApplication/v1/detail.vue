@@ -20,23 +20,23 @@
 			<!--申请表-->
 			<view class="cu-form-group">
 				<view class="title">申请人</view>
-				<input :value="model.owner" disabled />
+				<input :value="model.Owner" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">申请事由</view>
-				<input :value="model.applicationReason" disabled />
+				<input :value="model.ApplicationReason" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">起止时间</view>
-				<input disabled="true" :value="model.createdTime+'-'+model.endDate"></input>
+				<input disabled="true" :value="model.CreatedTime+'-'+model.EndDate"></input>
 			</view>
 			<view class="cu-form-group">
 				<view class="title">申请房间号</view>
-				<input :value="model.roomName" disabled />
+				<input :value="model.RoomName" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">指导老师</view>
-				<input :value="model.guideTeacher" disabled />
+				<input :value="model.GuideTeacher" disabled />
 			</view>
 			<!--view class="cu-form-group">
 				<view class="title">审核时间</view>
@@ -64,10 +64,10 @@
 						<view class="margin-top">{{v.stepName}}</view>
 					</view>
 					<view class="text-grey text-sm margin-top">
-						<template v-if="InStep([0, 1], v.State)">
+						<template v-if="inStep([0, 1], v.State)">
 							{{ v.executorName ? `${v.ExecutorName} 正在进行中` : "正在等待接手" }}
 						</template>
-						<template v-else-if="InStep([2, 3], v.State)">
+						<template v-else-if="inStep([2, 3], v.State)">
 							由{{ v.operator }}于{{ v.createdOn }}完成
 						</template>
 						<template v-else>
