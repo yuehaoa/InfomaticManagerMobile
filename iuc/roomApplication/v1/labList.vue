@@ -16,7 +16,7 @@
 				<view class="content">
 					<view>
 						<view class="text-cut">{{item.Name}}</view>
-						<view class="cu-tag round bg-orange sm">{{item.administrator}}&nbsp;&nbsp;{{item.AdminTelephone}}</view>
+						<view class="cu-tag round bg-orange sm">{{item.Administrator}}&nbsp;&nbsp;{{item.AdminTelephone}}</view>
 					</view>
 					<view class="text-gray text-sm flex">
 						<view class="text-cut">

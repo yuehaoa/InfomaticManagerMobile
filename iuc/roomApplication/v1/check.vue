@@ -32,7 +32,6 @@
 					<text>退回修改</text>
 				</view>
 			</view>
-
 		</form>
 	</view>
 </template>
@@ -51,39 +50,48 @@
 			this.getData(this.id);
 		},
 		methods: {
-			submit(opinion){
-				let id =this.id;
-				if(opinion=='通过')
-				{
+			submit(opinion) {
+				let id = this.id;
+				if (opinion == '通过') {
 					uni.post("/api/roomApp/v1/GuidTeacherChecking", {
-					ID:id,GuideTeacherOpinion:opinion}, msg => {
-							if(msg.success){
-								uni.showToast({
-									title:'通过成功'
-									});
-								setTimeout(function() {
-									uni.navigateBack({});
-									uni.hideToast();}, 1500);
-										}})
-				}	
-				else if(opinion=='修改'){
-					let id =this.id;
+						ID: id,
+						GuideTeacherOpinion: opinion
+					}, msg => {
+						if (msg.success) {
+							uni.showToast({
+								title: '通过成功'
+							});
+							setTimeout(function() {
+								uni.navigateBack({});
+								uni.hideToast();
+							}, 1500);
+						}
+					})
+				} else if (opinion == '修改') {
+					let id = this.id;
 					uni.showModal({
-						title:"是否确认修改",
-						success: function (res) {
+						title: "是否确认修改",
+						success: function(res) {
 							if (res.confirm) {
 								uni.post("/api/roomApp/v1/GuidTeacherChecking", {
-									ID:id,GuideTeacherOpinion:opinion}, msg => {
-										if(msg.success){
-											uni.showToast({title: '修改成功'})
-											setTimeout(function() {
-												uni.navigateBack({
-												});
-												uni.hideToast();
-												}, 1500);}
-										});}
-						}})}
-				},
+									ID: id,
+									GuideTeacherOpinion: opinion
+								}, msg => {
+									if (msg.success) {
+										uni.showToast({
+											title: '修改成功'
+										})
+										setTimeout(function() {
+											uni.navigateBack({});
+											uni.hideToast();
+										}, 1500);
+									}
+								});
+							}
+						}
+					})
+				}
+			},
 			getData(id) {
 				uni.post("/api/roomApp/v1/GetApplication", {
 					id: id
@@ -98,8 +106,7 @@
 				this.time = this.model.StartDate + " — " + this.model.EndDate;
 			},
 		}
-			}
-
+	}
 </script>
 
 <style>

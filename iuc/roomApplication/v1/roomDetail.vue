@@ -88,7 +88,7 @@
 		},
 		data(){
 			return{
-				roomType: enums.RoomType,
+				roomType: enums.roomType,
 				arrays: [
 					"实验室详情",
 					"时间安排表",
