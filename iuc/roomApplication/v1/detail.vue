@@ -10,7 +10,7 @@
 			<view class="cu-item" @click="changeState()">
 				<view class="text-blue" :class="state === 'detail' ? 'cuIcon-timefill' : 'cuIcon-form'"></view>
 				<text>{{ state === 'detail' ? '流程跟踪' : "查看申请表" }}</text>
-			</view>
+			</view> 
 			<view class="cu-item" v-if="!currentStep.completed && (isAdmin || isMyStep)" @click="exeStep()">
 				<view class="cuIcon-qrcode text-blue"></view>
 				<text>执行步骤</text>
@@ -53,7 +53,7 @@
 		</view>
 		<view v-show="state === 'timeline'" class="margin-top">
 			<view class="cu-timeline" v-for="(item, index) in timeline" :key="index">
-				<view class="cu-time">{{item.Key}}</view>
+				<view class="cu-time">{{item.key}}</view>
 				<!--某流程具体执行情况-->
 				<view class="cu-item" :class="'text-'+stepColor[v.State]" v-for="(v,k) in item.steps" :key="k">
 					<view class="content">
@@ -61,17 +61,17 @@
 							<view class="cu-tag" :class="'bg-' + stepColor[v.State]">{{ v.ExecutorName }}{{ stepInfo[v.State]}}</view>
 							<view class="cu-tag" :class="'line-'+stepColor[v.State]">{{v.Time}}</view>
 						</view>
-						<view class="margin-top">{{v.StepName}}</view>
+						<view class="margin-top">{{v.stepName}}</view>
 					</view>
 					<view class="text-grey text-sm margin-top">
-						<template v-if="InStep([0, 1], v.State)">
-							{{ v.ExecutorName ? `${v.ExecutorName} 正在进行中` : "正在等待接手" }}
+						<template v-if="inStep([0, 1], v.State)">
+							{{ v.executorName ? `${v.ExecutorName} 正在进行中` : "正在等待接手" }}
 						</template>
-						<template v-else-if="InStep([2, 3], v.State)">
-							由{{ v.Operator }}于{{ v.CreatedOn }}完成
+						<template v-else-if="inStep([2, 3], v.State)">
+							由{{ v.operator }}于{{ v.createdOn }}完成
 						</template>
 						<template v-else>
-							由{{ v.Operator }}于{{ v.CreatedOn }}取消
+							由{{ v.operator }}于{{ v.createdOn }}取消
 						</template>
 					</view>
 				</view>
@@ -98,7 +98,9 @@
 					})
 					return;
 				};
-				uni.post("/api/roomApp/v1/GetApplication", {id}, msg => {
+				uni.post("/api/roomApp/v1/GetApplication", {
+					id
+				}, msg => {
 					this.model = msg.data;
 					this.timeline = msg.timeline;
 					this.currentStep = msg.currentStep;
@@ -113,7 +115,7 @@
 					url: this.currentStep.ToAction
 				})
 			},
-			InStep(steps, state) {
+			inStep(steps, state) {
 				let s = state || this.model.State;
 				return steps.indexOf(s) > -1;
 			}
@@ -141,11 +143,12 @@
 			width: 6em;
 		}
 	}
+
 	.cu-timeline>.cu-item::after {
 		content: "";
 		display: block;
 		position: absolute;
-		width: 4upx;//加粗使得左边直线能够被看见
+		width: 4upx; //加粗使得左边直线能够被看见
 		background-color: #ddd;
 		left: 60upx;
 		height: 100%;

@@ -8,11 +8,11 @@
 		<form>
 			<view class="cu-form-group margin-top">
 				<view class="title">申请人</view>
-				<input :value="model.Owner" disabled />
+				<input :value="model.owner" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">联系方式</view>
-				<input :value="model.Telephone" disabled />
+				<input :value="model.telephone" disabled />
 				<view class="cu-capsule radius">
 					<view class='cu-tag bg-blue '>
 						+86
@@ -24,36 +24,36 @@
 			</view>
 			<view class="cu-form-group">
 				<view class="title">所属部门</view>
-				<input :value="model.BelongDepart" disabled />
+				<input :value="model.belongDepart" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">申请时间</view>
-				<input disabled="true" :value="model.CreatedTime"></input>
+				<input disabled="true" :value="model.createdTime"></input>
 			</view>
 			
 			<view class="cu-form-group margin-top">
 				<view class="title">选择实验室</view>
-				<input :value="model.RoomName" disabled />
+				<input :value="model.roomName" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">待装软件</view>
-				<input :value="model.ApplicationName" disabled />
+				<input :value="model.applicationName" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">软件版本</view>
-				<input :value="model.Version || '未设置'" disabled />
+				<input :value="model.version || '未设置'" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">下载地址</view>
-				<input :value="model.Download || '未设置'" disabled />
+				<input :value="model.download || '未设置'" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">安装人</view>
-				<input :value="model.HandlerName || '未设置'" disabled />
+				<input :value="model.handlerName || '未设置'" disabled />
 			</view>
 			<view class="cu-form-group">
 				<view class="title">安装时间</view>
-				<input :value="model.HandleTime || '未设置'" disabled />
+				<input :value="model.handleTime || '未设置'" disabled />
 			</view>
 			<view class="action-list cu-list grid col-2 margin-top margin-bottom">
 				<view class="cu-item" @click="submit('')">
@@ -85,7 +85,6 @@
 				if (reason && !confirm(tip)) {
 					return;
 				}
-				
 				uni.post("/api/installApp/v1/Confirm", {
 					ID: this.model.ID,
 					CheckOpinion: reason || '已确认安装'
@@ -111,7 +110,7 @@
 		data () {
 			return {
 				id: guidEmpty,
-				isloading: false,
+				isLoading: false,
 				model: {}
 			};
 		}

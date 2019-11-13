@@ -86,14 +86,13 @@
 					id
 				}, msg => {
 					this.model = msg.data;
-					console.log("msg=", msg);
 				})
 			}
 		},
 		data() {
 			return {
 				id: guidEmpty,
-				isloading: false,
+				isLoading: false,
 				model: {}
 			};
 		}

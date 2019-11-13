@@ -3,7 +3,7 @@
 	<view id="lab-apply-list">
 		<cu-custom bgColor="bg-gradual-blue" isBack="">
 			<block slot="backText">返回</block>
-			<block slot="content">查看所有申请表</block>
+			<block slot="content">我的待办</block>
 			<view class="action" slot="right" @click="addApplication()">添加</view>
 		</cu-custom>
 		<view class="cu-list menu-avatar margin-top">
@@ -31,7 +31,6 @@
 			</template>
 		</view>
 	</view>
-	
 </template>
 
 <script>
@@ -48,13 +47,12 @@
 			getData(p){
 				let page=p||this.page;
 				let pageSize=this.pageSize;
-				uni.post("/api/roomApp/v1/GetAllApplications",{
+				uni.post("/api/roomApp/v1/GetMyPending",{
 					page,
 					pageSize
 				},msg=>{
 					if(msg.success){
 						this.data=msg.data;
-						this.data=this.data.filter(e => e.IsMyStep == true);
 					}
 				})
 			},

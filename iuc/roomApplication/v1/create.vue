@@ -7,14 +7,14 @@
 		</cu-custom>
 		<form>
 			<view class="cu-steps magin-top">
-				<view class="cu-item" :class="item.id < model.State ? 'text-blue':''" v-for="(item,index) in steps" :key="item.id">
+				<view class="cu-item" :class="item.id < model.state ? 'text-blue':''" v-for="(item,index) in steps" :key="item.id">
 					<text class="num" :data-index="index+1"></text>
 					{{item.name}}
 				</view>
 			</view>
 			<view class="cu-form-group margin-top">
 				<view class="title">申请原因<text class="text-red">*</text></view>
-				<input name="input" v-model="model.ApplicationReason" maxlength="200"></input>
+				<input name="input" v-model="model.applicationReason" maxlength="200"></input>
 			</view>
 			<view class="cu-form-group">
 				<view class="title">选择申请实验室<text class="text-red">*</text></view>
@@ -26,9 +26,12 @@
 				</picker>
 			</view>
 			<view class="cu-form-group">
-				<view class="title">起止日期<text class="text-red">*</text></view>
-				<Date placeholder="请选择开始日期" @getData="selectDate1" :minSelect="currentDate"></Date>
-				<Date placeholder="请选择结束日期" @getData="selectDate2" :minSelect="model.startDate"></Date>
+				<view class="title">开始日期<text class="text-red">*</text></view>
+				<Time placeholder="请选择开始日期" @change="selectDate1"></Time>
+			</view>
+			<view class="cu-form-group">
+				<view class="title">结束日期<text class="text-red">*</text></view>
+				<Time placeholder="请选择结束日期" @change="selectDate2"></Time>
 			</view>
 			<view class="cu-form-group" v-if="isStudent">
 				<view class="title">选择指导老师<text class="text-red">*</text></view>
@@ -56,7 +59,6 @@
 		watch:{
 			model:{
 				handler(val){
-					console.log(val);
 				},
 				immediate:true,
 				deep:true
@@ -65,27 +67,30 @@
 		methods: {
 			selectTeacher(e) {
 				let u = this.teachers[e.detail.value];
-				this.currentTeacher = u.RealName || "请选择指导教师";
-				this.model.GuideTeacherId = u.ID || guidEmpty;
+				this.currentTeacher = u.RealName || "请选择导教师";
+				this.model.guideTeacherId = u.ID || guidEmpty;
 			},
 			selectRoom(e) {
 				let index = e.detail.value[1];
 				let v = this.rooms[index];
 				this.currentRoom = v.ID === this.guidEmpty ? "选择实验室" : `${v.Building.Name} ${v.Name}`;
-				this.model.RoomId = v.ID;
+				this.model.roomId = v.ID;
 			},
 			selectDate1(e) {
 				this.model.startDate = e || "请选择开始日期";
+				this.model.startDate = this.model.startDate.replace("年", "/").replace("月", "/").replace("日", "").replace("时", ":").replace(
+					"分", "");
 				if (Date.parse(this.model.startDate) > Date.parse(this.model.endDate)) {
 					this.model.endDate = this.model.startDate;
 					uni.showToast({
 						title: "结束时间不能早于开始时间"
 					});
 				}
-				this.model.startDate = this.model.startDate.replace("-", "/").replace("-", "/");
 			},
 			selectDate2(e) {
 				this.model.endDate = e || "请选择结束日期";
+				this.model.endDate = this.model.endDate.replace("年", "/").replace("月", "/").replace("日", "").replace("时", ":").replace(
+					"分", "");
 				if (Date.parse(this.model.startDate) > Date.parse(this.model.endDate)) {
 					uni.showToast({
 						title: "结束时间不能早于开始时间"
@@ -150,16 +155,17 @@
 			return {
 				model: {
 					ID: '',
-					ApplicationReason: '',
-					RoomId: '',
-					GuideTeacherId: '',
+					applicationReason: '',
+					roomId: '',
+					guideTeacherId: '',
 					startDate: '请选择开始日期',
-					State: 0,
-					endDate: '请选择结束日期'
+					state: 0,
+					endDate: '请选择结束日期',
+					isDateTime: true
 				},
 				isSubmitting: false,
 				buildings: [],
-				allrooms: [],
+				allRooms: [],
 				guidEmpty: '00000000-0000-0000-0000-000000000000',
 				rooms: [],
 				teachers: [],
