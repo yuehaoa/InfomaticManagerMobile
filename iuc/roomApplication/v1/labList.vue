@@ -14,14 +14,14 @@
 		<view class="cu-card">
 			<view class="cu-item margin-tb-sm bg-white" v-for="(item,index) in labs" :key="index" @click="labDetail(item.ID)">
 				<view class="shadow bg-gradual-blue">
-					<view class="flex padding-lr solid-bottom justify-between align-center padding-sm">
-						<view class="cu-avatar round"></view>
-						<view class="text-xl text-black">{{item.Name}}</view>
+					<view class="flex padding-lr solid-bottom justify-between align-center padding-tb-xs">
+						<view class="cu-avatar round lg" :style="{ backgroundImage: `url('${icon}')` }"></view>
+						<view class="text-xl text-white">{{`${item.Building.SubCampus} ${item.Building.Name}`}}</view>
 					</view>
-					<view class="text-xxl text-black flex justify-center padding-sm">
+					<view class="text-sl text-white flex justify-center padding-sm">
 						{{item.Name}}
 					</view>
-					<view class="flex flex-wrap text-black text-sm margin-sm">
+					<view class="flex flex-wrap text-white text-df margin-sm">
 						<view class="basis-xl">管理员:{{item.Administrator}}</view>
 						<view class="basis-xl">管理员联系电话:{{item.AdminTelephone}}</view>
 						<view class="basis-xs text-xl padding-bottom-xs">
@@ -45,6 +45,7 @@
 				scrollLeft: 0,
 				buildings: [],
 				buildingDic: {},
+				icon: '../../../static/XMU.png',
 				labs: {}
 			};
 		},
