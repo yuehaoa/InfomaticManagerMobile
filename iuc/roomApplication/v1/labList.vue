@@ -11,16 +11,21 @@
 				<span>{{item.Name}}</span>
 			</view>
 		</scroll-view>
-		<view class="cu-list menu">
+		<view class="cu-card">
 			<view class="cu-item margin-tb-sm bg-white" v-for="(item,index) in labs" :key="index" @click="labDetail(item.ID)">
-				<view class="content">
-					<view>
-						<view class="text-cut">{{item.Name}}</view>
-						<view class="cu-tag round bg-orange sm">{{item.Administrator}}&nbsp;&nbsp;{{item.AdminTelephone}}</view>
+				<view class="shadow bg-gradual-blue">
+					<view class="flex padding-lr solid-bottom justify-between align-center padding-sm">
+						<view class="cu-avatar round"></view>
+						<view class="text-xl text-black">{{item.Name}}</view>
 					</view>
-					<view class="text-gray text-sm flex">
-						<view class="text-cut">
-							暂无设置
+					<view class="text-xxl text-black flex justify-center padding-sm">
+						{{item.Name}}
+					</view>
+					<view class="flex flex-wrap text-black text-sm margin-sm">
+						<view class="basis-xl">管理员:{{item.Administrator}}</view>
+						<view class="basis-xl">管理员联系电话:{{item.AdminTelephone}}</view>
+						<view class="basis-xs text-xl padding-bottom-xs">
+							<text class="cuIcon-roundright text-xxl" style="float: right;display: block;"></text>
 						</view>
 					</view>
 				</view>
