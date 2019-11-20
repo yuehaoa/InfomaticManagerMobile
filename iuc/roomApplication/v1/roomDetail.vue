@@ -1,10 +1,10 @@
 <template>
 	<view id="room-detail">
-		<cu-custom bgColor="bg-gradual-blue shadow" isBack="">
+		<cu-custom bgColor="bg-gradual-blue" isBack="">
 			<block slot="backText">返回</block>
 			<block slot="content">实验室详细信息</block>
 		</cu-custom>
-		<view class="bg-cyan shadow radius margin-sm">
+		<view class="shadow shadow-lg bg-cyan radius margin-sm">
 			<view class="flex padding-lr padding-tb-xs solid-bottom justify-between align-center">
 				<view class="cu-avatar bg-cyan lg round" :style="{ backgroundImage: `url('${icon}')` }"></view>
 				<view class="text-xl text-white">{{`${labInfo.Building.SubCampus} ${labInfo.Building.Name}`}}</view>
@@ -25,9 +25,10 @@
 		<view class="margin-tb bg-white text-center" v-if="tabCur==0">
 			<text>0暂无内容</text>
 		</view>
-		<view  class="margin-tb bg-white cu-list menu" v-else-if="tabCur==1">
+		<view class="margin-tb bg-white cu-list menu" v-else-if="tabCur==1">
 			<view class="cu-item" v-for="(item,index) in applicationData" :key="index">
-				{{item.ApplicationReason}}
+				<text>申请人：{{item.Owner}}\n申请原因：{{item.ApplicationReason}}\n申请时段：{{item.StartDate.slice(5)}}-{{item.EndDate.slice(5)}}</text>
+				<view class="cu-tag round sm" :class="'bg-' + wColor[item.State]">{{ workflow[item.State] }}</view>
 			</view>
 		</view>
 		<view class="padding flex flex-direction" @click="create()">
@@ -72,6 +73,8 @@
 		},
 		data(){
 			return{
+				workflow: enums.workflow,
+				wColor: enums.workflowColor,
 				roomType: enums.roomType,
 				arrays: [
 					"时间安排表",
@@ -104,6 +107,7 @@
 <style>
 	.cardPosition
 	{
+		z-index: 100;
 		position: sticky;
 		top: 90rpx;
 	}
