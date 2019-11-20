@@ -36,7 +36,6 @@
 			uni.getStorage({
 				key:'userInfo',
 				success:(res)=>{
-					console.log(res);
 				this.preNickName = res.data.RealName;
 				}
 			});
@@ -49,7 +48,6 @@
 				let userName = this.nickname;
 				uni.post("/uc/ModifyNickName",{currentUserGuid,userName},msg=>{
 					if(msg.success) {
-						console.log(msg);
 						this.tip=msg.msg;
 						uni.showToast({
 								icon: 'none',

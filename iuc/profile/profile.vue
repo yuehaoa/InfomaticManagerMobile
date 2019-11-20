@@ -2,17 +2,21 @@
 	<view class="content">
 		<view class="head">
 			<p>
-				<span><navigator class="cuIcon-home" url="../index/index" open-type="reLaunch"></navigator></span>
-				<span><navigator class="cuIcon-settings" url="../userInfo/userInfo"></navigator></span>
+				<span>
+					<navigator class="cuIcon-home" url="../index/index" open-type="reLaunch"></navigator>
+				</span>
+				<span>
+					<navigator class="cuIcon-settings" url="../userInfo/userInfo"></navigator>
+				</span>
 			</p>
-		</view>	
+		</view>
 		<view class="info">
-			<image v-bind:src="avatar" v-on:click="NavToInfor()"/>
+			<image v-bind:src="avatar" v-on:click="NavToInfor()" />
 			<p class="info_name">
 				<span style="font-size: 40upx;">{{realName}}</span>
 			</p>
 		</view>
-			
+
 		<view class="iconCon">
 			<navigator url="../roomApplication/v1/labList">
 				<text class="cuIcon-list icon_comment icon-list"></text>
@@ -22,7 +26,7 @@
 				<i class="cuIcon-edit icon-edit icon_comment"></i>
 				<p>我的待办</p>
 			</navigator>
-			<navigator  url="../roomApplication/v1/alllist">
+			<navigator url="../roomApplication/v1/alllist">
 				<i class="cuIcon-write icon-write icon_comment"></i>
 				<p>所有申请</p>
 			</navigator>
@@ -31,7 +35,7 @@
 				<p>我的机位</p>
 			</navigator>
 		</view>
-		
+
 		<view class="ui-table">
 			<navigator class="ui-table-cell" url="../roomApplication/v1/labList">
 				<span>实验室列表</span>
@@ -50,11 +54,12 @@
 	export default {
 		data() {
 			return {
-				realName:"",
-				avatar:"",
-				currentUserGuid:"",
-				
-		}},
+				realName: "",
+				avatar: "",
+				currentUserGuid: "",
+
+			}
+		},
 		onLoad() {
 			this.avatar = app.userInfo.avatar;
 			this.currentUserGuid = app.userInfo.token;
@@ -63,19 +68,20 @@
 			this.GetInfo();
 		},
 		methods: {
-			GetInfo () {
+			GetInfo() {
 				let currentUserGuid = this.currentUserGuid;
-				uni.post("/uc/GetUserInfo",{currentUserGuid},msg=>{
-					if(msg.success) {
+				uni.post("/uc/GetUserInfo", {
+					currentUserGuid
+				}, msg => {
+					if (msg.success) {
 						this.userInfo = msg.data;
 						this.realName = msg.data.RealName;
 					}
-				}
-				)
+				})
 			},
-			NavToInfor(){
+			navToInfor() {
 				uni.navigateTo({
-					url:'../userInfo/userInfo',
+					url: '../userInfo/userInfo',
 				})
 			},
 		},
@@ -84,58 +90,65 @@
 
 <style lang="less">
 	@import'../../colorui/icon.css';
-	*{
+
+	* {
 		margin: 0;
 		padding: 0;
 		font-family: 微软雅黑;
-		font-size:30rpx;
+		font-size: 30rpx;
 	}
-	.head{
+
+	.head {
 		/* 头部包含背景图 */
 		color: #FFF;
-		background-color: rgba(255,218,25,0.6);
+		background-color: rgba(255, 218, 25, 0.6);
 		width: 100%;
 		overflow: hidden;
 		height: 160px;
 	}
-	.head > p{
+
+	.head>p {
 		/* 放我的和设置图标 */
 		height: 50px;
 		line-height: 50px;
 	}
-	.head > p > span:nth-of-type(1){
+
+	.head>p>span:nth-of-type(1) {
 		display: inline-block;
 		float: left;
 		padding-left: 10px;
 		font-size: 36rpx;
 		font-weight: bold;
 	}
-	.head > p > span:nth-of-type(2){
+
+	.head>p>span:nth-of-type(2) {
 		display: inline-block;
 		float: right;
-		padding:0rpx 0rpx 0 0;
+		padding: 0rpx 0rpx 0 0;
 		font-size: 36rpx;
 	}
-	.head > p > span> navigator{
+
+	.head>p>span>navigator {
 		text-align: center;
 		font-size: 44rpx;
 		width: 90rpx;
 		margin-right: 20rpx;
 	}
-	
-	
-	.info{
+
+
+	.info {
 		/* 存放个人信息的 */
-		width: calc( 100% - 32px );
+		width: calc(100% - 32px);
 		background-color: #FFFFFF;
 		margin-left: 18px;
 		margin-top: -48px;
-		float: left; 
-		height:180rpx;
+		float: left;
+		height: 180rpx;
 		border-radius: 8px;
-		box-shadow: 0 0 6px rgba(255,218,25,0.6);
+		box-shadow: 0 0 6px rgba(255, 218, 25, 0.6);
 	}
-	.info > image{
+
+	.info>image {
 		width: 140rpx;
 		height: 140rpx;
 		border-radius: 66px;
@@ -144,52 +157,57 @@
 		margin-top: -70rpx;
 		border: 1px solid #ffda19;
 	}
-	.info_name{
-		margin:5rpx 0;
+
+	.info_name {
+		margin: 5rpx 0;
 		text-align: center;
 		font-size: 44rpx;
 		color: #444444;
 		height: 30px;
 		line-height: 30px;
 	}
-	
-	.iconCon{
+
+	.iconCon {
 		/* 放功能的图标 */
 		width: 100%;
 		float: left;
 		overflow: hidden;
 		margin-top: 32rpx;
 		margin-bottom: 20rpx;
-		margin-left:2px;
+		margin-left: 2px;
 		padding: 0rpx 15rpx;
 	}
-	.iconCon > navigator{
+
+	.iconCon>navigator {
 		float: left;
-		width: calc( 100% / 4 );
+		width: calc(100% / 4);
 		text-align: center;
 		padding: 0rpx 0rpx;
 	}
-	
-	.ui-table{
+
+	.ui-table {
 		float: left;
 		width: calc(100%);
 		background-color: #FFFFFF;
 		border-top: 8px solid #EFEFF4;
 	}
-	.ui-table > navigator{
+
+	.ui-table>navigator {
 		height: 50px;
 		line-height: 50px;
 		border-bottom: 1px solid #EFEFF4;
 		padding: 0 32px;
 	}
-	.ui-table > navigator > span{
+
+	.ui-table>navigator>span {
 		float: left;
 	}
-	.ui-table > navigator > i{
+
+	.ui-table>navigator>i {
 		float: right;
 	}
-	
-	.icon_comment{
+
+	.icon_comment {
 		border-radius: 100px;
 		font-size: 44rpx;
 		width: 70rpx;
@@ -197,19 +215,22 @@
 		display: inline-block;
 		line-height: 70rpx;
 		color: #FFFFFF;
-		margin-bottom:12rpx;
+		margin-bottom: 12rpx;
 	}
-	
-	.icon-write{
+
+	.icon-write {
 		background-color: #fbdc58;
 	}
-	.icon-list{
+
+	.icon-list {
 		background-color: #94ede2;
 	}
-	.icon-search{
+
+	.icon-search {
 		background-color: #bceccd;
 	}
-	.icon-edit{
+
+	.icon-edit {
 		background-color: #ffbadc;
 	}
 </style>

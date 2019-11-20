@@ -4,7 +4,7 @@
 			<block slot="backText">返回</block>
 			<block slot="content">分管领导分配</block>
 		</cu-custom>
-		<lab-Steps v-model="model"/>
+		<lab-Steps v-model="model" />
 		<form>
 			<view class="cu-form-group margin-top">
 				<view class="title">申请人</view>
@@ -51,148 +51,151 @@
 </template>
 <script>
 	export default {
-		onLoad:function(opt) {
-			this.ID=opt.id;
+		onLoad: function(opt) {
+			this.ID = opt.id;
 			this.getAssignData(this.ID);
 			this.getData(this.ID);
 		},
-		data () {
+		data() {
 			return {
-				managerIDs:[],
-				array:[],
-				index:0,//picker的数组
-				ID:"",//申请表
-				HandlerId:"",//被分配的执行人ID
-				model:{},
-				assignModel:{},
-				time:"",
-				
+				managerIDs: [],
+				array: [],
+				index: 0, //picker的数组
+				ID: "", //申请表
+				handlerId: "", //被分配的执行人ID
+				model: {},
+				assignModel: {},
+				time: "",
+
 			}
 		},
-		methods:{
+		methods: {
 			getAssignData(ID) {
-				uni.post("/api/roomApp/v1/GetAssignApplication",{ID},msg=>{
-					if(msg.success) {
-						console.log(msg);
-						this.Assignmodel=msg.data;
-						this.SetManager(msg);
+				uni.post("/api/roomApp/v1/GetAssignApplication", {
+					ID
+				}, msg => {
+					if (msg.success) {
+						this.assignmodel = msg.data;
+						this.setManager(msg);
 					}
-				}
-				)
+				})
 			},
 			getData(ID) {
-				console.log(this.ID);
-				uni.post("/api/roomApp/v1/GetApplication",{ID},msg=>{
-					if(msg.success) {
-						console.log(msg);
-						this.model=msg.data;
-						this.TimeCombine();
+				uni.post("/api/roomApp/v1/GetApplication", {
+					ID
+				}, msg => {
+					if (msg.success) {
+						this.model = msg.data;
+						this.timeCombine();
 					}
-				}
-				)
-				
+				})
+
 			},
-			managerChange (e) {
-				this.index=e.target.value;
+			managerChange(e) {
+				this.index = e.target.value;
 				this.getManagerID(e.target.value);
 			},
-			submit (opinion) {
-							if(opinion=='确认'){
-								if(this.HandlerId==""){
-									uni.showToast({
-										title:"管理员不能为空"
-									})
-									return;
-								}
+			submit(opinion) {
+				if (opinion == '确认') {
+					if (this.handlerId == "") {
+						uni.showToast({
+							title: "管理员不能为空"
+						})
+						return;
+					}
+					uni.post("/api/roomApp/v1/AssignForm", {
+						ID: this.ID,
+						HandlerId: this.handlerId,
+						ReviewOpinion: opinion
+					}, msg => {
+						if (msg.success) {
+							uni.showToast({
+								title: '分配成功'
+							})
+							setTimeout(function() {
+								uni.navigateBack({
+
+								});
+								uni.hideToast();
+							}, 1500);
+						}
+					})
+				} else if (opinion == '修改') {
+					let id = this.ID;
+					let handID = this.handlerId;
+					uni.showModal({
+						title: "是否确认修改",
+						success: function(res) {
+							if (res.confirm) {
 								uni.post("/api/roomApp/v1/AssignForm", {
-									ID:this.ID,HandlerId:this.HandlerId,ReviewOpinion:opinion},msg=>{
-									if(msg.success) {
+									ID: id,
+									HandlerId: handID,
+									ReviewOpinion: opinion
+								}, msg => {
+									if (msg.success) {
 										uni.showToast({
-										title: '分配成功'
+											title: '修改成功'
 										})
 										setTimeout(function() {
-										uni.navigateBack({
-										
-										});
-										uni.hideToast();
+											uni.navigateBack({
+
+											});
+											uni.hideToast();
 										}, 1500);
 									}
-							})}
-							
-							else if(opinion=='修改'){
-								let id=this.ID;
-								let handID=this.HandlerId;
-								uni.showModal({
-									title:"是否确认修改",
-									success: function(res) {
-										if(res.confirm){
-											uni.post("/api/roomApp/v1/AssignForm", {
-												ID:id,HandlerId:handID,ReviewOpinion:opinion},msg=>{
-												if(msg.success) {
-													uni.showToast({
-													title: '修改成功'
-													})
-													setTimeout(function() {
-													uni.navigateBack({
-													
-													});
-													uni.hideToast();
-													}, 1500);
-												}
-										})}
+								})
+							}
+						}
+					})
+				} else if (opinion == '无法') {
+					let id = this.ID;
+					let handID = this.handlerId;
+					uni.showModal({
+						title: "是否确认取消",
+						success: function(res) {
+							if (res.confirm) {
+								uni.post("/api/roomApp/v1/AssignForm", {
+									ID: id,
+									HandlerId: handID,
+									ReviewOpinion: opinion
+								}, msg => {
+									if (msg.success) {
+										uni.showToast({
+											title: '取消成功'
+										})
+										setTimeout(function() {
+											uni.navigateBack({
+
+											});
+											uni.hideToast();
+										}, 1500);
 									}
 								})
-								
 							}
-							else if(opinion=='无法'){
-								let id=this.ID;
-								let handID=this.HandlerId;
-								uni.showModal({
-									title:"是否确认取消",
-									success: function(res) {
-										if(res.confirm){
-											uni.post("/api/roomApp/v1/AssignForm", {
-												ID:id,HandlerId:handID,ReviewOpinion:opinion},msg=>{
-												if(msg.success) {
-													uni.showToast({
-													title: '取消成功'
-													})
-													setTimeout(function() {
-													uni.navigateBack({
-													
-													});
-													uni.hideToast();
-													}, 1500);
-												}
-										})}
-									}
-								})
-								
-							}
-					},
-			TimeCombine(){
-				this.time=this.model.StartDate+" — "+this.model.EndDate;
-			},
-			SetManager(msg){
-				this.array=["未设置"];
-				this.managerArray=msg.users;
-				console.log(this.managerArray);
-				for(var i=1;i<=msg.users.length;i++){
-					this.array[i]=msg.users[i-1].RealName;
+						}
+					})
+
 				}
 			},
-			getManagerID(value){
-				for(var i=0;i<this.managerArray.length;i++)
-				{
-					if(this.managerArray[i].RealName==this.array[value])
-					{
-						this.HandlerId=this.managerArray[i].ID;
-						console.log(this.HandlerId);
+			timeCombine() {
+				this.time = this.model.StartDate + " — " + this.model.EndDate;
+			},
+			setManager(msg) {
+				this.array = ["未设置"];
+				this.managerArray = msg.users;
+				for (var i = 1; i <= msg.users.length; i++) {
+					this.array[i] = msg.users[i - 1].RealName;
+				}
+			},
+			getManagerID(value) {
+				for (var i = 0; i < this.managerArray.length; i++) {
+					if (this.managerArray[i].RealName == this.array[value]) {
+						this.handlerId = this.managerArray[i].ID;
+						this.handlerId = this.managerArray[i].ID;
 						break;
 					}
 				}
 			}
-			
 		}
 	}
 </script>

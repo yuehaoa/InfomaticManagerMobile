@@ -9,7 +9,7 @@
 		<view class="cu-list menu-avatar margin-top">
 			<template v-if="data.length > 0">
 				<view class="cu-item" v-for="(item,index) in data" :key="index" @click="toExecute(item)"
-				@touchstart="ListTouchStart" @touchmove="ListTouchMove" @touchend="ListTouchEnd" :data-target="'move-box-' + index"
+				@touchstart="ListTouchStart" @touchmove="listTouchMove" @touchend="listTouchEnd" :data-target="'move-box-' + index"
 				:class="modalName=='move-box-'+ index?'move-cur':''">
 					<view class="cu-avatar round lg" :style="{ backgroundImage: `url('${icon}')` }"></view>
 					<view class="margin-left content">
@@ -31,7 +31,6 @@
 			</template>
 		</view>
 	</view>
-	
 </template>
 
 <script>
@@ -78,12 +77,12 @@
 			},
 			
 			// ListTouch计算方向
-			ListTouchMove(e) {
+			listTouchMove(e) {
 				this.listTouchDirection = e.touches[0].pageX - this.listTouchStart > 0 ? 'right' : 'left'
 			},
 			
 			// ListTouch计算滚动
-			ListTouchEnd(e) {
+			listTouchEnd(e) {
 				if (this.listTouchDirection == 'left') {
 					this.modalName = e.currentTarget.dataset.target
 				} else {

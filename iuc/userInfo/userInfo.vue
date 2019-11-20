@@ -44,7 +44,7 @@
 				<navigator class="menu_item">
 					<text style="flex:1;">性别</text>
 					<view class="detail-info">
-						<text>{{userInfo.Gender?userInfo.Grender:"未填写"}}</text>
+						<text>{{userInfo.Gender?userInfo.Gender:"未填写"}}</text>
 					</view>
 					<view class="cuIcon-right"></view>
 				</navigator>

@@ -13,11 +13,11 @@
 			</view>
 			<view class="cu-form-group margin-top">
 				<view class="title">申请人</view>
-				<input disabled="true" name="input" :value="model.Owner"></input>
+				<input disabled="true" name="input" :value="model.owner"></input>
 			</view>
 			<view class="cu-form-group">
 				<view class="title">联系方式</view>
-				<input disabled="true" name="input" :value="model.Telephone"></input>
+				<input disabled="true" name="input" :value="model.telephone"></input>
 				<view class="cu-capsule radius">
 					<view class='cu-tag bg-blue '>
 						+86
@@ -29,11 +29,11 @@
 			</view>
 			<view class="cu-form-group">
 				<view class="title">所属部门</view>
-				<input disabled="true" :value="model.BelongDepart"></input>
+				<input disabled="true" :value="model.belongDepart"></input>
 			</view>
 			<view class="cu-form-group">
 				<view class="title">申请时间</view>
-				<input disabled="true" :value="model.CreatedTime"></input>
+				<input disabled="true" :value="model.createdTime"></input>
 			</view>
 			
 			<view class="cu-form-group margin-top">
@@ -47,18 +47,18 @@
 			</view>
 			<view class="cu-form-group">
 				<view class="title">待装软件<span class="must">*</span></view>
-				<input placeholder="(必填)请填写软件的名称" v-model="model.ApplicationName"></input>
+				<input placeholder="(必填)请填写软件的名称" v-model="model.applicationName"></input>
 			</view>
 			<view class="cu-form-group">
 				<view class="title">软件版本</view>
-				<input placeholder="(可选)请填写需要安装的软件版本" v-model="model.Version"></input>
+				<input placeholder="(可选)请填写需要安装的软件版本" v-model="model.version"></input>
 			</view>
 			<view class="cu-form-group">
 				<view class="title">下载地址</view>
-				<input placeholder="(可选)请填写软件的下载地址" v-model="model.Download"></input>
+				<input placeholder="(可选)请填写软件的下载地址" v-model="model.download"></input>
 			</view>
 			<view class="padding flex flex-direction">
-				<button class="cu-btn bg-green lg" :disabled="isloading" @click="submit()">提交</button>
+				<button class="cu-btn bg-green lg" :disabled="isLoading" @click="submit()">提交</button>
 			</view>
 		</form>
 	</view>
@@ -71,15 +71,15 @@
 	export default {
 		methods: {
 			submit () {
-				if (this.model.RoomId === guidEmpty) {
+				if (this.model.roomId === guidEmpty) {
 					alert("必须选择实验室");
 					return;
 				}
-				if (!this.model.ApplicationName) {
+				if (!this.model.applicationName) {
 					alert("必须填写待装软件的名称");
 					return;
 				}
-				this.isloading = true;
+				this.isLoading = true;
 				uni.post("/api/installApp/v1/CreateApplication", this.model, msg => {
 					this.isloading = false;
 					uni.navigateTo({
@@ -93,13 +93,13 @@
 				if (column) return;
 				
 				let buildingId = this.buildings[value].ID;
-				this.rooms = this.allRooms.filter(e => e.BuildingId === buildingId);
+				this.rooms = this.allRooms.filter(e => e.buildingId === buildingId);
 			},
 			selectRoom (e) {
 				let index = e.detail.value[1];
 				let v = this.rooms[index];
 				this.roomName = v.ID === guidEmpty ? "选择实验室" : `${v.Building.Name} ${v.Name}`;
-				this.model.RoomId = v.ID;
+				this.model.roomId = v.ID;
 			},
 			goBack () {
 				uni.navigateTo({
@@ -109,7 +109,7 @@
 		},
 		data () {
 			return {
-				isloading: false,
+				isLoading: false,
 				model: {},
 				roomName: "",
 				buildings: [{ID: guidEmpty, Name: '置空'}],
@@ -126,7 +126,7 @@
 					this.model = msg.data;
 					this.buildings = msg.buildings;
 					this.allRooms = msg.rooms;
-					this.roomName = msg.data.RoomName === "暂无设置" ? "选择实验室" : msg.data.RoomName;
+					this.roomName = msg.data.roomName === "暂无设置" ? "选择实验室" : msg.data.roomName;
 				}
 			})
 		}
