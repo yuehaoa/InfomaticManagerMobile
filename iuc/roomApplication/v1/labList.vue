@@ -11,17 +11,20 @@
 				<span>{{item.Name}}</span>
 			</view>
 		</scroll-view>
-		<view class="cu-list menu">
-			<view class="cu-item margin-tb-sm bg-white" v-for="(item,index) in labs" :key="index" @click="labDetail(item.ID)">
-				<view class="content">
-					<view>
-						<view class="text-cut">{{item.Name}}</view>
-						<view class="cu-tag round bg-orange sm">{{item.administrator}}&nbsp;&nbsp;{{item.AdminTelephone}}</view>
-					</view>
-					<view class="text-gray text-sm flex">
-						<view class="text-cut">
-							暂无设置
-						</view>
+		<view class="padding-sm bg-white" v-for="(item,index) in labs" :key="index" @click="labDetail(item.ID)">
+			<view class="shadow shadow-lg bg-gradual-blue radius">
+				<view class="flex padding-lr solid-bottom justify-between align-center padding-tb-xs">
+					<view class="cu-avatar round lg" :style="{ backgroundImage: `url('${icon}')` }"></view>
+					<view class="text-xl text-white">{{`${item.Building.SubCampus} ${item.Building.Name}`}}</view>
+				</view>
+				<view class="text-sl text-white flex justify-center padding-sm">
+					{{item.Name}}
+				</view>
+				<view class="flex flex-wrap text-white text-df margin-sm">
+					<view class="basis-xl">管理员:{{item.Administrator}}</view>
+					<view class="basis-xl">管理员联系电话:{{item.AdminTelephone}}</view>
+					<view class="basis-xs text-xl padding-bottom-xs">
+						<text class="cuIcon-roundright text-xxl" style="float: right;display: block;"></text>
 					</view>
 				</view>
 			</view>
@@ -40,6 +43,7 @@
 				scrollLeft: 0,
 				buildings: [],
 				buildingDic: {},
+				icon: '../../../static/XMU.png',
 				labs: {}
 			};
 		},
