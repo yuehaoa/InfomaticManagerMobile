@@ -8,7 +8,7 @@
 </template>
 
 <script>
-	let stp = require("../stepsv1.js")
+	let stp = require("../../iuc/roomApplication/stepsv1.js")
 	export default {
 		name: "LabStepInfo",
 		props: {
