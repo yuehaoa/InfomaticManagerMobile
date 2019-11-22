@@ -5,13 +5,8 @@
 			<block slot="backText">返回</block>
 			<block slot="content">创建申请表</block>
 		</cu-custom>
+		<lab-Steps v-model="stepInfo" />
 		<form>
-			<view class="cu-steps magin-top">
-				<view class="cu-item" :class="item.id < model.state ? 'text-blue':''" v-for="(item,index) in steps" :key="item.id">
-					<text class="num" :data-index="index+1"></text>
-					{{item.name}}
-				</view>
-			</view>
 			<view class="cu-form-group margin-top">
 				<view class="title">申请原因<text class="text-red">*</text></view>
 				<input name="input" v-model="model.applicationReason" maxlength="200"></input>
@@ -54,16 +49,8 @@
 		onLoad(opt) {
 			this.ID = opt.id;
 			this.getInfo();
+			this.getLabCurrentRoom(opt);
 		},
-		/*
-		watch:{
-			model:{
-				handler(val){
-				},
-				immediate:true,
-				deep:true
-			}
-		},*/
 		methods: {
 			selectTeacher(e) {
 				let u = this.teachers[e.detail.value];
@@ -131,6 +118,7 @@
 				let THIS = this;
 				uni.post("/api/roomApp/v1/GetCreateApplication", {}, msg => {
 					if (msg.success) {
+						THIS.stepInfo = msg.data;
 						THIS.isStudent = msg.isStudent;
 						THIS.model.State = msg.data.State;
 						THIS.currentDate = msg.data.CreatedTime.
@@ -149,6 +137,13 @@
 				let buildingId = this.buildings[value].ID;
 				//逐个查找
 				this.rooms = this.allRooms.filter(e => e.BuildingId === buildingId);
+			},
+			getLabCurrentRoom(opt){
+				if(opt.BuildingName&&opt.labName)
+				{
+					this.currentRoom = opt.BuildingName+" "+opt.labName;
+					this.model.roomId = opt.roomID;
+				}
 			}
 		},
 		data() {
@@ -175,7 +170,7 @@
 				isStudent: true,
 				ID: '',
 				roomIndex: [0, 0],
-				steps
+				stepInfo: {}
 			}
 		}
 	}

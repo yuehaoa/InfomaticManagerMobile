@@ -1,5 +1,5 @@
 <template>
-	<picker class="uni-input" mode="multiSelector" :range="times" :value="timesIndex" :disabled="curDisabled" @change='changeDate' @cancel="cancelDate" @columnchange="columnchangeDate">
+	<picker class="uni-input" mode="multiSelector" :range="times3" :value="timesIndex" :disabled="curDisabled" @change='changeDate' @cancel="cancelDate" @columnchange="columnchangeDate">
 		<view class="padding"v-if="showTime">{{curValue}}
 		</view>
 		<view v-else class="placeholder">{{placeholder}}</view>
@@ -64,7 +64,8 @@
 				showTime: false,
 				curValue2:[],
 				curValue3:[],
-				value2:''
+				value2:'',
+				times3:[]//这个是用来只取times的前三个元素
 			}
 		},
 		watch: {
@@ -83,7 +84,19 @@
 				this.$emit('change', val);
 			},
 			times(val){
+				var i=0;
+				var l=0;
+				var k=0;
+				var j=0;
 				this.times = val;
+				for(i=0;i<this.times[0].length;i++)this.times[0][i]=this.times[0][i]+' 年'
+				for(j=0;j<this.times[1].length;j++)this.times[1][j]=this.times[1][j]+' 月'
+				for(k=0;k<this.times[2].length;k++)this.times[2][k]=this.times[2][k]+' 日'
+				for(l=0;l<this.times[3].length;l++)this.times[3][l]=this.times[3][l]+' 时'
+				this.times3[0]=this.times[0];
+				this.times3[1]=this.times[1];
+				this.times3[2]=this.times[2];
+				this.times3[3]=this.times[3];
 			},
 			timesIndex(val){
 				this.timesIndex = val;
