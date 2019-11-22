@@ -46,7 +46,7 @@
 			},
 			create() {
 				uni.navigateTo({
-					url: "./create?buildingID="+this.labInfo.BuildingId+"&roomID="+this.labInfo.ID
+					url: "./create?buildingID="+this.labInfo.BuildingId+"&roomID="+this.labInfo.ID+"&BuildingName="+this.labInfo.Building.Name+"&labName="+this.labInfo.Name
 				})
 			},
 			getData(){
@@ -86,7 +86,8 @@
 				applicationData: [],
 				icon: '../../../static/XMU.png',
 				buildingDic: {},
-				customBar: this.CustomBar
+				customBar: this.CustomBar,
+				labs:[]
 			}
 		}
 	}

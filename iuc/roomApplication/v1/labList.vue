@@ -28,8 +28,7 @@
 				scrollLeft: 0,
 				buildings: [],
 				buildingDic: {},
-				icon: '../../../static/XMU.png',
-				labs: {}
+				labs: []
 			};
 		},
 		methods: {
