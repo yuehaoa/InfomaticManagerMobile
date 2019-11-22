@@ -46,8 +46,5 @@ try {
 	if (!appSetting.currentUserGuid) {
 		appSetting.currentUserGuid = uni.getStorageSync("currentUserGuid");
 	}
-	if(!appSetting.buildingDic) {
-		appSetting.buildingDic = uni.getStorageSync("buildingDic");
-	}
 } catch {}
 module.exports = appSetting;

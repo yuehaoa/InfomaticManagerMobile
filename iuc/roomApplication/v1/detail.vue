@@ -1,4 +1,3 @@
-<!--邵良颖于2019年10月14日编辑 用于查看实验室申请流程-->
 <template>
 	<view id="lab-apply-detail">
 		<cu-custom bgColor="bg-gradual-blue" isBack="">
