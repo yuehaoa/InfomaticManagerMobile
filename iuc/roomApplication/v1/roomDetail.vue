@@ -1,32 +1,35 @@
 <template>
 	<view id="room-detail">
-		<cu-custom bgColor="bg-gradual-blue shadow" isBack="">
+		<cu-custom bgColor="bg-gradual-blue" isBack="">
 			<block slot="backText">返回</block>
 			<block slot="content">实验室详细信息</block>
 		</cu-custom>
-		<view class="bg-gradual-blue shadow radius margin-sm">
-			<view class="flex padding-lr solid-bottom justify-between align-center padding-sm">
-				<view class="cu-avatar round"></view>
-				<view class="text-xl text-black">{{labInfo.Name}}</view>
+		<view class="shadow shadow-lg bg-cyan radius margin-sm">
+			<view class="flex padding-lr padding-tb-xs solid-bottom justify-between align-center">
+				<view class="cu-avatar bg-cyan lg round" :style="{ backgroundImage: `url('${icon}')` }"></view>
+				<view class="text-xl text-white">{{`${labInfo.Building.SubCampus} ${labInfo.Building.Name}`}}</view>
 			</view>
-			<view class="text-xxl text-black flex justify-center padding-sm">
+			<view class="text-sl text-white flex justify-center padding-sm">
 				{{labInfo.Name}}
 			</view>
-			<view class="flex flex-wrap text-black text-sm padding-sm">
+			<view class="flex flex-wrap text-white text-df padding-sm">
 				<view class="basis-xl">管理员:{{labInfo.Administrator}}</view>
-				<view class="basis-xl">管理员联系电话:{{labInfo.AdminTelephone}}</view>
+				<view class="basis-xl">联系电话:{{labInfo.AdminTelephone}}</view>
 			</view>
 		</view>
-		<scroll-view scroll-x class="bg-white nav text-center cardPosition shadow">
+		<scroll-view scroll-x class="bg-white nav text-center cardPosition shadow" :style="[{height:customBar + 'px'}]">
 			<view class="cu-item" :class="index==tabCur?'text-blue cur':''" v-for="(item,index) in arrays" :key="index" @tap="tabSelect" :data-id="index">
 				{{item}}
 			</view>
 		</scroll-view>
-		<view class="margin-tb padding bg-white text-center" v-if="tabCur==0">
+		<view class="margin-tb bg-white text-center" v-if="tabCur==0">
 			<text>0暂无内容</text>
 		</view>
-		<view class="margin-tb padding bg-white text-center" v-else-if="tabCur==1">
-			<text>1暂无内容</text>
+		<view class="margin-tb bg-white cu-list menu" v-else-if="tabCur==1">
+			<view class="cu-item" v-for="(item,index) in applicationData" :key="index">
+				<text>申请人：{{item.Owner}}\n申请原因：{{item.ApplicationReason}}\n申请时段：{{item.StartDate.slice(5)}}-{{item.EndDate.slice(5)}}</text>
+				<view class="cu-tag round sm" :class="'bg-' + wColor[item.State]">{{ workflow[item.State] }}</view>
+			</view>
 		</view>
 		<view class="padding flex flex-direction" @click="create()">
 			<button class="cu-btn bg-blue lg">申请</button>
@@ -47,7 +50,6 @@
 					this.buildingDic = res.data;
 				}
 			})
-			console.log(this.cuCustomHeight);
 		},
 		methods:{
 			tabSelect(e) {
@@ -64,10 +66,15 @@
 				uni.post("/api/building/GetRoom", { ID: this.labInfo.ID }, msg => {
 					this.labInfo = msg.data;
 				});
+				uni.post("/api/roomApp/v1/GetApplicationByRoom",{ ID: this.labInfo.ID },msg=>{
+					this.applicationData = msg.data;
+				})
 			}
 		},
 		data(){
 			return{
+				workflow: enums.workflow,
+				wColor: enums.workflowColor,
 				roomType: enums.roomType,
 				arrays: [
 					"时间安排表",
@@ -79,6 +86,7 @@
 					ID: "",
 					Name: "",
 					BuildingId: "",
+					Building: "",
 					administrator: "",
 					AdminTelephone: "",
 					SecurityOfficer: "",
@@ -87,7 +95,10 @@
 					CreatedOn: "",
 					RoomType: ""
 				},
-				buildingDic: {}
+				applicationData: [],
+				icon: '../../../static/XMU.png',
+				buildingDic: {},
+				customBar: this.CustomBar
 			}
 		}
 	}
@@ -96,6 +107,7 @@
 <style>
 	.cardPosition
 	{
+		z-index: 100;
 		position: sticky;
 		top: 90rpx;
 	}
