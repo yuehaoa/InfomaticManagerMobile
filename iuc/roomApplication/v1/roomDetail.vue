@@ -4,7 +4,7 @@
 			<block slot="backText">返回</block>
 			<block slot="content">实验室详细信息</block>
 		</cu-custom>
-		<labBar :lab="labInfo" arrowDisplay="none" color="bg-cyan"></labBar>
+		<labInfoCard :lab="labInfo" arrowDisplay="none" color="bg-gradual-blue"></labInfoCard>
 		<scroll-view scroll-x class="bg-white nav text-center cardPosition shadow" :style="[{height:customBar + 'px'}]">
 			<view class="cu-item" :class="index==tabCur?'text-blue cur':''" v-for="(item,index) in arrays" :key="index" @tap="tabSelect" :data-id="index">
 				{{item}}
@@ -29,7 +29,6 @@
 	let enums = require("../enumsv1.js");
 	export default{
 		onLoad(opt) {
-			//document.selectByName
 			this.labInfo.ID = opt.id;
 			this.getData();
 			uni.getStorage({

@@ -30,9 +30,9 @@
 				<i class="cuIcon-write icon-write icon_comment"></i>
 				<p>所有申请</p>
 			</navigator>
-			<navigator>
+			<navigator url="../roomApplication/v1/create">
 				<i class="cuIcon-search icon_comment icon-search"></i>
-				<p>我的机位</p>
+				<p>申请实验室</p>
 			</navigator>
 		</view>
 

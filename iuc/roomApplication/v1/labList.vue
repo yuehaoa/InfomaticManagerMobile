@@ -12,7 +12,7 @@
 			</view>
 		</scroll-view>
 		<view v-for="(item,index) in labs" :key="index" @click="labDetail(item.ID)">
-			<labBar :lab="item"color="bg-gradual-blue"></labBar>
+			<labInfoCard :lab="item" color="bg-gradual-blue"></labInfoCard>
 		</view>
 	</view>
 </template>
