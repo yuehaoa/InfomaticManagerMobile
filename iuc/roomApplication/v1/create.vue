@@ -22,11 +22,11 @@
 			</view>
 			<view class="cu-form-group">
 				<view class="title">开始日期<text class="text-red">*</text></view>
-				<Time placeholder="请选择开始日期" @change="selectDate1"></Time>
+				<timer placeholder="请选择开始日期" @change="selectDate1"></timer>
 			</view>
 			<view class="cu-form-group">
 				<view class="title">结束日期<text class="text-red">*</text></view>
-				<Time placeholder="请选择结束日期" @change="selectDate2"></Time>
+				<timer placeholder="请选择结束日期" @change="selectDate2"></timer>
 			</view>
 			<view class="cu-form-group" v-if="isStudent">
 				<view class="title">选择指导老师<text class="text-red">*</text></view>
