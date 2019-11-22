@@ -31,7 +31,8 @@
 				handler(value) {
 
 					let tb = "text-blue",
-						err = "err";
+						err = "err",
+						loading = "loading";
 
 					let steps = this.steps;
 					//steps[0].FinalState = value.State > 0 ? tb : "";
@@ -40,20 +41,24 @@
 					let isComplete = (v) => {
 						if (v === 20) return tb;
 						if (v === 30) return "text-red";
+						if (v === 10) return "text-cyan";
 						return "";
 					};
 					steps[0].finalState = isComplete(value.ApplicateState);
 					steps[0].err = value.ApplicateState === 30 ? err : ""; //填写申请表
+					steps[0].err = value.ApplicateState === 10 ? loading : "";
 
 					steps[1].finalState = isComplete(value.GuideTeacherState);
 					steps[1].err = value.GuideTeacherState === 30 ? err : ""; //指导老师审核
+					steps[1].err = value.GuideTeacherState === 10 ? loading : "";
 
 					steps[2].finalState = isComplete(value.ReviewState);
 					steps[2].err = value.ReviewState === 30 ? err : ""; //分管领导分配
+					steps[2].err = value.ReviewState === 10 ? loading : "";
 
 					steps[3].finalState = isComplete(value.HandleState);
 					steps[3].err = value.HandleState === 30 ? err : ""; //管理员确认
-
+					steps[3].err = value.HandleState === 10 ? loading : "";
 				}
 			}
 		}
@@ -61,4 +66,8 @@
 </script>
 
 <style>
+.cu-steps .cu-item[class*="text-"] .num.loading::after
+{
+	content: "\e7f1";
+}
 </style>
