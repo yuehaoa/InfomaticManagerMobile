@@ -29,7 +29,6 @@
 	let enums = require("../enumsv1.js");
 	export default{
 		onLoad(opt) {
-			//document.selectByName
 			this.labInfo.ID = opt.id;
 			this.getData();
 			uni.getStorage({
