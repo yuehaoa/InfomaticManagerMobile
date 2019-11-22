@@ -54,6 +54,7 @@
 		onLoad(opt) {
 			this.ID = opt.id;
 			this.getInfo();
+			this.getLabCurrentRoom(opt);
 		},
 		/*
 		watch:{
@@ -149,6 +150,13 @@
 				let buildingId = this.buildings[value].ID;
 				//逐个查找
 				this.rooms = this.allRooms.filter(e => e.BuildingId === buildingId);
+			},
+			getLabCurrentRoom(opt){
+				if(opt.BuildingName&&opt.labName)
+				{
+					this.currentRoom = opt.BuildingName+" "+opt.labName;
+					this.model.roomId = opt.roomID;
+				}
 			}
 		},
 		data() {
