@@ -25,6 +25,9 @@ require("./init");
 import mixin from './config/mixin.js'
 Vue.mixin(mixin);
 
+import labInfoCard from './components/labComponent/labInfoCard.vue'
+Vue.component('labInfoCard',labInfoCard)
+
 import labSteps from './components/labComponent/labStepInfo.vue'
 Vue.component('lab-Steps',labSteps)
 

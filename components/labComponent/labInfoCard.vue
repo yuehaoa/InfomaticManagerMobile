@@ -1,7 +1,6 @@
 <template>
 		<view class="padding-sm">
-			<view class="shadow shadow-lg  radius  bg-white">
-				<view :class="color">
+			<view :class="color" class="shadow shadow-lg radius bg-white">
 				<view class="flex padding-lr solid-bottom justify-between align-center padding-tb-xs">
 					<view class="cu-avatar round lg" :style="{ backgroundImage: `url('${icon}')` }"></view>
 					<view class="text-xl text-white">{{`${lab.Building.SubCampus} ${lab.Building.Name}`}}</view>
@@ -15,7 +14,6 @@
 					<view class="basis-xs text-xl padding-bottom-xs":style="{display:arrowDisplay}">
 						<text class="cuIcon-roundright text-xxl" style="float: right;display: block;"></text>
 					</view>
-				</view>
 				</view>
 			</view>
 		</view>

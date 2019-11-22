@@ -4,19 +4,7 @@
 			<block slot="backText">返回</block>
 			<block slot="content">实验室详细信息</block>
 		</cu-custom>
-		<view class="shadow shadow-lg bg-cyan radius margin-sm">
-			<view class="flex padding-lr padding-tb-xs solid-bottom justify-between align-center">
-				<view class="cu-avatar bg-cyan lg round" :style="{ backgroundImage: `url('${icon}')` }"></view>
-				<view class="text-xl text-white">{{`${labInfo.Building.SubCampus} ${labInfo.Building.Name}`}}</view>
-			</view>
-			<view class="text-sl text-white flex justify-center padding-sm">
-				{{labInfo.Name}}
-			</view>
-			<view class="flex flex-wrap text-white text-df padding-sm">
-				<view class="basis-xl">管理员:{{labInfo.Administrator}}</view>
-				<view class="basis-xl">联系电话:{{labInfo.AdminTelephone}}</view>
-			</view>
-		</view>
+		<labInfoCard :lab="labInfo" arrowDisplay="none" color="bg-gradual-blue"></labInfoCard>
 		<scroll-view scroll-x class="bg-white nav text-center cardPosition shadow" :style="[{height:customBar + 'px'}]">
 			<view class="cu-item" :class="index==tabCur?'text-blue cur':''" v-for="(item,index) in arrays" :key="index" @tap="tabSelect" :data-id="index">
 				{{item}}
