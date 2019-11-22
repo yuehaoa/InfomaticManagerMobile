@@ -1,4 +1,3 @@
-<!--邵良颖于2019-10-16编辑 用于查看实验室-->
 <template>
 	<view class="bg-white">
 		<cu-custom bgColor="bg-gradual-blue" isBack="">
@@ -20,7 +19,7 @@
 <script>
 	export default {
 		onLoad() {
-			this.getBuildings(true);
+			this.getBuildings();
 		},
 		data() {
 			return {
@@ -42,17 +41,11 @@
 					this.buildings = msg.data;
 					this.buildings = this.buildings.filter(e => e.ID !== '00000000-0000-0000-0000-000000000000');
 					this.buildings.map(e => this.buildingDic[e.ID] = e.Name);
-					uni.setStorage({
-						key: 'buildingDic',
-						data: this.buildingDic,
-					});
 					this.getLabs(this.buildings[0].ID);
 				});
 			},
 			getLabs(pid) {
-				uni.post("/api/building/GetRooms", {
-					pid
-				}, msg => {
+				uni.post("/api/building/GetRooms", {pid}, msg => {
 					this.labs = msg.data;
 					this.labs = this.labs.filter(e => e.ID !== '00000000-0000-0000-0000-000000000000');
 				})
