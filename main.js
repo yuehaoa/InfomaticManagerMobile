@@ -15,15 +15,20 @@ Vue.component('cu-custom',cuCustom)
 
 import date from './components/dy-Date/dy-Date.vue'
 Vue.component('Date',date)
+
+import labInfoCard from './components/LabComponent/labInfoCard.vue'
+Vue.component('labInfoCard',labInfoCard)
+
 import time from './components/rattenking-dtpicker/rattenking-dtpicker.vue'
 Vue.component('Time',time)
+
 let app = require("@/config");
 require("./init");
 
 import mixin from './config/mixin.js'
 Vue.mixin(mixin);
 
-import labSteps from './iuc/roomApplication/v1/LabStepInfo.vue'
+import labSteps from './components/labStepInfo/labStepInfo.vue'
 Vue.component('lab-Steps',labSteps)
 
 Vue.config.productionTip = false
