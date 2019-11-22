@@ -1,4 +1,3 @@
-<!--邵良颖于2019年10月14日编辑 用于实验室管理员确认实验室申请-->
 <template>
 	<view id="lab-apply-confirm">
 		<cu-custom bgColor="bg-gradual-blue" :isBack="'/iuc/roomApplication/v1/list'">
@@ -28,7 +27,7 @@
 				<input :value="model.GuideTeacher" disabled />
 			</view>
 
-			<!--confirm操作-->
+			<!--可用操作-->
 			<view class="action-list cu-list grid col-4 margin-top margin-bottom">
 				<view class="cu-item" @click="submit('')">
 					<view class="cuIcon-roundcheckfill text-green"></view>
