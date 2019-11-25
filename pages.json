@@ -6,6 +6,10 @@
 			"style": {}
 		},
 		{
+			"path": "iuc/index/testEntry",
+			"style": {}
+		},
+		{
 			"path": "uc/login/login",
 			"style": {}
 		},
@@ -89,7 +93,11 @@
 			"path":"iuc/userInfo/modifyMobile",
 			"style": {}
 		}
-	],
+	    ,{
+            "path" : "iuc/index/index",
+            "style" : {}
+        }
+    ],
 	"globalStyle": {
 		"mp-alipay": {
 			/* 支付宝小程序特有相关 */
