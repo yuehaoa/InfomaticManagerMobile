@@ -2,7 +2,6 @@ let appSetting = {
     debug: true,
     api: "",
     currentUserGuid: "",
-	buildingDic : {},
     titlePerfix: " - ",
     title: "登录",
     nav: "",
