@@ -1,4 +1,3 @@
-<!--宋润涵于2019-10-16编辑 用于查看所有申请-->
 <template>
 	<view id="lab-apply-list">
 		<cu-custom bgColor="bg-gradual-blue" isBack="">
