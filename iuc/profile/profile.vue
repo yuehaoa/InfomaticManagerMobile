@@ -11,7 +11,7 @@
 			</p>
 		</view>
 		<view class="info">
-			<image v-bind:src="avatar" v-on:click="NavToInfor()" />
+			<image v-bind:src="avatar" v-on:click="navToInfor()" />
 			<p class="info_name">
 				<span style="font-size: 40upx;">{{realName}}</span>
 			</p>
@@ -43,6 +43,10 @@
 			</navigator>
 			<navigator url="../roomApplication/v1/list">
 				<span>我的申请流程</span>
+				<i class="cuIcon-right"></i>
+			</navigator>
+			<navigator url="../index/testEntry">
+				<span>测试入口</span>
 				<i class="cuIcon-right"></i>
 			</navigator>
 		</view>

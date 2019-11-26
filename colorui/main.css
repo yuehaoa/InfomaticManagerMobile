@@ -1993,7 +1993,7 @@ button.cuIcon.lg {
 	content: "";
 	display: block;
 	position: absolute;
-	width: 1upx;
+	width: 4upx;
 	background-color: #ddd;
 	left: 60upx;
 	height: 100%;
