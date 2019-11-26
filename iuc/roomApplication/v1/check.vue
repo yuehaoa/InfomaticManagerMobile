@@ -18,21 +18,32 @@
 				<view class="title">起止时间</view>
 				<input :value="time" disabled />
 			</view>
-			<view class="cu-form-group">
+			<view class="cu-form-group margin-bottom solids-bottom">
 				<view class="title">申请房间号</view>
 				<input :value="model.RoomName" disabled />
 			</view>
-			<view class="action-list cu-list grid col-2 margin-top margin-bottom">
-				<view class="cu-item" @click="submit('通过')">
-					<view class="cuIcon-roundcheckfill text-green"></view>
-					<text>审核通过</text>
-				</view>
-				<view class="cu-item" @click="submit('修改')">
-					<view class="cuIcon-writefill text-red"></view>
-					<text>退回修改</text>
-				</view>
-			</view>
 		</form>
+		<view class="cu-bar bg-white solids-bottom">
+			<view class="action text-xl">
+				<text class="cuIcon-title text-blue text-xl"></text>
+				<text class="text-bold text-xl">操作流程</text>
+			</view>
+			<view class="action" @click="foldUp">
+				<text class="text-df">{{displayTimeline?'收起':'展开'}}</text>
+				<text class="padding-lr-xs text-bold" :class="displayTimeline?'cuIcon-fold':'cuIcon-unfold'"></text>
+			</view>
+		</view>
+		<labTimeLine :timeline="timeline" v-show="displayTimeline"></labTimeLine>
+		<view class="action-list cu-list grid col-2 margin-top">
+			<view class="cu-item" @click="submit('通过')">
+				<view class="cuIcon-roundcheckfill text-green"></view>
+				<text>审核通过</text>
+			</view>
+			<view class="cu-item" @click="submit('修改')">
+				<view class="cuIcon-writefill text-red"></view>
+				<text>退回修改</text>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -42,7 +53,9 @@
 			return {
 				id: "",
 				model: {},
-				time: ""
+				time: "",
+				timeline: {},
+				displayTimeline: false
 			}
 		},
 		onLoad(opt) {
@@ -97,6 +110,7 @@
 					id: id
 				}, msg => {
 					if (msg.success) {
+						this.timeline = msg.timeline;
 						this.model = msg.data;
 						this.TimeCombine();
 					}
@@ -105,6 +119,9 @@
 			TimeCombine() {
 				this.time = this.model.StartDate + " — " + this.model.EndDate;
 			},
+			foldUp(){
+				this.displayTimeline=!this.displayTimeline;
+			}
 		}
 	}
 </script>
