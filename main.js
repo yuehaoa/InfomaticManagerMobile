@@ -17,7 +17,7 @@ import date from './components/dy-Date/dy-Date.vue'
 Vue.component('Date',date)
 
 import time from './components/rattenking-dtpicker/rattenking-dtpicker.vue'
-Vue.component('Time',time)
+Vue.component('timer',time)
 
 let app = require("@/config");
 require("./init");

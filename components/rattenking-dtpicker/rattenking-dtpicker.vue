@@ -65,7 +65,9 @@
 				curValue2:[],
 				curValue3:[],
 				value2:'',
-				times3:[]//这个是用来只取times的前三个元素
+				times3:[],
+				flag:0
+				
 			}
 		},
 		watch: {
@@ -88,15 +90,21 @@
 				var l=0;
 				var k=0;
 				var j=0;
+				var x=0;
 				this.times = val;
-				for(i=0;i<this.times[0].length;i++)this.times[0][i]=this.times[0][i]+' 年'
+				if(this.flag==0)
+				{for(i=0;i<this.times[0].length;i++)this.times[0][i]=this.times[0][i]+' 年'
 				for(j=0;j<this.times[1].length;j++)this.times[1][j]=this.times[1][j]+' 月'
 				for(k=0;k<this.times[2].length;k++)this.times[2][k]=this.times[2][k]+' 日'
 				for(l=0;l<this.times[3].length;l++)this.times[3][l]=this.times[3][l]+' 时'
+				for(x=0;x<this.times[4].length;x++)this.times[4][x]=this.times[4][x]+' 分'
+				this.flag++;
+				}
 				this.times3[0]=this.times[0];
 				this.times3[1]=this.times[1];
 				this.times3[2]=this.times[2];
 				this.times3[3]=this.times[3];
+				this.times3[4]=this.times[4];
 			},
 			timesIndex(val){
 				this.timesIndex = val;
@@ -184,9 +192,9 @@
 		methods: {
 			changeDate(e){
 				this.showTime =true;
-			  let values = e.detail.value;
 			  let times = this.times;
 			  let curarr = [];
+			  let values = e.detail.value;
 			  for (let i = 0, len = values.length; i < len; i++) {
 				curarr.push(times[i][values[i]])
 			  }
@@ -206,10 +214,14 @@
 			  }else{
 					// 如果改变的是年和月，重新获取天数，同时判断天数的index是否大于当前天数，大于就设置为当月最后一天，否则不变。
 					if(e.detail.column === 0 || e.detail.column === 1){
+						var i=0;
 						let times = GetDate.getNewArray(this.times);
 						let timesIndex = GetDate.getNewArray(this.timesIndex);
 						timesIndex[e.detail.column] = e.detail.value;
-						let days = GetDate.getMonthDay(times[0][timesIndex[0]], times[1][timesIndex[1]]);
+						let days = GetDate.getMonthDay(times[0][timesIndex[0]].split(' 年')[0], times[1][timesIndex[1]].split(' 月')[0]);
+						for(i=0;i<days.length;i++){
+							days[i]=days[i]+' 日';
+						}
 						times[2] = days;
 						if(timesIndex[2] > days.length - 1){
 							timesIndex[2] = days.length - 1;
