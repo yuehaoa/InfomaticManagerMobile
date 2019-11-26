@@ -44,6 +44,7 @@
 
 <script>
 	let steps = require("../stepsv1.js")
+	let app = require("@/config/index")
 	export default {
 		onLoad(opt) {
 			this.ID = opt.id;

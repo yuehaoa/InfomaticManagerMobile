@@ -55,7 +55,7 @@
 			this.getData(1);
 		},
 		onLoad() {
-			this.getData(1);
+			
 		},
 		methods: {
 			getData(p) {
@@ -129,7 +129,7 @@
 	.cu-list>.cu-item{
 		padding-top: 18rpx;
 		padding-bottom: 8rpx;
-		transition: all 1s;
+		transition: all 0.8s;
 	}
 	.application-list-move{
 		transition: transform 1s;

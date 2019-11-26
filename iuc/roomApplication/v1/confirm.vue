@@ -1,6 +1,6 @@
 <template>
 	<view id="lab-apply-confirm">
-		<cu-custom bgColor="bg-gradual-blue" :isBack="'/iuc/roomApplication/v1/list'">
+		<cu-custom bgColor="bg-gradual-blue" isBack="">
 			<block slot="backText">返回</block>
 			<block slot="content">实验室申请表</block>
 		</cu-custom>
@@ -26,27 +26,36 @@
 				<view class="title">指导老师</view>
 				<input :value="model.GuideTeacher" disabled />
 			</view>
-
-			<!--可用操作-->
-			<view class="action-list cu-list grid col-4 margin-top margin-bottom">
-				<view class="cu-item" @click="submit('')">
-					<view class="cuIcon-roundcheckfill text-green"></view>
-					<text>同意申请</text>
-				</view>
-				<view class="cu-item" @click="submit('无法得到空闲机房', '您是否确认无法得到空闲机房或不存在机房？')">
-					<view class="cuIcon-roundclosefill text-red"></view>
-					<text>取消流程</text>
-				</view>
-				<view class="cu-item" @click="submit('分配错误', '您是否确认分配错误？')">
-					<view class="cuIcon-warnfill text-red"></view>
-					<text>分配错误</text>
-				</view>
-				<view class="cu-item" @click="submit('修改', '执行该流程会将流程发回给申请人，是否继续？')">
-					<view class="cuIcon-writefill text-red"></view>
-					<text>退回修改</text>
-				</view>
-			</view>
 		</form>
+		<view class="cu-bar bg-white solids-bottom margin-top">
+			<view class="action text-xl">
+				<text class="cuIcon-title text-blue text-xl"></text>
+				<text class="text-bold text-xl">操作流程</text>
+			</view>
+			<view class="action" @click="foldUp">
+				<text class="text-df">{{displayTimeline?'收起':'展开'}}</text>
+				<text class="padding-lr-xs text-bold" :class="displayTimeline?'cuIcon-fold':'cuIcon-unfold'"></text>
+			</view>
+		</view>
+		<labTimeLine :timeline="timeline" v-show="displayTimeline"></labTimeLine>
+		<view class="action-list cu-list grid col-4 margin-top margin-top">
+			<view class="cu-item" @click="submit('')">
+				<view class="cuIcon-roundcheckfill text-green"></view>
+				<text>同意申请</text>
+			</view>
+			<view class="cu-item" @click="submit('无法得到空闲机房', '您是否确认无法得到空闲机房或不存在机房？')">
+				<view class="cuIcon-roundclosefill text-red"></view>
+				<text>取消流程</text>
+			</view>
+			<view class="cu-item" @click="submit('分配错误', '您是否确认分配错误？')">
+				<view class="cuIcon-warnfill text-red"></view>
+				<text>分配错误</text>
+			</view>
+			<view class="cu-item" @click="submit('修改', '执行该流程会将流程发回给申请人，是否继续？')">
+				<view class="cuIcon-writefill text-red"></view>
+				<text>退回修改</text>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -85,13 +94,19 @@
 					id
 				}, msg => {
 					this.model = msg.data;
+					this.timeline = msg.timeline;
 				})
+			},
+			foldUp(){
+				this.displayTimeline=!this.displayTimeline;
 			}
 		},
 		data() {
 			return {
 				id: guidEmpty,
 				isLoading: false,
+				timeline: {},
+				displayTimeline: false,
 				model: {}
 			};
 		}
