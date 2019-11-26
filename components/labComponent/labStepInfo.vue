@@ -68,6 +68,6 @@
 <style>
 .cu-steps .cu-item[class*="text-"] .num.loading::after
 {
-	content: "\e7f1";
+	content: "\e74f";
 }
 </style>

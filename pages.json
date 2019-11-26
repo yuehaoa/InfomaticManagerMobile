@@ -97,6 +97,10 @@
             "path" : "iuc/index/index",
             "style" : {}
         }
+        ,{
+            "path" : "components/labComponent/labTimeLine",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"mp-alipay": {

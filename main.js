@@ -31,6 +31,9 @@ Vue.component('labInfoCard',labInfoCard)
 import labSteps from './components/labComponent/labStepInfo.vue'
 Vue.component('lab-Steps',labSteps)
 
+import labTimeLine from './components/labComponent/labTimeLine.vue'
+Vue.component('labTimeLine',labTimeLine)
+
 Vue.config.productionTip = false
 
 App.mpType = 'app'
