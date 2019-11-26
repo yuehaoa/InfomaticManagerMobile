@@ -12,13 +12,13 @@ const steps = [{
 	},
 	{
 		id: 2,
-		name: '分配经办人',
+		name: '主管审核',
 		finalState: "",
 		err: ""
 	},
 	{
 		id: 3,
-		name: '待经办人确认',
+		name: '管理员确认',
 		finalState: "",
 		err: ""
 	}
