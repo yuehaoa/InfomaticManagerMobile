@@ -3,27 +3,28 @@
 		<cu-custom bgColor="bg-gradual-blue">
 			<block slot="content">实验室管理系统</block>
 		</cu-custom>
-		<swiper autoplay="true" indicator-dots="true" indicator-active-color="white" indicator-color="grey" class="margin-tb margin-lr radius padding-lr">
+		<swiper class="screen-swiper" autoplay="true" indicator-dots="true" 
+		indicator-active-color="white" indicator-color="grey" circular="true">
 			<swiper-item v-for='(item,index) in swiperList' :key='index'>
-				<image class="radius" :src="item" mode="aspectFill"></image>
+				<image :src="item" mode="aspectFill"></image>
 			</swiper-item>
 		</swiper>
-		<view class="bg-white flex margin-bottom padding-tb-xs justify-between align-center">
-			<view class="margin-lr-xs text-xl">
+		<view class="bg-white flex solids-bottom padding-tb-sm justify-between align-center">
+			<view class="margin-left text-xl">
 				<text class="cuIcon-notification"></text>
 				<text class="text-bold margin-lr-xs">通知公告</text>
 				<text class="text-lg">实验室管理系统又炸啦!</text>
 			</view>
-			<view class="margin-right-xs more">查看更多<text class="cuIcon-playfill"></text></view>
+			<view class="margin-right more">查看更多<text class="cuIcon-playfill"></text></view>
 		</view>
-		<view>
+		<view class="padding-bottom bg-white">
 			<view class="cu-bar bg-white">
 				<view class="action">
-					<text class="text-bold">我的</text>
+					<text class="text-bold text-xl">我的</text>
 				</view>
 				<view class="action more">收起<text class="cuIcon-playfill"></text></view>
 			</view>
-			<view class="cu-list grid col-4 no-border">
+			<view class="cu-list grid col-4 no-border ">
 				<view class="cu-item" v-for='(item,index) in mine' :key='index'>
 					<view>
 						<image :src="item.image" class="cu-avatar bg-white lg" mode="aspectFit"></image>
@@ -35,7 +36,7 @@
 		<view>
 			<view class="cu-bar bg-white">
 				<view class="action">
-					<text class="text-bold">功能</text>
+					<text class="text-bold text-xl">功能</text>
 				</view>
 				<view class="action more">收起<text class="cuIcon-playfill"></text></view>
 			</view>
