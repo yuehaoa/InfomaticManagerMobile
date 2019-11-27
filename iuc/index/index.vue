@@ -64,7 +64,8 @@
 
 <script>
 	export default {
-		onLoad() {},
+		onLoad() {
+		},
 		data() {
 			return {
 				swiperList: {
