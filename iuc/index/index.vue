@@ -26,7 +26,7 @@
 			<view class="cu-list grid col-4 no-border">
 				<view class="cu-item" v-for='(item,index) in mine' :key='index'>
 					<view>
-						<image :src="item.image" class="cu-avatar lg" mode="aspectFit"></image>
+						<image :src="item.image" class="cu-avatar bg-white lg" mode="aspectFit"></image>
 					</view>
 					<text>{{item.text}}</text>
 				</view>
@@ -42,7 +42,7 @@
 			<view class="cu-list grid col-4 no-border">
 				<view class="cu-item" v-for='(item,index) in functionList' :key='index'>
 					<view>
-						<image :src="item.image" class="cu-avatar lg" mode="aspectFit"></image>
+						<image :src="item.image" class="cu-avatar bg-white lg" mode="aspectFit"></image>
 					</view>
 					<text>{{item.text}}</text>
 				</view>
@@ -51,7 +51,7 @@
 		<view style="height: 100rpx;">
 			<view class="cu-bar tabbar bg-white foot">
 				<view v-for="(item,index) in tabInfo" class="action" :key="index">
-					<view>
+					<view :class="{'text-blue':index === 0}">
 						<text :class="item.icon"></text>
 						<text class="text-lg">{{item.text}}</text>
 					</view>
