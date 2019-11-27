@@ -3,27 +3,28 @@
 		<cu-custom bgColor="bg-gradual-blue">
 			<block slot="content">实验室管理系统</block>
 		</cu-custom>
-		<swiper autoplay="true" indicator-dots="true" indicator-active-color="white" indicator-color="grey" class="margin">
+		<swiper autoplay="true" indicator-dots="true" indicator-active-color="white" indicator-color="grey" class="margin-tb margin-lr radius padding-lr">
 			<swiper-item v-for='(item,index) in swiperList' :key='index'>
-				<image class="swiper-image" :src="item"></image>
+				<image class="radius" :src="item" mode="aspectFill"></image>
 			</swiper-item>
 		</swiper>
-		<view class="notice bg-white padding" style="height:25rpx">
-			<view class="text-lg">
-				<text class="text-gray cuIcon-notification padding-right"></text>
-				<text class="text-bold">通知公告</text>
+		<view class="bg-white flex margin-bottom padding-tb-xs justify-between align-center">
+			<view class="margin-lr-xs text-xl">
+				<text class="cuIcon-notification"></text>
+				<text class="text-bold margin-lr-xs">通知公告</text>
+				<text class="text-lg">实验室管理系统又炸啦!</text>
 			</view>
-			<view class="more text-lg">查看更多<text class="cuIcon-playfill"></text></view>
+			<view class="margin-right-xs more">查看更多<text class="cuIcon-playfill"></text></view>
 		</view>
-		<view class="padding bg-white">
-			<view class="notice">
-				<view class="text-lg">
+		<view>
+			<view class="cu-bar bg-white">
+				<view class="action">
 					<text class="text-bold">我的</text>
 				</view>
-				<view class="more text-lg">收起<text class="cuIcon-playfill"></text></view>
+				<view class="action more">收起<text class="cuIcon-playfill"></text></view>
 			</view>
 			<view class="cu-list grid col-4 no-border">
-				<view class="cu-item" v-for='(item,index) in myList' :key='index'>
+				<view class="cu-item" v-for='(item,index) in mine' :key='index'>
 					<view>
 						<image :src="item.image" class="cu-avatar lg" mode="aspectFit"></image>
 					</view>
@@ -31,47 +32,28 @@
 				</view>
 			</view>
 		</view>
-		<view class="padding bg-white">
-				<view class="notice">
-					<view class="text-lg">
-						<text class="text-bold">功能</text>
-					</view>
-					<view class="more text-lg">收起<text class="cuIcon-playfill"></text></view>
+		<view>
+			<view class="cu-bar bg-white">
+				<view class="action">
+					<text class="text-bold">功能</text>
 				</view>
-					<view class="cu-list grid col-4 no-border">
-							<view class="cu-item" v-for='(item,index) in functionList' :key='index'>
-								<view><image :src="item.image" class="cu-avatar lg" mode="aspectFit"></image></view>
-								<text class="txt">{{item.text}}</text>
-							</view>
-					</view>
+				<view class="action more">收起<text class="cuIcon-playfill"></text></view>
 			</view>
-			<view>
-				<view class="nav text-center bg-white" style="position: fixed; bottom: 0; width: 100%;height: 100rpx;">
-					<view class="cu-bar tabbar bg-white flex">
-						<view class="action" @click="navToTest">
-							<view class="flex-sub">
-								<text class="cuIcon-home"></text>
-								<text class="text-lg">主页</text>
-							</view>
-						</view>
-						<view class="action">
-							<view class="flex-sub">
-								<text class="cuIcon-notice"></text>
-								<text class="text-lg">通知公告</text>
-							</view>
-						</view>
-						<view class="action">
-							<view class="flex-sub">
-								<text class="cuIcon-notice"></text>
-								<text class="text-lg">待开发</text>
-							</view>
-						</view>
-						<view class="action" @click="navToProfile">
-							<view class="flex-sub">
-								<text class="cuIcon-my"></text>
-								<text class="text-lg">我的</text>
-							</view>
-						</view>
+			<view class="cu-list grid col-4 no-border">
+				<view class="cu-item" v-for='(item,index) in functionList' :key='index'>
+					<view>
+						<image :src="item.image" class="cu-avatar lg" mode="aspectFit"></image>
+					</view>
+					<text>{{item.text}}</text>
+				</view>
+			</view>
+		</view>
+		<view style="height: 100rpx;">
+			<view class="cu-bar tabbar bg-white foot">
+				<view v-for="(item,index) in tabInfo" class="action" :key="index">
+					<view>
+						<text :class="item.icon"></text>
+						<text class="text-lg">{{item.text}}</text>
 					</view>
 				</view>
 			</view>
@@ -81,32 +63,80 @@
 
 <script>
 	export default {
-		onLoad() {
-			uni.navigateTo({
-				url:'./testEntry'
-			})
-		},
+		onLoad() {},
 		data() {
 			return {
-				
+				swiperList: {
+					img1: "https://ossweb-img.qq.com/images/lol/web201310/skin/big99008.jpg",
+					img2: "https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg",
+					img3: "https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg"
+				},
+				mine: [{
+						image: "../../static/needToDo.png",
+						text: "我的代办"
+					},
+					{
+						image: "../../static/myJoint.png",
+						text: "我的参与"
+					},
+					{
+						image: "../../static/myApplication.png",
+						text: "我的申请"
+					},
+					{
+						image: "../../static/labList.png",
+						text: "待开发"
+					},
+				],
+				functionList: [{
+						image: "../../static/labList.png",
+						text: "查看实验室"
+					},
+					{
+						image: "../../static/labAppointment.png",
+						text: "申请实验室"
+					},
+					{
+						image: "../../static/labList.png",
+						text: "功能待开发"
+					},
+					{
+						image: "../../static/labList.png",
+						text: "功能待开发"
+					},
+				],
+				tabInfo:[
+					{
+						icon: 'cuIcon-home',
+						text: '主页',
+						nav:''
+					},
+					{
+						icon: 'cuIcon-notice',
+						text: '通知公告',
+						nav:''
+					},
+					{
+						icon: 'cuIcon-notice',
+						text: '待开发',
+						nav:''
+					},
+					{
+						icon: 'cuIcon-my',
+						text: '我的',
+						nav:''
+					}
+				]
 			}
-		},
-		methods: {
-			
 		}
+	}
+	methods: {
+
 	}
 </script>
 
 <style lang="scss">
-	swiper {
-		height: 400rpx;
-		.swiper-image {
-			height: 400rpx;
-			width: 750rpx;
-			border-radius: 15rpx;
-		}
-	}
-	.more{
+	.more {
 		color: rgb(0, 167, 244);
 	}
 </style>
