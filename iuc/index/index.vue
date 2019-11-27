@@ -9,7 +9,7 @@
 			</swiper-item>
 		</swiper>
 		<view class="bg-white flex margin-bottom padding-tb-xs justify-between align-center">
-			<view class="margin-left-sm text-xl">
+			<view class="margin-lr-xs text-xl">
 				<text class="cuIcon-notification"></text>
 				<text class="text-bold margin-lr-xs">通知公告</text>
 				<text class="text-lg">实验室管理系统又炸啦!</text>
