@@ -97,14 +97,17 @@
 				for(j=0;j<this.times[1].length;j++)this.times[1][j]=this.times[1][j]+' 月'
 				for(k=0;k<this.times[2].length;k++)this.times[2][k]=this.times[2][k]+' 日'
 				for(l=0;l<this.times[3].length;l++)this.times[3][l]=this.times[3][l]+' 时'
-				for(x=0;x<this.times[4].length;x++)this.times[4][x]=this.times[4][x]+' 分'
+				x=0;
+				for(i=0;i<6;i++){this.times[4][i]=x+' 分';x=x+10;}
 				this.flag++;
 				}
 				this.times3[0]=this.times[0];
 				this.times3[1]=this.times[1];
 				this.times3[2]=this.times[2];
 				this.times3[3]=this.times[3];
-				this.times3[4]=this.times[4];
+				this.times3[4]=[0];
+				for(i=0;i<6;i++)
+				this.times3[4][i]=this.times[4][i];
 			},
 			timesIndex(val){
 				this.timesIndex = val;
