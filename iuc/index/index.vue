@@ -24,14 +24,14 @@
 				</view>
 				<view class="action more" @click="mineClick()">{{mineShow ? "收起" : "展开"}}<text class="cuIcon-playfill"></text></view>
 			</view>
-			<transition-group class="cu-list grid col-4 no-border" v-show="mineShow">
+			<view class="cu-list grid col-4 no-border" v-show="mineShow">
 				<view class="cu-item" v-for='(item,index) in mine' :key='index' @click="navTo(item.soure)">
 					<view>
 						<image :src="item.image" class="cu-avatar bg-white lg" mode="aspectFit"></image>
 					</view>
 					<text>{{item.text}}</text>
 				</view>
-			</transition-group>
+			</view>
 		</view>
 		<view>
 			<view class="cu-bar bg-white">
