@@ -124,6 +124,7 @@
 						THIS.buildings = msg.buildings;
 						THIS.allRooms = msg.rooms;
 						THIS.teachers = msg.teachers;
+						THIS.model.endDate="";
 					}
 				})
 			},
