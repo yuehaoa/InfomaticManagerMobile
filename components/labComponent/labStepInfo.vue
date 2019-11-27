@@ -13,6 +13,7 @@
 		name: "LabStepInfo",
 		props: {
 			value: {
+				required: true,
 				type: Object, 
 				default: () => {}
 			}
