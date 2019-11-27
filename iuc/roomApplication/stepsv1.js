@@ -1,26 +1,26 @@
 const steps = [{
 		id: 0,
 		name: '填写申请表',
-		finalState: "",
-		err: ""
+		color: "",
+		icon: ""
 	},
 	{
 		id: 1,
 		name: '指导老师审核',
-		finalState: "",
-		err: ""
+		color: "",
+		icon: ""
 	},
 	{
 		id: 2,
-		name: '分配经办人',
-		finalState: "",
-		err: ""
+		name: '主管审核',
+		color: "",
+		icon: ""
 	},
 	{
 		id: 3,
-		name: '待经办人确认',
-		finalState: "",
-		err: ""
+		name: '管理员确认',
+		color: "",
+		icon: ""
 	}
 ]
 

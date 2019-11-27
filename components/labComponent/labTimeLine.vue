@@ -32,7 +32,9 @@
 	export default {
 		name: "labTimeLine",
 		props: {
-			timeline: {}
+			timeline: {
+				required: true
+			}
 		},
 		data() {
 			return {

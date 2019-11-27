@@ -14,7 +14,7 @@
 				<view class="title">申请原因</view>
 				<input :value="model.ApplicationReason" disabled />
 			</view>
-			<view class="cu-form-group margin-top">
+			<view class="cu-form-group">
 				<view class="title">起止时间</view>
 				<input :value="time" disabled />
 			</view>
@@ -32,21 +32,32 @@
 					<view class="picker">{{array[index]}}</view>
 				</picker>
 			</view>
-			<view class="action-list cu-list grid col-3 margin-top margin-bottom">
-				<view class="cu-item" @click="submit('确认')">
-					<view class="cuIcon-roundcheckfill text-green"></view>
-					<text>确认分配</text>
-				</view>
-				<view class="cu-item" @click="submit('修改')">
-					<view class="cuIcon-writefill text-red"></view>
-					<text>退回修改</text>
-				</view>
-				<view class="cu-item" @click="submit('无法')">
-					<view class="cuIcon-roundclosefill text-red"></view>
-					<text>取消流程</text>
-				</view>
-			</view>
 		</form>
+		<view class="cu-bar bg-white solids-bottom margin-top">
+			<view class="action text-xl">
+				<text class="cuIcon-title text-blue text-xl"></text>
+				<text class="text-bold text-xl">操作流程</text>
+			</view>
+			<view class="action" @click="foldUp">
+				<text class="text-df">{{displayTimeline?'收起':'展开'}}</text>
+				<text class="padding-lr-xs text-bold" :class="displayTimeline?'cuIcon-fold':'cuIcon-unfold'"></text>
+			</view>
+		</view>
+		<labTimeLine :timeline="timeline" v-show="displayTimeline"></labTimeLine>
+		<view class="action-list cu-list grid col-3 margin-top margin-bottom">
+			<view class="cu-item" @click="submit('确认')">
+				<view class="cuIcon-roundcheckfill text-green"></view>
+				<text>确认分配</text>
+			</view>
+			<view class="cu-item" @click="submit('修改')">
+				<view class="cuIcon-writefill text-red"></view>
+				<text>退回修改</text>
+			</view>
+			<view class="cu-item" @click="submit('无法')">
+				<view class="cuIcon-roundclosefill text-red"></view>
+				<text>取消流程</text>
+			</view>
+		</view>
 	</view>
 </template>
 <script>
@@ -66,7 +77,8 @@
 				model: {},
 				assignModel: {},
 				time: "",
-
+				timeline: {},
+				displayTimeline: false
 			}
 		},
 		methods: {
@@ -86,6 +98,7 @@
 				}, msg => {
 					if (msg.success) {
 						this.model = msg.data;
+						this.timeline = msg.timeline;
 						this.timeCombine();
 					}
 				})
@@ -195,6 +208,9 @@
 						break;
 					}
 				}
+			},
+			foldUp(){
+				this.displayTimeline=!this.displayTimeline;
 			}
 		}
 	}
