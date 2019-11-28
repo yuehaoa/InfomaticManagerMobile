@@ -132,7 +132,7 @@
 		transition: all 0.8s;
 	}
 	.application-list-move{
-		transition: transform 1s;
+		transition: all 0.8s;
 	}
 	.application-list-enter{
 		opacity: 0;
