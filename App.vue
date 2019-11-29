@@ -119,6 +119,11 @@
 					name: 'white',
 					color: '#ffffff'
 				},
+				{
+					title: '学院棕',
+					name: 'informatic-brown',
+					color: '#6d3b5e'
+				}
 			]
 		},
 	}

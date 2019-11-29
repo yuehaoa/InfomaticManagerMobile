@@ -1,6 +1,6 @@
 <template>
 	<view class="bg-white">
-		<cu-custom bgColor="bg-gradual-blue" isBack="">
+		<cu-custom bgColor="bg-informatic-brown" isBack="">
 			<block slot="backText">返回</block>
 			<block slot="content">实验室列表页</block>
 		</cu-custom>
