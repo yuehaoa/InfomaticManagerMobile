@@ -3458,6 +3458,11 @@ scroll-view.cu-steps .cu-item {
 	color: #ffffff;
 }
 
+.bg-informatic-brown {
+	background-color: #6d3b5e;
+	color: #ffffff;
+}
+
 .bg-grey {
 	background-color: #8799a3;
 	color: #ffffff;
@@ -3885,6 +3890,12 @@ scroll-view.cu-steps .cu-item {
 .line-brown,
 .lines-brown {
 	color: #a5673f;
+}
+
+.text-informatic-brown,
+.line-informatic-brown,
+.lines-informatic-brown {
+	color: #6d3b5e;
 }
 
 .text-grey,

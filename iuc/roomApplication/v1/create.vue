@@ -1,6 +1,6 @@
 <template>
 	<view id="lab-apply-creat">
-		<cu-custom bgColor="bg-gradual-blue" isBack="">
+		<cu-custom bgColor="bg-informatic-brown" isBack="">
 			<block slot="backText">返回</block>
 			<block slot="content">创建申请表</block>
 		</cu-custom>
@@ -36,7 +36,7 @@
 				</picker>
 			</view>
 			<view class="padding flex flex-direction">
-				<button class="cu-btn bg-green lg" :loading="isSubmitting" @click="submit()">提交</button>
+				<button class="cu-btn bg-informatic-brown lg" :loading="isSubmitting" @click="submit()">提交</button>
 			</view>
 		</form>
 	</view>

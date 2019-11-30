@@ -1,6 +1,6 @@
 <template>
 	<view id="lab-apply-list">
-		<cu-custom bgColor="bg-gradual-blue" isBack="">
+		<cu-custom bgColor="bg-informatic-brown" isBack="">
 			<block slot="backText">返回</block>
 			<block slot="content">所有申请</block>
 			<view class="action" slot="right" @click="addApplication()">添加</view>
