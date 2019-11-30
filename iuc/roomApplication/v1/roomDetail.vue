@@ -4,7 +4,7 @@
 			<block slot="backText">返回</block>
 			<block slot="content">实验室详细信息</block>
 		</cu-custom>
-		<labInfoCard :lab="labInfo" arrowDisplay="none" color="bg-gradual-blue"></labInfoCard>
+		<labInfoCard class="margin-lr" :lab="labInfo"></labInfoCard>
 		<scroll-view scroll-x class="bg-white nav text-center cardPosition shadow" :style="[{height:customBar + 'px'}]">
 			<view class="cu-item" :class="index==tabCur?'text-blue cur':''" v-for="(item,index) in arrays" :key="index" @tap="tabSelect" :data-id="index">
 				{{item}}
