@@ -1,14 +1,24 @@
 <template>
 	<view id="lab-apply-list">
-		<cu-custom bgColor="bg-gradual-blue" isBack="">
+		<cu-custom bgColor="bg-informatic-brown" isBack="">
 			<block slot="backText">返回</block>
 			<block slot="content">所有申请</block>
 			<view class="action" slot="right" @click="addApplication()">添加</view>
 		</cu-custom>
+		<view class="cu-bar bg-white solids-bottom">
+			<view class="action">
+				<text class="cuIcon-title text-blue text-xxl"></text>
+				<text class="text-xxl text-bold">实验室申请</text>
+			</view>
+			<view class="action" @click="foldUp">
+				<text class="text-df">{{display?'收起':'展开'}}</text>
+				<text class="padding-lr-xs" :class="display?'cuIcon-fold':'cuIcon-unfold'"></text>
+			</view>
+		</view>
 		<transition-group class="cu-list menu" name="list">
 			<view v-for="(item,index) in data" :key="index" @click="toExecute(item)" @touchstart="ListTouchStart"
-			 @touchmove="listTouchMove" @touchend="listTouchEnd" :data-target="'move-box-' + index" :class="modalName=='move-box-'+ index?'move-cur':''"
-			 class="cu-item" :style="{'transition-delay': index/8+'s'}">
+			 @touchmove="listTouchMove" v-show="display" @touchend="listTouchEnd" :data-target="'move-box-' + index" :class="modalName=='move-box-'+ index?'move-cur':''"
+			 class="cu-item">
 				<!--view class="cu-avatar round lg" :style="{ backgroundImage: `url('${icon}')` }"></view-->
 				<view class="margin-left content">
 					<view class="text-black text-lg">
@@ -86,6 +96,9 @@
 					this.modalName = null
 				}
 				this.listTouchDirection = null
+			},
+			foldUp(){
+				this.display = !this.display
 			}
 		},
 		data() {
@@ -98,7 +111,8 @@
 				data: [],
 				modalName: null,
 				listTouchStart: 0,
-				listTouchDirection: null
+				listTouchDirection: null,
+				display:true
 			}
 		}
 	}
@@ -110,8 +124,15 @@
 		padding-bottom: 6rpx;
 		transition: all 1s;
 	}
+	.list-move{
+		transition: all 1s;
+	}
 	.list-enter{
 		opacity: 0;
-		transform: translateX(120rpx);
+		transform: translateY(-30px);
+	}
+	.list-leave-to{
+		opacity: 0;
+		transform: translateY(-30px);
 	}
 </style>

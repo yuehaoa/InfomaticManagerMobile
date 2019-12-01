@@ -1,6 +1,6 @@
 <template>
 	<view id="lab-apply-creat">
-		<cu-custom bgColor="bg-gradual-blue" isBack="">
+		<cu-custom bgColor="bg-informatic-brown" isBack="">
 			<block slot="backText">返回</block>
 			<block slot="content">创建申请表</block>
 		</cu-custom>
@@ -21,11 +21,11 @@
 			</view>
 			<view class="cu-form-group">
 				<view class="title">开始日期<text class="text-red">*</text></view>
-				<timer placeholder="请选择开始日期" @change="selectDate1"></timer>
+				<timePicker placeholder="请选择开始日期" v-model="model.startDate"></timePicker>
 			</view>
 			<view class="cu-form-group">
 				<view class="title">结束日期<text class="text-red">*</text></view>
-				<timer placeholder="请选择结束日期" @change="selectDate2"></timer>
+				<timePicker placeholder="请选择结束日期" v-model="model.endDate"></timePicker>
 			</view>
 			<view class="cu-form-group" v-if="isStudent">
 				<view class="title">选择指导老师<text class="text-red">*</text></view>
@@ -36,7 +36,7 @@
 				</picker>
 			</view>
 			<view class="padding flex flex-direction">
-				<button class="cu-btn bg-green lg" :loading="isSubmitting" @click="submit()">提交</button>
+				<button class="cu-btn bg-informatic-brown lg" :loading="isSubmitting" @click="submit()">提交</button>
 			</view>
 		</form>
 	</view>
@@ -62,27 +62,6 @@
 				let v = this.rooms[index];
 				this.currentRoom = v.ID === this.guidEmpty ? "选择实验室" : `${v.Building.Name} ${v.Name}`;
 				this.model.roomId = v.ID;
-			},
-			selectDate1(e) {
-				this.model.startDate = e || "请选择开始日期";
-				this.model.startDate = this.model.startDate.replace("年", "/").replace("月", "/").replace("日", "")
-					.replace("时", ":").replace("分", "");
-				if (Date.parse(this.model.startDate) > Date.parse(this.model.endDate)) {
-					this.model.endDate = this.model.startDate;
-					uni.showToast({
-						title: "结束时间不能早于开始时间"
-					});
-				}
-			},
-			selectDate2(e) {
-				this.model.endDate = e || "请选择结束日期";
-				this.model.endDate = this.model.endDate.replace("年", "/").replace("月", "/").replace("日", "")
-					.replace("时", ":").replace("分", "");
-				if (Date.parse(this.model.startDate) > Date.parse(this.model.endDate)) {
-					uni.showToast({
-						title: "结束时间不能早于开始时间"
-					});
-				}
 			},
 			submit() {
 				this.isSubmitting = true;
@@ -124,7 +103,6 @@
 						THIS.buildings = msg.buildings;
 						THIS.allRooms = msg.rooms;
 						THIS.teachers = msg.teachers;
-						THIS.model.endDate="";
 					}
 				})
 			},
@@ -152,9 +130,9 @@
 					applicationReason: '',
 					roomId: '',
 					guideTeacherId: '',
-					startDate: '请选择开始日期',
+					startDate: '',
 					state: 0,
-					endDate: '请选择结束日期',
+					endDate: '',
 					isDateTime: true
 				},
 				isSubmitting: false,
@@ -170,7 +148,7 @@
 				roomIndex: [0, 0],
 				stepInfo: {}
 			}
-		}
+		},
 	}
 </script>
 
