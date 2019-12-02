@@ -5,19 +5,17 @@
 			<block slot="content">我的待办</block>
 			<view class="action" slot="right" @click="addApplication()">添加</view>
 		</cu-custom>
-		<view>
-			<transition-group appear name="list" class="cu-card">
-				<view class="cu-item bg-informatic-brown shadow"
-				v-for="(item,index) in data" :key="index" @click="toExecute(item)">
-					<stiky :item="item" />
-				</view>
-			</transition-group>
-			<template v-if="data.length===0">
-				<view class="padding-tb text-center text-lg">
-					<text class="text-bold text-gray">暂无数据</text>
-				</view>
-			</template>
-		</view>
+		<transition-group appear class="cu-card" name="list">
+			<view class="cu-item bg-informatic-brown shadow"
+			v-for="(item,index) in data" :key="index" @click="toExecute(item)">
+				<stiky :item="item" />
+			</view>
+		</transition-group>
+		<template v-if="data.length===0">
+			<view class="padding-tb text-center text-lg">
+				<text class="text-bold text-gray">暂无数据</text>
+			</view>
+		</template>
 	</view>
 </template>
 
@@ -91,11 +89,6 @@
 </script>
 	
 <style>
-	.cu-list>.cu-item{
-		padding-top: 18rpx;
-		padding-bottom: 8rpx;
-		transition: all 0.8s;
-	}
 	.list-move{
 		transition: all 0.8s;
 	}
