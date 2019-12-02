@@ -2,7 +2,7 @@
 	<view id="lab-apply-list">
 		<cu-custom bgColor="bg-informatic-brown" isBack="">
 			<block slot="backText">返回</block>
-			<block slot="content">我的待办</block>
+			<block slot="content">我的申请</block>
 			<view class="action" slot="right" @click="addApplication()">添加</view>
 		</cu-custom>
 		<transition-group class="cu-card" name="list">
@@ -52,25 +52,6 @@
 					url: item.RouteData
 				})
 			}
-			/* ListTouch触摸开始
-			ListTouchStart(e) {
-				this.listTouchStart = e.touches[0].pageX
-			},
-
-			// ListTouch计算方向
-			ListTouchMove(e) {
-				this.listTouchDirection = e.touches[0].pageX - this.listTouchStart > 0 ? 'right' : 'left'
-			},
-
-			// ListTouch计算滚动
-			ListTouchEnd(e) {
-				if (this.listTouchDirection == 'left') {
-					this.modalName = e.currentTarget.dataset.target
-				} else {
-					this.modalName = null
-				}
-				this.listTouchDirection = null
-			}*/
 		},
 		data() {
 			return {

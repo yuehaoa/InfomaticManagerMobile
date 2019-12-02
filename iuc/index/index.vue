@@ -80,7 +80,7 @@
 				mine: [{
 						image: "../../static/我的申请.png",
 						text: "我的申请",
-						soure: "../roomApplication/v1/list"
+						soure: "../roomApplication/v1/myList"
 					},
 					{
 						image: "../../static/我的待办.png",
@@ -90,7 +90,7 @@
 					{
 						image: "../../static/我的参与.png",
 						text: "我的参与",
-						soure: ""
+						soure: "../roomApplication/v1/myInvolve"
 					}
 				],
 				functionList: [{
