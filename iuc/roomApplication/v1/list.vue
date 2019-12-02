@@ -5,7 +5,7 @@
 			<block slot="content">我的待办</block>
 			<view class="action" slot="right" @click="addApplication()">添加</view>
 		</cu-custom>
-		<transition-group appear class="cu-card" name="list">
+		<transition-group class="cu-card" name="list">
 			<view class="cu-item bg-informatic-brown shadow"
 			v-for="(item,index) in data" :key="index" @click="toExecute(item)">
 				<stiky :item="item" />
@@ -100,8 +100,5 @@
 		opacity: 0;
 		transform: translateY(-30px);
 	}
-	.list-appare{
-		opacity: 0;
-		transform: translateY(-30px);
-	}
+	
 </style>
