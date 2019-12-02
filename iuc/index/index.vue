@@ -10,8 +10,10 @@
 			<view class="margin-left text-xl">
 				<text class="cuIcon-notification"></text>
 				<text class="text-bold margin-lr-xs">通知公告</text>
-				<text class="text-lg">实验室管理系统又炸啦!</text>
 			</view>
+			<swiper style="height: 40rpx;width: 250rpx;" class="swiper" autoplay="true" interval="2000" duration="500" circular="true" vertical="true">
+				<swiper-item v-for="(item,index) in swiperArray" :key='index'>{{item}}</swiper-item>
+			</swiper>
 			<view class="margin-right text-informatic-brown">查看更多<text class="cuIcon-playfill"></text></view>
 		</view>
 		<view class="padding-bottom bg-white">
@@ -65,6 +67,11 @@
 		},
 		data() {
 			return {
+				swiperArray: [
+					"实验室管理系统",
+					"开通新功能啦~",
+					"新功能炸啦！"
+				],
 				swiperList: {
 					img1: "../../static/轮播图片画板1.jpg",
 					img2: "../../static/轮播图片画板2.jpg",
