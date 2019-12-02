@@ -5,40 +5,29 @@
 			<block slot="content">我的待办</block>
 			<view class="action" slot="right" @click="addApplication()">添加</view>
 		</cu-custom>
-		<view class="cu-bar bg-white solids-bottom">
-			<view class="action text-xxl">
-				<text class="cuIcon-title text-blue text-xxl"></text>
-				<text class="text-bold text-xxl">实验室申请</text>
-			</view>
-			<view class="action" @click="foldUp">
-				<text class="text-df">{{display?'收起':'展开'}}</text>
-				<text class="padding-lr-xs text-bold" :class="display?'cuIcon-fold':'cuIcon-unfold'"></text>
-			</view>
-		</view>
 		<view>
-			<transition-group class="cu-list menu" name="application-list">
-				<view class="cu-item" v-show="display" v-for="(item,index) in data" :key="index" @click="toExecute(item)" @touchstart="ListTouchStart"
-				 @touchmove="ListTouchMove" @touchend="ListTouchEnd" :data-target="'move-box-' + index" :class="modalName=='move-box-'+ index?'move-cur':''">
-					<!--view class="cu-avatar round lg" :style="{ backgroundImage: `url('${icon}')` }"></view-->
-					<view class="margin-left content">
-						<view class="text-black text-lg">
-							<view class="text-cut text-xl">{{item.RoomName}}申请表</view>
-							<view class="cu-tag round sm" :class="'bg-' + wColor[item.State]">{{ workflow[item.State] }}</view>
-						</view>
-						<view class="text-gray">
-							<view class="text-cut padding-tb-xs" style="line-height: 36rpx;">
-								<text>申请人：{{item.Owner}}\n</text>
-								<text>申请时段：{{item.StartDate.slice(5)}}-{{item.EndDate.slice(5)}}</text>
+			<transition-group appear name="list" class="cu-card">
+				<view class="cu-item bg-informatic-brown shadow"
+				v-for="(item,index) in data" :key="index" @click="toExecute(item)">
+					<view class="cu-list menu-avatar">
+						<view class="cu-item">
+							<view class="cu-avatar round lg">{{item.Owner.substr(0,1)}}</view>
+							<view class="content flex-sub">
+								<view class="text-black text-lg">
+									<view class="text-cut text-xl">{{item.Owner}}提交的实验室申请</view>
+									<!--view class="cu-tag round sm" :class="'bg-' + wColor[item.State]">{{ workflow[item.State] }}</view-->
+								</view>
+								<view class="text-gray">
+									<view class="text-cut padding-tb-xs" style="line-height: 36rpx;">
+										<text>申请时段：{{item.StartDate.slice(5)}}-{{item.EndDate.slice(5)}}</text>
+									</view>
+								</view>
 							</view>
 						</view>
 					</view>
-					<view class="move">
-						<view class="bg-green" v-if="item.IsMyStep" @click.stop="toExecute(item)">执行</view>
-						<view class="bg-blue" @click.stop="toDetail(item.ID)">详细</view>
-					</view>
 				</view>
 			</transition-group>
-			<template v-if="display &&data.length===0">
+			<template v-if="data.length===0">
 				<view class="padding-tb text-center text-lg">
 					<text class="text-bold text-gray">暂无数据</text>
 				</view>
@@ -79,16 +68,8 @@
 				uni.navigateTo({
 					url: item.RouteData
 				})
-			},
-			toDetail(id) {
-				uni.navigateTo({
-					url: "/iuc/roomApplication/v1/detail?id=" + id
-				})
-			},
-			foldUp() {
-				this.display = !this.display;
-			},
-			// ListTouch触摸开始
+			}
+			/* ListTouch触摸开始
 			ListTouchStart(e) {
 				this.listTouchStart = e.touches[0].pageX
 			},
@@ -106,7 +87,7 @@
 					this.modalName = null
 				}
 				this.listTouchDirection = null
-			}
+			}*/
 		},
 		data() {
 			return {
@@ -118,8 +99,7 @@
 				data: [],
 				modalName: null,
 				listTouchStart: 0,
-				listTouchDirection: null,
-				display: true
+				listTouchDirection: null
 			}
 		}
 	}
@@ -131,14 +111,18 @@
 		padding-bottom: 8rpx;
 		transition: all 0.8s;
 	}
-	.application-list-move{
+	.list-move{
 		transition: all 0.8s;
 	}
-	.application-list-enter{
+	.list-enter{
 		opacity: 0;
 		transform: translateY(-30px);
 	}
-	.application-list-leave-to{
+	.list-leave-to{
+		opacity: 0;
+		transform: translateY(-30px);
+	}
+	.list-appare{
 		opacity: 0;
 		transform: translateY(-30px);
 	}
