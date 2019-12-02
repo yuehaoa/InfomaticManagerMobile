@@ -35,6 +35,9 @@ Vue.component('labTimeLine',labTimeLine)
 import sticky from './components/labComponent/sticky.vue'
 Vue.component('sticky',sticky)
 
+import navTab from './components/labComponent/navTab.vue'
+Vue.component('navTab',navTab)
+
 Vue.config.productionTip = false
 
 App.mpType = 'app'
