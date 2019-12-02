@@ -3,7 +3,7 @@
 		<swiper class="screen-swiper" autoplay="true" indicator-dots="true" 
 		indicator-active-color="white" indicator-color="grey" circular="true">
 			<swiper-item v-for='(item,index) in swiperList' :key='index'>
-				<image :src="item" mode="aspectFill"></image>
+				<image :src="item"></image>
 			</swiper-item>
 		</swiper>
 		<view class="bg-white flex solids-bottom padding-tb-sm justify-between align-center">
@@ -66,9 +66,9 @@
 		data() {
 			return {
 				swiperList: {
-					img1: "https://ossweb-img.qq.com/images/lol/web201310/skin/big99008.jpg",
-					img2: "https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg",
-					img3: "https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg"
+					img1: "../../static/轮播图片画板1.jpg",
+					img2: "../../static/轮播图片画板2.jpg",
+					img3: "../../static/轮播图片画板3.jpg"
 				},
 				mine: [{
 						image: "../../static/我的申请.png",

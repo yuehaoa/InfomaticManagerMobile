@@ -1,7 +1,5 @@
 <template>
 	<view class="cu-card">
-		<view class="cu-item bg-informatic-brown shadow"
-		v-for="(item,index) in data" :key="index" @click="toExecute(item)">
 			<view class="cu-list menu-avatar">
 				<view class="cu-item">
 					<view class="cu-avatar round lg">{{item.Owner.substr(0,1)}}</view>
@@ -18,12 +16,18 @@
 					</view>
 				</view>
 			</view>
-		</view>
 	</view>
 </template>
 
 <script>
-	
+	export default {
+		props: {
+			name: "stiky",
+			item: {
+				required: true
+			}
+		}
+	}
 </script>
 
 <style>

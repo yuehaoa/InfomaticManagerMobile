@@ -32,6 +32,9 @@ Vue.component('lab-Steps',labSteps)
 import labTimeLine from './components/labComponent/labTimeLine.vue'
 Vue.component('labTimeLine',labTimeLine)
 
+import stiky from './components/labComponent/sticky.vue'
+Vue.component('stiky',stiky)
+
 Vue.config.productionTip = false
 
 App.mpType = 'app'
