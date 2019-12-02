@@ -20,7 +20,7 @@
 <script>
 	export default {
 		props: {
-			name: "stiky",
+			name: "sticky",
 			item: {
 				required: true
 			}

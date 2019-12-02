@@ -32,8 +32,8 @@ Vue.component('lab-Steps',labSteps)
 import labTimeLine from './components/labComponent/labTimeLine.vue'
 Vue.component('labTimeLine',labTimeLine)
 
-import stiky from './components/labComponent/sticky.vue'
-Vue.component('stiky',stiky)
+import sticky from './components/labComponent/sticky.vue'
+Vue.component('sticky',sticky)
 
 Vue.config.productionTip = false
 
