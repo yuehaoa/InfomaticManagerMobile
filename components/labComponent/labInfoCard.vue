@@ -1,9 +1,9 @@
 <template>
 	<view class="padding">
 		<view class="shadow shadow-lg bg-white bg-color">
-			<view class="flex padding-lr justify-between align-center padding-tb-sm">
+			<view class="flex padding-lr justify-between align-center padding-tb-xs">
 				<view class="logo" :style="{ backgroundImage: `url('${icon}')`}"></view>
-				<view class="text-xl text-white">{{lab.RoomCode}}</view>
+				<view class="text-xxl text-white">{{lab.RoomCode}}</view>
 			</view>
 			<view class="text-black bg-gray padding-tb text-center">
 				<text class="text-bold text-xxl">{{lab.Name}}</text>
@@ -46,8 +46,8 @@
 <style>
 	.bg-color{
 		background-color:#6d3b5e;
-		border-top-left-radius: 12%;
-		border-bottom-right-radius: 12%;
+		border-top-left-radius: 48rpx;
+		border-bottom-right-radius: 48rpx;
 	}
 	.logo{
 		width: 300rpx;
