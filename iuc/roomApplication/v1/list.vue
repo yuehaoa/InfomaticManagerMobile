@@ -6,9 +6,9 @@
 			<view class="action" slot="right" @click="addApplication()">添加</view>
 		</cu-custom>
 		<transition-group class="cu-card" name="list">
-			<view v-for="(item,index) in data" class="cu-item bg-informatic-brown shadow"
-			 :key="index" @click="toExecute(item)">
-				<stiky :item="item" />
+			<view class="cu-item bg-informatic-brown shadow" v-show="display"
+			v-for="(item,index) in data" :key="index" @click="toExecute(item)">
+				<sticky :item="item" />
 			</view>
 		</transition-group>
 		<template v-if="data.length===0">
@@ -82,16 +82,14 @@
 				data: [],
 				modalName: null,
 				listTouchStart: 0,
-				listTouchDirection: null
+				listTouchDirection: null,
+				display: true
 			}
 		}
 	}
 </script>
 	
 <style>
-	.cu-card > .cu-item{
-		transition: all 1s;
-	}
 	.list-move{
 		transition: all 0.8s;
 	}

@@ -38,7 +38,7 @@
 			getData(p) {
 				let page = p || this.page;
 				let pageSize = this.pageSize;
-				uni.post("/api/roomApp/v1/GetAllApplications", {
+				uni.post("/api/roomApp/v1/GetAllMyApplication", {
 					page,
 					pageSize,
 				}, msg => {

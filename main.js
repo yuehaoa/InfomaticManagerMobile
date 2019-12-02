@@ -14,7 +14,7 @@ import cuCustom from './colorui/components/cu-custom.vue'
 Vue.component('cu-custom',cuCustom)
 
 
-import timePicker from './components/lanxiujuan-dyDateTime/lanxiujuan-dyDateTime.vue'
+import timePicker from './components/mx-datepicker/mx-datepicker.vue'
 Vue.component('timePicker',timePicker)
 
 let app = require("@/config");

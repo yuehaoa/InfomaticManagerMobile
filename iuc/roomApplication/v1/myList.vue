@@ -33,7 +33,7 @@
 			getData(p) {
 				let page = p || this.page;
 				let pageSize = this.pageSize;
-				uni.post("/api/roomApp/v1/GetMyPending", {
+				uni.post("/api/roomApp/v1/GetMyApplication", {
 					page,
 					pageSize
 				}, msg => {
