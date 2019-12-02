@@ -1,5 +1,5 @@
 <template>
-	<view id="lab-apply-list">
+	<view id="all-apply-list">
 		<cu-custom bgColor="bg-informatic-brown" isBack="">
 			<block slot="backText">返回</block>
 			<block slot="content">所有申请</block>
@@ -16,8 +16,8 @@
 			</view>
 		</view>
 		<transition-group class="cu-list menu" name="list">
-			<view v-for="(item,index) in data" :key="index" @click="toExecute(item)" @touchstart="ListTouchStart"
-			 @touchmove="listTouchMove" v-show="display" @touchend="listTouchEnd" :data-target="'move-box-' + index" :class="modalName=='move-box-'+ index?'move-cur':''"
+			<view v-for="(item,index) in data" :key="index" @click="toExecute(item)" @touchstart="ListTouchStart" @touchmove="listTouchMove"
+			 v-show="display" @touchend="listTouchEnd" :data-target="'move-box-' + index" :class="modalName=='move-box-'+ index?'move-cur':''"
 			 class="cu-item">
 				<!--view class="cu-avatar round lg" :style="{ backgroundImage: `url('${icon}')` }"></view-->
 				<view class="margin-left content">
@@ -97,7 +97,7 @@
 				}
 				this.listTouchDirection = null
 			},
-			foldUp(){
+			foldUp() {
 				this.display = !this.display
 			}
 		},
@@ -112,7 +112,7 @@
 				modalName: null,
 				listTouchStart: 0,
 				listTouchDirection: null,
-				display:true
+				display: true
 			}
 		}
 	}
@@ -124,14 +124,17 @@
 		padding-bottom: 6rpx;
 		transition: all 1s;
 	}
-	.list-move{
+
+	.list-move {
 		transition: all 1s;
 	}
-	.list-enter{
+
+	.list-enter {
 		opacity: 0;
 		transform: translateY(-30px);
 	}
-	.list-leave-to{
+
+	.list-leave-to {
 		opacity: 0;
 		transform: translateY(-30px);
 	}
