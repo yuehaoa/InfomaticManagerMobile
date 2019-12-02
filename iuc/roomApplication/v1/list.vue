@@ -5,8 +5,8 @@
 			<block slot="content">我的待办</block>
 			<view class="action" slot="right" @click="addApplication()">添加</view>
 		</cu-custom>
-		<transition-group class="cu-card" name="list">
-			<view class="cu-item bg-informatic-brown shadow"
+		<transition-group class="cu-card" name="alist">
+			<view class="cu-item bg-informatic-brown shadow" v-show="display"
 			v-for="(item,index) in data" :key="index" @click="toExecute(item)">
 				<stiky :item="item" />
 			</view>
@@ -82,21 +82,22 @@
 				data: [],
 				modalName: null,
 				listTouchStart: 0,
-				listTouchDirection: null
+				listTouchDirection: null,
+				display: true
 			}
 		}
 	}
 </script>
 	
 <style>
-	.list-move{
+	.alist-move{
 		transition: all 0.8s;
 	}
-	.list-enter{
+	.alist-enter{
 		opacity: 0;
 		transform: translateY(-30px);
 	}
-	.list-leave-to{
+	.alist-leave-to{
 		opacity: 0;
 		transform: translateY(-30px);
 	}
