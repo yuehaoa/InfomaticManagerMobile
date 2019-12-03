@@ -3,15 +3,17 @@
 		<swiper class="screen-swiper" autoplay="true" indicator-dots="true" 
 		indicator-active-color="white" indicator-color="grey" circular="true">
 			<swiper-item v-for='(item,index) in swiperList' :key='index'>
-				<image :src="item" mode="aspectFill"></image>
+				<image :src="item"></image>
 			</swiper-item>
 		</swiper>
 		<view class="bg-white flex solids-bottom padding-tb-sm justify-between align-center">
 			<view class="margin-left text-xl">
 				<text class="cuIcon-notification"></text>
 				<text class="text-bold margin-lr-xs">通知公告</text>
-				<text class="text-lg">实验室管理系统又炸啦!</text>
 			</view>
+			<swiper style="height: 40rpx;width: 250rpx;" class="swiper" autoplay="true" interval="5000" duration="500" circular="true" vertical="true">
+				<swiper-item v-for="(item,index) in swiperArray" :key='index'>{{item}}</swiper-item>
+			</swiper>
 			<view class="margin-right text-informatic-brown">查看更多<text class="cuIcon-playfill"></text></view>
 		</view>
 		<view class="padding-bottom bg-white">
@@ -46,16 +48,7 @@
 				</view>
 			</view>
 		</view>
-		<view style="height: 100rpx;">
-			<view class="cu-bar tabbar bg-white foot">
-				<view v-for="(item,index) in tabInfo" class="action" :key="index" @click="navTo(item.nav)">
-					<view :class="{'text-informatic-brown':index === 0}">
-						<text :class="item.icon"></text>
-						<text class="text-lg">{{item.text}}</text>
-					</view>
-				</view>
-			</view>
-		</view>
+		<navTab :selection='0' />
 	</view>
 </template>
 
@@ -65,15 +58,20 @@
 		},
 		data() {
 			return {
+				swiperArray: [
+					"实验室管理系统",
+					"开通新功能啦~",
+					"新功能炸啦！"
+				],
 				swiperList: {
-					img1: "https://ossweb-img.qq.com/images/lol/web201310/skin/big99008.jpg",
-					img2: "https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg",
-					img3: "https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg"
+					img1: "../../static/轮播图片画板1.jpg",
+					img2: "../../static/轮播图片画板2.jpg",
+					img3: "../../static/轮播图片画板3.jpg"
 				},
 				mine: [{
 						image: "../../static/我的申请.png",
 						text: "我的申请",
-						soure: "../roomApplication/v1/list"
+						soure: "../roomApplication/v1/myList"
 					},
 					{
 						image: "../../static/我的待办.png",
@@ -83,7 +81,7 @@
 					{
 						image: "../../static/我的参与.png",
 						text: "我的参与",
-						soure: ""
+						soure: "../roomApplication/v1/myInvolve"
 					}
 				],
 				functionList: [{
@@ -103,27 +101,6 @@
 					},
 
 				],
-				tabInfo: [{
-						icon: 'cuIcon-home',
-						text: '主页',
-						nav: ''
-					},
-					{
-						icon: 'cuIcon-notice',
-						text: '通知公告',
-						nav: ''
-					},
-					{
-						icon: 'cuIcon-notice',
-						text: '待开发',
-						nav: ''
-					},
-					{
-						icon: 'cuIcon-my',
-						text: '我的',
-						nav: '../profile/profile'
-					}
-				],
 				mineShow: true,
 				functionshow: true
 			}
@@ -136,7 +113,7 @@
 				this.mineShow = !this.mineShow;
 			},
 			navTo(url) {
-				uni.navigateTo({
+				uni.redirectTo({
 					url: url
 				})
 			}
