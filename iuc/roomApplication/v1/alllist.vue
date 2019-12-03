@@ -1,5 +1,5 @@
 <template>
-	<view id="lab-apply-list">
+	<view id="all-apply-list">
 		<cu-custom bgColor="bg-informatic-brown" isBack="">
 			<block slot="backText">返回</block>
 			<block slot="content">所有申请</block>
@@ -15,26 +15,10 @@
 				<text class="padding-lr-xs" :class="display?'cuIcon-fold':'cuIcon-unfold'"></text>
 			</view>
 		</view>
-		<transition-group class="cu-list menu" name="list">
-			<view v-for="(item,index) in data" :key="index" @click="toExecute(item)" @touchstart="ListTouchStart"
-			 @touchmove="listTouchMove" v-show="display" @touchend="listTouchEnd" :data-target="'move-box-' + index" :class="modalName=='move-box-'+ index?'move-cur':''"
-			 class="cu-item">
-				<!--view class="cu-avatar round lg" :style="{ backgroundImage: `url('${icon}')` }"></view-->
-				<view class="margin-left content">
-					<view class="text-black text-lg">
-						<view class="text-cut text-xl">{{item.RoomName}}申请表</view>
-						<view class="cu-tag round sm" :class="'bg-' + wColor[item.State]">{{ workflow[item.State] }}</view>
-					</view>
-					<view class="text-gray padding-tb-xs">
-						<view class="text-cut" style="line-height: 36rpx;">
-							<text>申请人：{{item.Owner}}\n申请时段：{{item.StartDate.slice(5)}}-{{item.EndDate.slice(5)}}</text>
-						</view>
-					</view>
-				</view>
-				<view class="move">
-					<view class="bg-green" v-if="item.IsMyStep" @click.stop="toExecute(item)">执行</view>
-					<view class="bg-blue" @click.stop="toDetail(item.ID)">详细</view>
-				</view>
+		<transition-group class="cu-list cu-card" name="list">
+			<view class="cu-item bg-informatic-brown shadow"
+			 v-for="(item,index) in data" :key="index" @click="toExecute(item)" v-show="display">
+				<sticky :item="item" />
 			</view>
 		</transition-group>
 	</view>
@@ -97,7 +81,7 @@
 				}
 				this.listTouchDirection = null
 			},
-			foldUp(){
+			foldUp() {
 				this.display = !this.display
 			}
 		},
@@ -112,7 +96,7 @@
 				modalName: null,
 				listTouchStart: 0,
 				listTouchDirection: null,
-				display:true
+				display: true
 			}
 		}
 	}
@@ -120,18 +104,19 @@
 
 <style>
 	.cu-list>.cu-item {
-		padding-top: 16rpx;
-		padding-bottom: 6rpx;
 		transition: all 1s;
 	}
-	.list-move{
+
+	.list-move {
 		transition: all 1s;
 	}
-	.list-enter{
+
+	.list-enter {
 		opacity: 0;
 		transform: translateY(-30px);
 	}
-	.list-leave-to{
+
+	.list-leave-to {
 		opacity: 0;
 		transform: translateY(-30px);
 	}

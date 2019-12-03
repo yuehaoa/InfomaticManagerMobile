@@ -50,6 +50,7 @@
 				<i class="cuIcon-right"></i>
 			</navigator>
 		</view>
+		<navTab :selection='3' />
 	</view>
 </template>
 
@@ -61,7 +62,6 @@
 				realName: "",
 				avatar: "",
 				currentUserGuid: "",
-
 			}
 		},
 		onLoad() {

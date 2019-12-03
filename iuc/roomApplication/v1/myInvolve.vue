@@ -15,7 +15,7 @@
 				<text class="padding-lr-xs" :class="display?'cuIcon-fold':'cuIcon-unfold'"></text>
 			</view>
 		</view>
-		<transition-group class="cu-card" name="list">
+		<transition-group class="cu-list cu-card" name="list">
 			<view class="cu-item bg-informatic-brown shadow"
 			 v-for="(item,index) in data" :key="index" @click="toExecute(item)" v-show="display">
 				<sticky :item="item" />
@@ -38,7 +38,7 @@
 			getData(p) {
 				let page = p || this.page;
 				let pageSize = this.pageSize;
-				uni.post("/api/roomApp/v1/GetAllApplications", {
+				uni.post("/api/roomApp/v1/GetAllMyApplication", {
 					page,
 					pageSize,
 				}, msg => {

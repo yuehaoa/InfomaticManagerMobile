@@ -11,7 +11,7 @@
 				<text class="cuIcon-notification"></text>
 				<text class="text-bold margin-lr-xs">通知公告</text>
 			</view>
-			<swiper style="height: 40rpx;width: 250rpx;" class="swiper" autoplay="true" interval="2000" duration="500" circular="true" vertical="true">
+			<swiper style="height: 40rpx;width: 250rpx;" class="swiper" autoplay="true" interval="5000" duration="500" circular="true" vertical="true">
 				<swiper-item v-for="(item,index) in swiperArray" :key='index'>{{item}}</swiper-item>
 			</swiper>
 			<view class="margin-right text-informatic-brown">查看更多<text class="cuIcon-playfill"></text></view>
@@ -48,16 +48,7 @@
 				</view>
 			</view>
 		</view>
-		<view style="height: 100rpx;">
-			<view class="cu-bar tabbar bg-white foot">
-				<view v-for="(item,index) in tabInfo" class="action" :key="index" @click="navTo(item.nav)">
-					<view :class="{'text-informatic-brown':index === 0}">
-						<text :class="item.icon"></text>
-						<text class="text-lg">{{item.text}}</text>
-					</view>
-				</view>
-			</view>
-		</view>
+		<navTab :selection='0' />
 	</view>
 </template>
 
@@ -110,27 +101,6 @@
 					},
 
 				],
-				tabInfo: [{
-						icon: 'cuIcon-home',
-						text: '主页',
-						nav: ''
-					},
-					{
-						icon: 'cuIcon-notice',
-						text: '通知公告',
-						nav: ''
-					},
-					{
-						icon: 'cuIcon-notice',
-						text: '待开发',
-						nav: ''
-					},
-					{
-						icon: 'cuIcon-my',
-						text: '我的',
-						nav: '../profile/profile'
-					}
-				],
 				mineShow: true,
 				functionshow: true
 			}
@@ -143,7 +113,7 @@
 				this.mineShow = !this.mineShow;
 			},
 			navTo(url) {
-				uni.navigateTo({
+				uni.redirectTo({
 					url: url
 				})
 			}

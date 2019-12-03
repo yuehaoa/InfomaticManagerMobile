@@ -14,7 +14,7 @@ import cuCustom from './colorui/components/cu-custom.vue'
 Vue.component('cu-custom',cuCustom)
 
 
-import timePicker from './components/lanxiujuan-dyDateTime/lanxiujuan-dyDateTime.vue'
+import timePicker from './components/mx-datepicker/mx-datepicker.vue'
 Vue.component('timePicker',timePicker)
 
 let app = require("@/config");
@@ -34,6 +34,9 @@ Vue.component('labTimeLine',labTimeLine)
 
 import sticky from './components/labComponent/sticky.vue'
 Vue.component('sticky',sticky)
+
+import navTab from './components/labComponent/navTab.vue'
+Vue.component('navTab',navTab)
 
 Vue.config.productionTip = false
 
