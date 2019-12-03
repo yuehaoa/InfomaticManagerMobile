@@ -5,7 +5,7 @@
 			<block slot="content">实验室列表页</block>
 		</cu-custom>
 		<scroll-view scroll-x class="bg-white nav text-center" scroll-with-animation :scroll-left="scrollLeft">
-			<view class="cu-item" :class="index==TabCur?'text-green cur':''" v-for="(item,index) in buildings" :key="index" @tap="tabSelect($event, item.ID)"
+			<view class="cu-item" :class="index==TabCur?'text-informatic-brown text-bold cur':''" v-for="(item,index) in buildings" :key="index" @tap="tabSelect($event, item.ID)"
 			 :data-id="index">
 				<span>{{item.Name}}</span>
 			</view>
