@@ -74,6 +74,14 @@
 			"style": {}
 		},
 		{
+			"path":"iuc/roomApplication/v1/myList",
+			"style": {}
+		},
+		{
+			"path":"iuc/roomApplication/v1/myInvolve",
+			"style": {}
+		},
+		{
 			"path":"iuc/profile/profile",
 			"style": {}
 		},

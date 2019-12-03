@@ -1,35 +1,36 @@
 <template>
-		<view class="padding-sm">
-			<view :class="color" class="shadow shadow-lg radius bg-white">
-				<view class="flex padding-lr solid-bottom justify-between align-center padding-tb-xs">
-					<view class="cu-avatar round lg" :style="{ backgroundImage: `url('${icon}')` }"></view>
-					<view class="text-xl text-white">{{`${lab.Building.SubCampus} ${lab.Building.Name}`}}</view>
-				</view>
-				<view class="text-sl text-white flex justify-center padding-sm">
-					{{lab.Name}}
-				</view>
-				<view class="flex flex-wrap text-white text-df margin-sm">
-					<view class="basis-xl">管理员:{{lab.Administrator}}</view>
-					<view class="basis-xl padding-bottom-xs">管理员联系电话:{{lab.AdminTelephone}}</view>
-					<view class="basis-xs text-xl padding-bottom-xs":style="{display:arrowDisplay}">
-						<text class="cuIcon-roundright text-xxl" style="float: right;display: block;"></text>
-					</view>
+	<view class="padding">
+		<view class="shadow shadow-lg bg-white bg-color">
+			<view class="flex padding-lr justify-between align-center padding-tb-xs">
+				<view class="logo" :style="{ backgroundImage: `url('${icon}')`}"></view>
+				<view class="text-xxl text-white">{{lab.RoomCode}}</view>
+			</view>
+			<view class="text-black bg-gray padding-tb text-center">
+				<text class="text-bold text-xxl">{{lab.Name}}</text>
+			</view>
+			<view class="flex justify-between text-white padding-lr padding-tb-xs text-center">
+				<view>{{`责任人: ${lab.Administrator} ${lab.AdminTelephone}`}}</view>
+				<view class="text-xl" v-if="displayArrow">
+					<text class="cuIcon-roundright"></text>
 				</view>
 			</view>
 		</view>
+	</view>
 </template>
 <script>
 	export default{
 		data(){
 			return{
-				icon: '../../../static/XMU.png',
+				icon: '../../../static/Informatic.png',
 			}
 		},
 		props:{
 			lab:{
 				required: true
 			},
-			arrowDisplay:"",
+			displayArrow:{
+				type: Boolean
+			},
 			color:""
 		},
 		methods:{
@@ -43,4 +44,14 @@
 </script>
 
 <style>
+	.bg-color{
+		background-color:#6d3b5e;
+		border-top-left-radius: 48rpx;
+		border-bottom-right-radius: 48rpx;
+	}
+	.logo{
+		width: 300rpx;
+		height: 60rpx;
+		background-size: cover;
+	}
 </style>

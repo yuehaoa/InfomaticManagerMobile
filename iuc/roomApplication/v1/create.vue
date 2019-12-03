@@ -1,6 +1,6 @@
 <template>
 	<view id="lab-apply-creat">
-		<cu-custom bgColor="bg-gradual-blue" isBack="">
+		<cu-custom bgColor="bg-informatic-brown" isBack="">
 			<block slot="backText">返回</block>
 			<block slot="content">创建申请表</block>
 		</cu-custom>
@@ -19,13 +19,10 @@
 					</view>
 				</picker>
 			</view>
-			<view class="cu-form-group">
-				<view class="title">开始日期<text class="text-red">*</text></view>
-				<timePicker placeholder="请选择开始日期" v-model="model.startDate"></timePicker>
-			</view>
-			<view class="cu-form-group">
-				<view class="title">结束日期<text class="text-red">*</text></view>
-				<timePicker placeholder="请选择结束日期" v-model="model.endDate"></timePicker>
+			<view class="cu-form-group" @click="selectDateTime()">
+				<view class="title">申请时段<text class="text-red">*</text></view>
+				<text style="flex: 1;">{{model.startDate===""?"请选择申请时段"
+				:model.startDate+'&nbsp;至&nbsp;'+model.endDate}}</text>
 			</view>
 			<view class="cu-form-group" v-if="isStudent">
 				<view class="title">选择指导老师<text class="text-red">*</text></view>
@@ -36,9 +33,11 @@
 				</picker>
 			</view>
 			<view class="padding flex flex-direction">
-				<button class="cu-btn bg-green lg" :loading="isSubmitting" @click="submit()">提交</button>
+				<button class="cu-btn bg-informatic-brown lg" :loading="isSubmitting" @click="submit()">提交</button>
 			</view>
 		</form>
+		<timePicker :show="showPicker" type="rangetime" color="#6d3b5e" 
+		@cancel="selectDateTime()" @confirm="confirmDateTime"/>
 	</view>
 </template>
 
@@ -121,6 +120,17 @@
 					this.currentRoom = opt.BuildingName+" "+opt.labName;
 					this.model.roomId = opt.roomID;
 				}
+			},
+			selectDateTime()
+			{
+				this.showPicker=!this.showPicker;
+			},
+			confirmDateTime(e)
+			{
+				console.log(e);
+				this.model.startDate=e.value[0];
+				this.model.endDate=e.value[1];
+				this.selectDateTime();
 			}
 		},
 		data() {
@@ -146,7 +156,8 @@
 				isStudent: true,
 				ID: '',
 				roomIndex: [0, 0],
-				stepInfo: {}
+				stepInfo: {},
+				showPicker: false
 			}
 		},
 	}
