@@ -1,17 +1,17 @@
 <template>
 	<view class="bg-white">
-		<cu-custom bgColor="bg-informatic-brown" isBack="">
+		<cu-custom bgColor="bg-informatic-brown" isBack>
 			<block slot="backText">返回</block>
 			<block slot="content">实验室列表页</block>
 		</cu-custom>
 		<scroll-view scroll-x class="bg-white nav text-center" scroll-with-animation :scroll-left="scrollLeft">
-			<view class="cu-item" :class="index==TabCur?'text-green cur':''" v-for="(item,index) in buildings" :key="index" @tap="tabSelect($event, item.ID)"
+			<view class="cu-item" :class="index==TabCur?'text-informatic-brown text-bold cur':''" v-for="(item,index) in buildings" :key="index" @tap="tabSelect($event, item.ID)"
 			 :data-id="index">
 				<span>{{item.Name}}</span>
 			</view>
 		</scroll-view>
 		<view v-for="(item,index) in labs" :key="index" @click="labDetail(item.ID)">
-			<labInfoCard class="margin-lr" :lab="item" displayArrow></labInfoCard>
+			<labInfoCard class="margin-lr-xl" :lab="item" displayArrow></labInfoCard>
 		</view>
 	</view>
 </template>
