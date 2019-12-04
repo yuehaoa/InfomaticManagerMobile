@@ -11,7 +11,7 @@
 			</view>
 		</scroll-view>
 		<view v-for="(item,index) in labs" :key="index" @click="labDetail(item.ID)">
-			<labInfoCard class="margin-lr" :lab="item" displayArrow></labInfoCard>
+			<labInfoCard class="margin-lr-xl" :lab="item" displayArrow></labInfoCard>
 		</view>
 	</view>
 </template>
