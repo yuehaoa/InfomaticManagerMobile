@@ -21,7 +21,7 @@
 				<sticky :item="item" />
 			</view>
 		</transition-group>
-		<template v-if="data.length===0">
+		<template v-if="data.length===0 && display">
 			<view class="padding-tb text-center text-lg">
 				<text class="text-bold text-gray">暂无数据</text>
 			</view>
