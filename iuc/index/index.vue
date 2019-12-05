@@ -14,14 +14,14 @@
 			<swiper style="height: 40rpx;width: 250rpx;" class="swiper" autoplay="true" interval="5000" duration="500" circular="true" vertical="true">
 				<swiper-item v-for="(item,index) in swiperArray" :key='index'>{{item}}</swiper-item>
 			</swiper>
-			<view class="margin-right text-informatic-brown">查看更多<text class="cuIcon-playfill"></text></view>
+			<view class="margin-right text-informatic-brown"@click="navToNews">查看更多<text class="cuIcon-playfill"></text></view>
 		</view>
 		<view class="padding-bottom bg-white">
 			<view class="cu-bar bg-white">
 				<view class="action">
 					<text class="text-bold text-xl">我的</text>
 				</view>
-				<view class="action text-informatic-brown" @click="mineClick()">{{mineShow ? "收起" : "展开"}}<text class="cuIcon-playfill"></text></view>
+				<view class="action text-informatic-brown" @click="mineClick()">{{mineShow ? "收起" : "展开"}}<text :class="mineShow ? 'cuIcon-triangleupfill' : 'cuIcon-triangledownfill'" style="font-size:25px;"></text></view>
 			</view>
 			<view class="cu-list grid col-3 no-border" v-show="mineShow">
 				<view class="cu-item" v-for='(item,index) in mine' :key='index' @click="navTo(item.soure)">
@@ -37,7 +37,7 @@
 				<view class="action">
 					<text class="text-bold text-xl">功能</text>
 				</view>
-				<view class="action text-informatic-brown" @click="functionClick">{{functionshow ? "收起" : "展开"}}<text class="cuIcon-playfill"></text></view>
+				<view class="action text-informatic-brown" @click="functionClick">{{functionshow ? "收起" : "展开"}}<text :class="functionshow ? 'cuIcon-triangleupfill' : 'cuIcon-triangledownfill'" style="font-size:25px;"></text></view>
 			</view>
 			<view class="cu-list grid col-3 no-border" v-show="functionshow">
 				<view class="cu-item" v-for='(item,index) in functionList' :key='index' @click="navTo(item.soure)">
@@ -115,6 +115,11 @@
 			navTo(url) {
 				uni.navigateTo({
 					url: url
+				})
+			},
+			navToNews() {
+				uni.navigateTo({
+					url:'../News/newsList'
 				})
 			}
 		}

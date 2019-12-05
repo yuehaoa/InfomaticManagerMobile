@@ -36,7 +36,7 @@
 					{
 						icon: 'cuIcon-notice',
 						text: '通知公告',
-						nav: ''
+						nav: '../../iuc/News/newsList'
 					},
 					{
 						icon: 'cuIcon-notice',
