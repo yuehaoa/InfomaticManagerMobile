@@ -11,7 +11,7 @@
 				<text class="cuIcon-notification"></text>
 				<text class="text-bold margin-lr-xs">通知公告</text>
 			</view>
-			<swiper style="height: 40rpx;width: 250rpx;" class="swiper" autoplay="true" interval="5000" duration="500" circular="true" vertical="true">
+			<swiper style="height: 40rpx;width: 250rpx;" class="swiper" autoplay="true" interval="4000" duration="500" circular="true" vertical="true">
 				<swiper-item v-for="(item,index) in swiperArray" :key='index'>{{item}}</swiper-item>
 			</swiper>
 			<view class="margin-right text-informatic-brown">查看更多<text class="cuIcon-playfill"></text></view>
