@@ -113,7 +113,7 @@
 				this.mineShow = !this.mineShow;
 			},
 			navTo(url) {
-				uni.redirectTo({
+				uni.navigateTo({
 					url: url
 				})
 			}
