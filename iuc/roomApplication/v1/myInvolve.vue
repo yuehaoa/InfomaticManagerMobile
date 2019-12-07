@@ -3,7 +3,6 @@
 		<cu-custom bgColor="bg-informatic-brown" isBack>
 			<block slot="backText">返回</block>
 			<block slot="content">我的参与</block>
-			<view class="action" slot="right" @click="addApplication()">添加</view>
 		</cu-custom>
 		<view class="cu-bar bg-white solids-bottom">
 			<view class="action">
@@ -50,11 +49,6 @@
 					if (msg.success) {
 						this.data = msg.data;
 					}
-				})
-			},
-			addApplication() {
-				uni.navigateTo({
-					url: "/iuc/roomApplication/v1/create"
 				})
 			},
 			toExecute(item) {

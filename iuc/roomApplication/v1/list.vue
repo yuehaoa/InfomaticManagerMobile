@@ -3,7 +3,6 @@
 		<cu-custom bgColor="bg-informatic-brown" isBack>
 			<block slot="backText">返回</block>
 			<block slot="content">我的待办</block>
-			<view class="action" slot="right" @click="addApplication()">添加</view>
 		</cu-custom>
 		<transition-group class="cu-card" name="list">
 			<view class="cu-item bg-informatic-brown shadow" v-show="display"
@@ -40,11 +39,6 @@
 					if (msg.success) {
 						this.data = msg.data;
 					}
-				})
-			},
-			addApplication() {
-				uni.navigateTo({
-					url: "/iuc/roomApplication/v1/create"
 				})
 			},
 			toExecute(item) {

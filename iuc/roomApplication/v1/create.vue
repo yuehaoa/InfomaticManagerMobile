@@ -46,6 +46,12 @@
 	let app = require("@/config/index")
 	export default {
 		onLoad(opt) {
+			if(app.checkPermission("ItemManager.CreateSoftwareInstallWorkflow")==-1)
+			{
+				uni.navigateBack({
+					delta: 1
+				});
+			}
 			this.ID = opt.id;
 			this.getInfo();
 			this.getLabCurrentRoom(opt);
@@ -53,7 +59,7 @@
 		methods: {
 			selectTeacher(e) {
 				let u = this.teachers[e.detail.value];
-				this.currentTeacher = u.RealName || "请选择导教师";
+				this.currentTeacher = u.RealName || "请选择指导教师";
 				this.model.guideTeacherId = u.ID || guidEmpty;
 			},
 			selectRoom(e) {
@@ -63,6 +69,14 @@
 				this.model.roomId = v.ID;
 			},
 			submit() {
+				if(app.checkPermission("ItemManager.CreateSoftwareInstallWorkflow")==-1)
+				{
+					uni.showToast({
+						title: "您没有权限",
+						icon: "none"
+					})
+					return;
+				};
 				this.isSubmitting = true;
 				uni.post("/api/roomApp/v1/GetApplication", {}, msg => {
 					if (msg.success == true) {
