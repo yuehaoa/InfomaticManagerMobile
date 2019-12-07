@@ -98,7 +98,7 @@
 						image: "../../static/实验室申请.png",
 						text: "申请实验室",
 						source: "../roomApplication/v1/create",
-						permission: "ItemManager.CreateSoftwareInstallWorkflow"
+						permission: "ItemManager.CreateRoomApplicationWorkflow"
 					},
 					{
 						image: "../../static/实验室列表.png",
