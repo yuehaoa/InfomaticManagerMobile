@@ -46,7 +46,7 @@
 	let app = require("@/config/index")
 	export default {
 		onLoad(opt) {
-			if(app.checkPermission("ItemManager.CreateSoftwareInstallWorkflow")==-1)
+			if(!app.checkPermission("ItemManager.CreateSoftwareInstallWorkflow"))
 			{
 				uni.navigateBack({
 					delta: 1
@@ -69,7 +69,7 @@
 				this.model.roomId = v.ID;
 			},
 			submit() {
-				if(app.checkPermission("ItemManager.CreateSoftwareInstallWorkflow")==-1)
+				if(!app.checkPermission("ItemManager.CreateSoftwareInstallWorkflow"))
 				{
 					uni.showToast({
 						title: "您没有权限",
