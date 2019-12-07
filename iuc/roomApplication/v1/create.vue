@@ -33,7 +33,7 @@
 				</picker>
 			</view>
 			<view class="padding flex flex-direction">
-				<button class="cu-btn bg-informatic-brown lg" :loading="isSubmitting" @click="submit()">提交</button>
+				<button :disabled="!havePermission('ItemManager.CreateRoomApplicationWorkflow')" class="cu-btn bg-informatic-brown lg" :loading="isSubmitting" @click="submit()" >提交</button>
 			</view>
 		</form>
 		<timePicker :show="showPicker" type="rangetime" color="#6d3b5e" 
@@ -46,7 +46,7 @@
 	let app = require("@/config/index")
 	export default {
 		onLoad(opt) {
-			if(app.checkPermission("ItemManager.CreateSoftwareInstallWorkflow")==-1)
+			if(!app.checkPermission("ItemManager.CreateRoomApplicationWorkflow"))
 			{
 				uni.navigateBack({
 					delta: 1
@@ -69,7 +69,7 @@
 				this.model.roomId = v.ID;
 			},
 			submit() {
-				if(app.checkPermission("ItemManager.CreateSoftwareInstallWorkflow")==-1)
+				if(!app.checkPermission("ItemManager.CreateRoomApplicationWorkflow"))
 				{
 					uni.showToast({
 						title: "您没有权限",
@@ -145,6 +145,10 @@
 				this.model.startDate=e.value[0];
 				this.model.endDate=e.value[1];
 				this.selectDateTime();
+			},
+			havePermission(e)
+			{
+				return app.checkPermission(e);
 			}
 		},
 		data() {

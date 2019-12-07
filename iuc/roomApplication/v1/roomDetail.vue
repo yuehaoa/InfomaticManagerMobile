@@ -45,7 +45,7 @@
 				this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60
 			},
 			create() {
-				if(app.checkPermission("ItemManager.CreateSoftwareInstallWorkflow")==-1)
+				if(app.checkPermission("ItemManager.CreateRoomApplicationWorkflow")==-1||app.checkPermission("ItemManager.CreateRoomApplicationWorkflow")==false)
 				{
 					uni.showToast({
 						title: "您没有权限",
