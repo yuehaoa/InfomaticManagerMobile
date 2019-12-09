@@ -69,8 +69,8 @@
 					"新功能炸啦！"
 				],
 				swiperList: {
-					img1: "../../static/轮播图片画板1.jpg",
-					img2: "../../static/轮播图片画板2.jpg",
+					img1: "../../static/轮播图片画板1.png",
+					img2: "../../static/轮播图片画板2.png",
 					img3: "../../static/轮播图片画板3.jpg"
 				},
 				mine: [{
