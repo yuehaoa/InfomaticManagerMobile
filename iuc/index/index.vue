@@ -25,7 +25,7 @@
 				<view class="action text-informatic-brown" @click="mineClick()">{{mineShow ? "收起" : "展开"}}<text :class="mineShow ? 'cuIcon-triangleupfill' : 'cuIcon-triangledownfill'"
 					 style="font-size:25px;"></text></view>
 			</view>
-			<view class="cu-list grid col-3 no-border" v-show="mineShow">
+			<view class="cu-list grid col-4 no-border" v-show="mineShow">
 				<view v-if="p(item.permission)" class="cu-item" v-for='(item,index) in mine' :key='index' @click="navTo(item.source)">
 					<view>
 						<image :src="item.image" class="cu-avatar bg-white lg" mode="aspectFit"></image>
@@ -42,7 +42,7 @@
 				<view class="action text-informatic-brown" @click="functionClick">{{functionshow ? "收起" : "展开"}}<text :class="functionshow ? 'cuIcon-triangleupfill' : 'cuIcon-triangledownfill'"
 					 style="font-size:25px;"></text></view>
 			</view>
-			<view class="cu-list grid col-3 no-border" v-show="functionshow">
+			<view class="cu-list grid col-4 no-border" v-show="functionshow">
 				<view v-if="p(item.permission)" class="cu-item" v-for='(item,index) in functionList' :key='index' @click="navTo(item.source)">
 					<view>
 						<image :src="item.image" class="cu-avatar bg-white lg" mode="aspectFit"></image>
@@ -87,6 +87,11 @@
 						image: "../../static/我的参与.png",
 						text: "我的参与",
 						source: "../roomApplication/v1/myInvolve",
+					},
+					{
+						image: "../../static/扫一扫.png",
+						text: "扫一扫",
+						soure: "../roomApplication/v1/myInvolve"
 					}
 				],
 				functionList: [{
@@ -105,7 +110,11 @@
 						text: "所有申请",
 						source: "../roomApplication/v1/alllist"
 					},
-
+					{
+						image: "../../static/申请机位.png",
+						text: "机位申请",
+						soure: "../roomApplication/v1/alllist"
+					}
 				],
 				mineShow: true,
 				functionshow: true
