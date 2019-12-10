@@ -33,7 +33,7 @@
 				</picker>
 			</view>
 			<view class="padding flex flex-direction">
-				<button :disabled="!havePermission('ItemManager.CreateRoomApplicationWorkflow')" class="cu-btn bg-informatic-brown lg" :loading="isSubmitting" @click="submit()" >提交</button>
+				<button class="cu-btn bg-informatic-brown lg" :disabled="!havePermission" :loading="isSubmitting" @click="submit()">提交</button>
 			</view>
 		</form>
 		<timePicker :show="showPicker" type="rangetime" color="#6d3b5e" 
@@ -46,12 +46,7 @@
 	let app = require("@/config/index")
 	export default {
 		onLoad(opt) {
-			if(!app.checkPermission("ItemManager.CreateRoomApplicationWorkflow"))
-			{
-				uni.navigateBack({
-					delta: 1
-				});
-			}
+			this.havePermission=app.checkPermission("ItemManager.CreateRoomApplicationWorkflow");
 			this.ID = opt.id;
 			this.getInfo();
 			this.getLabCurrentRoom(opt);
@@ -69,14 +64,6 @@
 				this.model.roomId = v.ID;
 			},
 			submit() {
-				if(!app.checkPermission("ItemManager.CreateRoomApplicationWorkflow"))
-				{
-					uni.showToast({
-						title: "您没有权限",
-						icon: "none"
-					})
-					return;
-				};
 				this.isSubmitting = true;
 				uni.post("/api/roomApp/v1/GetApplication", {}, msg => {
 					if (msg.success == true) {
@@ -175,7 +162,8 @@
 				ID: '',
 				roomIndex: [0, 0],
 				stepInfo: {},
-				showPicker: false
+				showPicker: false,
+				havePermission: false
 			}
 		},
 	}
