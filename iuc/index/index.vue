@@ -86,7 +86,7 @@
 					{
 						image: "../../static/我的参与.png",
 						text: "我的参与",
-						source: "../roomApplication/v1/myInvolve",
+						source: "../roomApplication/v2/myAttend",
 					},
 					{
 						image: "../../static/扫一扫.png",
@@ -97,7 +97,7 @@
 				functionList: [{
 						image: "../../static/实验室列表.png",
 						text: "实验室列表",
-						source: "../roomApplication/v2/work"
+						source: "../roomApplication/v1/labList"
 					},
 					{
 						image: "../../static/实验室申请.png",
@@ -108,7 +108,7 @@
 					{
 						image: "../../static/实验室列表.png",
 						text: "所有申请",
-						source: "../roomApplication/v1/alllist"
+						source: "../roomApplication/v2/allList"
 					},
 					{
 						image: "../../static/申请机位.png",

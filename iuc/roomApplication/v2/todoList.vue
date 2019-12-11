@@ -10,6 +10,11 @@
 				<sticky :item="item" />
 			</view>
 		</transition-group>
+		<template v-if="todoList.length===0">
+			<view class="padding-tb text-center text-lg">
+				<text class="text-bold text-gray">暂无数据</text>
+			</view>
+		</template>
 	</view>
 </template>
 
@@ -28,21 +33,30 @@
 				})
 			},
 			toExecute(item) {
-				uni.navigateTo({
-					url: './flowsCtrl?InstanceId='+item.InstanceId
+				uni.setStorage({
+					key : 'jmpInfo',
+					data:item,
+					success: () => {	//如果缓存成功则跳转
+						uni.navigateTo({
+							url: './flowsCtrl'
+						})
+					}
 				})
 			}
 
 		},
 		data() {
 			return {
-				todoList:[]
+				todoList:[],
 			}
 		}
 	}
 </script>
 	
 <style>
+	.cu-card>.cu-item {
+		transition: all 1s;
+	}
 	.list-move{
 		transition: all 0.8s;
 	}

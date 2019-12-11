@@ -22,6 +22,14 @@
 			"style": {}
 		},
 		{
+			"path":"iuc/roomApplication/v2/myAttend",
+			"style": {}
+		},
+		{
+			"path":"iuc/roomApplication/v2/allList",
+			"style": {}
+		},
+		{
 			"path":"iuc/softwareInstall/v1/create",
 			"style": {}
 		},
