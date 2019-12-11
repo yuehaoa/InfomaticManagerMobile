@@ -43,7 +43,7 @@
 					 style="font-size:25px;"></text></view>
 			</view>
 			<view class="cu-list grid col-4 no-border" v-show="functionshow">
-				<view v-if="p(item.permission)" class="cu-item" v-for='(item,index) in functionList' :key='index' @click="navTo(item.source)">
+				<view v-if="p(item.permission)||true" class="cu-item" v-for='(item,index) in functionList' :key='index' @click="navTo(item.source)">
 					<view>
 						<image :src="item.image" class="cu-avatar bg-white lg" mode="aspectFit"></image>
 					</view>
@@ -59,7 +59,7 @@
 	let app = require("@/config");
 	export default {
 		onLoad() {
-			console.log(!-1);
+			
 		},
 		data() {
 			return {
@@ -81,7 +81,7 @@
 					{
 						image: "../../static/我的待办.png",
 						text: "我的待办",
-						source: "../roomApplication/v1/list",
+						source: "../roomApplication/v2/todoList",
 					},
 					{
 						image: "../../static/我的参与.png",
@@ -97,12 +97,12 @@
 				functionList: [{
 						image: "../../static/实验室列表.png",
 						text: "实验室列表",
-						source: "../roomApplication/v1/labList"
+						source: "../roomApplication/v2/work"
 					},
 					{
 						image: "../../static/实验室申请.png",
 						text: "申请实验室",
-						source: "../roomApplication/v1/create",
+						source: "../roomApplication/v2/flowsCtrl?create=true",
 						permission: "ItemManager.CreateRoomApplicationWorkflow"
 					},
 					{
