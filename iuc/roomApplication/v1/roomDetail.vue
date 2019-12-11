@@ -19,7 +19,7 @@
 				<view class="cu-tag round sm" :class="'bg-' + wColor[item.State]">{{ workflow[item.State] }}</view>
 			</view>
 		</view>
-		<view class="padding flex flex-direction" @click="create()">
+		<view v-if="labInfo.RoomType==10" class="padding flex flex-direction" @click="create()">
 			<button class="cu-btn bg-blue lg">申请</button>
 		</view>
 	</view>
@@ -45,7 +45,7 @@
 				this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60
 			},
 			create() {
-				if(app.checkPermission("ItemManager.CreateSoftwareInstallWorkflow")==-1)
+				if(app.checkPermission("ItemManager.CreateRoomApplicationWorkflow")==-1||app.checkPermission("ItemManager.CreateRoomApplicationWorkflow")==false)
 				{
 					uni.showToast({
 						title: "您没有权限",

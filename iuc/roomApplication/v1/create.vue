@@ -132,6 +132,10 @@
 				this.model.startDate=e.value[0];
 				this.model.endDate=e.value[1];
 				this.selectDateTime();
+			},
+			havePermission(e)
+			{
+				return app.checkPermission(e);
 			}
 		},
 		data() {
