@@ -14,6 +14,10 @@
 			"style": {}
 		},
 		{
+			"path":"iuc/roomApplication/v2/myApplication",
+			"style": {}
+		},
+		{
 			"path":"iuc/roomApplication/v2/flowsCtrl",
 			"style": {}
 		},

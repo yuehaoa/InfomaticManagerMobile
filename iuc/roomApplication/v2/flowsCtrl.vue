@@ -2,7 +2,7 @@
 	<view>
 		<cu-custom bgColor="bg-informatic-brown" isBack>
 			<block slot="backText">返回</block>
-			<block slot="content">查看申请表</block>
+			<block slot="content">{{io.isMyStep?"操作申请表":"查看申请表"}}</block>
 		</cu-custom>
 		<lab-Steps :value="io.allSteps"></lab-Steps>
 		<form>
@@ -94,7 +94,18 @@
 			</view>
 		</form>
 		<timePicker :show="showPicker" type="rangetime" color="#6d3b5e" @cancel="selectDateTime()" @confirm="confirmDateTime" />
-		<view v-if="io.isMyStep">
+		<view class="cu-bar bg-white solids-bottom margin-top">
+			<view class="action text-xl">
+				<text class="cuIcon-title text-blue text-xl"></text>
+				<text class="text-bold text-xl">操作流程</text>
+			</view>
+			<view class="action" @click="foldUp">
+				<text class="text-df">{{displayTimeline?'收起':'展开'}}</text>
+				<text class="padding-lr-xs text-bold" :class="displayTimeline?'cuIcon-fold':'cuIcon-unfold'"></text>
+			</view>
+		</view>
+		<labTimeLine :timeline="io.allSteps" v-show="displayTimeline"></labTimeLine>
+		<view v-if="io.isMyStep" class="margin-top">
 			<button @click="onSubmit()" v-if="io.submitBtns.length===1">{{io.submitBtns[0].Text}}</button>
 			<view class="cu-list grid" :class="['col-'+io.submitBtns.length]" v-else>
 				<view v-for="(item,index) in io.submitBtns" class="cu-item" @click="onSubmit(item)" :key="index">
@@ -213,6 +224,9 @@
 				this.io.data.EndDate = e.value[1];
 				this.selectDateTime();
 				console.log(this.io.data)
+			},
+			foldUp(){
+				this.displayTimeline=!this.displayTimeline;
 			}
 		},
 		data() {
@@ -233,11 +247,11 @@
 					roomIndex: [0, 0],
 					guideTeacherName: '请选择指导老师'
 				},
+				displayTimeline: true,
 				upLoad: [],
 				roomDic: {},
 				teacherDic: {},
 				showPicker: false,
-
 			}
 		}
 	}

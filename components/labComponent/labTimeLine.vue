@@ -23,7 +23,6 @@
 				</view>
 			</view>
 		</view>
-		<view class="padding-bottom bg-white"></view>
 	</view>
 </template>
 
