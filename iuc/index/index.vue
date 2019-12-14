@@ -1,9 +1,9 @@
 <template>
 	<view>
-		<swiper class="screen-swiper" autoplay="true" indicator-dots="true" 
-		indicator-active-color="white" indicator-color="grey" circular="true">
+		<swiper class="screen-swiper" autoplay="true" indicator-dots="true" indicator-active-color="white" indicator-color="grey"
+		 circular="true">
 			<swiper-item v-for='(item,index) in swiperList' :key='index'>
-				<image :src="item"></image>
+				<image :src="item" mode="aspectFit" style="height: 423rpx;"></image>
 			</swiper-item>
 		</swiper>
 		<view class="bg-white flex solids-bottom padding-tb-sm justify-between align-center">
@@ -11,24 +11,26 @@
 				<text class="cuIcon-notification"></text>
 				<text class="text-bold margin-lr-xs">通知公告</text>
 			</view>
-			<swiper style="height: 40rpx;width: 250rpx;" class="swiper" autoplay="true" interval="5000" duration="500" circular="true" vertical="true">
-				<swiper-item v-for="(item,index) in swiperArray" :key='index'>{{item}}</swiper-item>
+			<swiper style="height: 40rpx;width: 400rpx;" class="swiper" autoplay="true" interval="4000" duration="500" circular="true"
+			 vertical="true">
+				<swiper-item v-for="(item,index) in swiperArray" :key='index' class="text-cut">{{item}}</swiper-item>
 			</swiper>
-			<view class="margin-right text-informatic-brown">查看更多<text class="cuIcon-playfill"></text></view>
+			<view class="margin-right text-informatic-brown" @click="navToNews">更多<text class="cuIcon-playfill"></text></view>
 		</view>
 		<view class="padding-bottom bg-white">
 			<view class="cu-bar bg-white">
 				<view class="action">
 					<text class="text-bold text-xl">我的</text>
 				</view>
-				<view class="action text-informatic-brown" @click="mineClick()">{{mineShow ? "收起" : "展开"}}<text class="cuIcon-playfill"></text></view>
+				<view class="action text-informatic-brown" @click="mineClick()">{{mineShow ? "收起" : "展开"}}<text :class="mineShow ? 'cuIcon-triangleupfill' : 'cuIcon-triangledownfill'"
+					 style="font-size:25px;"></text></view>
 			</view>
-			<view class="cu-list grid col-3 no-border" v-show="mineShow">
-				<view class="cu-item" v-for='(item,index) in mine' :key='index' @click="navTo(item.soure)">
+			<view class="cu-list grid col-4 no-border" v-show="mineShow">
+				<view v-if="p(item.permission)" class="cu-item" v-for='(item,index) in mine' :key='index' @click="navTo(item.source)">
 					<view>
 						<image :src="item.image" class="cu-avatar bg-white lg" mode="aspectFit"></image>
 					</view>
-					<text>{{item.text}}</text>
+					<text class="text-df">{{item.text}}</text>
 				</view>
 			</view>
 		</view>
@@ -37,10 +39,11 @@
 				<view class="action">
 					<text class="text-bold text-xl">功能</text>
 				</view>
-				<view class="action text-informatic-brown" @click="functionClick">{{functionshow ? "收起" : "展开"}}<text class="cuIcon-playfill"></text></view>
+				<view class="action text-informatic-brown" @click="functionClick">{{functionshow ? "收起" : "展开"}}<text :class="functionshow ? 'cuIcon-triangleupfill' : 'cuIcon-triangledownfill'"
+					 style="font-size:25px;"></text></view>
 			</view>
-			<view class="cu-list grid col-3 no-border" v-show="functionshow">
-				<view class="cu-item" v-for='(item,index) in functionList' :key='index' @click="navTo(item.soure)">
+			<view class="cu-list grid col-4 no-border" v-show="functionshow">
+				<view v-if="p(item.permission)||true" class="cu-item" v-for='(item,index) in functionList' :key='index' @click="navTo(item.source)">
 					<view>
 						<image :src="item.image" class="cu-avatar bg-white lg" mode="aspectFit"></image>
 					</view>
@@ -53,60 +56,72 @@
 </template>
 
 <script>
+	let app = require("@/config");
 	export default {
 		onLoad() {
+			
 		},
 		data() {
 			return {
 				swiperArray: [
-					"实验室管理系统",
-					"开通新功能啦~",
-					"新功能炸啦！"
+					"厦门大学100周年校庆网站开通",
+					"数字城市与人工智能实验室签约挂牌",
+					"中心党支部开展“不忘初心”系列学习活动！"
 				],
 				swiperList: {
-					img1: "../../static/轮播图片画板1.jpg",
-					img2: "../../static/轮播图片画板2.jpg",
+					img1: "../../static/轮播图片画板1.png",
+					img2: "../../static/轮播图片画板2.png",
 					img3: "../../static/轮播图片画板3.jpg"
 				},
 				mine: [{
 						image: "../../static/我的申请.png",
 						text: "我的申请",
-						soure: "../roomApplication/v1/myList"
+						source: "../roomApplication/v2/myApplication"
 					},
 					{
 						image: "../../static/我的待办.png",
-						text: "我的待办" ,
-						soure: "../roomApplication/v1/list"
+						text: "我的待办",
+						source: "../roomApplication/v2/todoList",
 					},
 					{
 						image: "../../static/我的参与.png",
 						text: "我的参与",
+						source: "../roomApplication/v2/myAttend",
+					},
+					{
+						image: "../../static/扫一扫.png",
+						text: "扫一扫",
 						soure: "../roomApplication/v1/myInvolve"
 					}
 				],
 				functionList: [{
 						image: "../../static/实验室列表.png",
 						text: "实验室列表",
-						soure: "../roomApplication/v1/labList"
+						source: "../roomApplication/v1/labList"
 					},
 					{
 						image: "../../static/实验室申请.png",
 						text: "申请实验室",
-						soure: "../roomApplication/v1/create"
+						source: "../roomApplication/v2/flowsCtrl?create=true",
+						permission: "ItemManager.CreateRoomApplicationWorkflow"
 					},
 					{
 						image: "../../static/实验室列表.png",
 						text: "所有申请",
-						soure: "../roomApplication/v1/alllist"
+						source: "../roomApplication/v2/allList"
 					},
-
+					{
+						image: "../../static/申请机位.png",
+						text: "机位申请",
+						soure: "../roomApplication/v1/alllist"
+					}
 				],
 				mineShow: true,
 				functionshow: true
 			}
 		},
 		methods: {
-			functionClick(){
+			functionClick() {
 				this.functionshow = !this.functionshow;
 			},
 			mineClick() {
@@ -116,6 +131,14 @@
 				uni.navigateTo({
 					url: url
 				})
+			},
+			navToNews() {
+				uni.navigateTo({
+					url: '../News/newsList'
+				})
+			},
+			p: e => {
+				return e ? app.checkPermission(e) : true;
 			}
 		}
 	}

@@ -33,32 +33,27 @@
 	let enums = require("../enumsv1.js");
 	export default {
 		onShow() {
-			this.getData(1);
+			this.getData();
 		},
 		onLoad() {
-			this.getData(1);
+			this.getData();
 		},
 		methods: {
-			getData(p) {
-				let page = p || this.page;
-				let pageSize = this.pageSize;
-				uni.post("/api/roomApp/v1/GetAllMyApplication", {
-					page,
-					pageSize,
+			getData() {
+				uni.post("/api/workflow/MyAttend", {name:'按团队申请实验室'
 				}, msg => {
-					if (msg.success) {
-						this.data = msg.data;
-					}
+					this.data = msg.data;
 				})
 			},
 			toExecute(item) {
-				uni.navigateTo({
-					url: item.RouteData
-				})
-			},
-			toDetail(id) {
-				uni.navigateTo({
-					url: "/iuc/roomApplication/v1/detail?id=" + id
+				uni.setStorage({
+					key : 'jmpInfo',
+					data:item,
+					success: () => {	//如果缓存成功则跳转
+						uni.navigateTo({
+							url: './flowsCtrl'
+						})
+					}
 				})
 			},
 			/*// ListTouch触摸开始

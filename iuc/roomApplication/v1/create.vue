@@ -33,7 +33,7 @@
 				</picker>
 			</view>
 			<view class="padding flex flex-direction">
-				<button class="cu-btn bg-informatic-brown lg" :loading="isSubmitting" @click="submit()">提交</button>
+				<button class="cu-btn bg-informatic-brown lg" :disabled="!havePermission" :loading="isSubmitting" @click="submit()">提交</button>
 			</view>
 		</form>
 		<timePicker :show="showPicker" type="rangetime" color="#6d3b5e" 
@@ -46,6 +46,7 @@
 	let app = require("@/config/index")
 	export default {
 		onLoad(opt) {
+			this.havePermission=app.checkPermission("ItemManager.CreateRoomApplicationWorkflow");
 			this.ID = opt.id;
 			this.getInfo();
 			this.getLabCurrentRoom(opt);
@@ -53,7 +54,7 @@
 		methods: {
 			selectTeacher(e) {
 				let u = this.teachers[e.detail.value];
-				this.currentTeacher = u.RealName || "请选择导教师";
+				this.currentTeacher = u.RealName || "请选择指导教师";
 				this.model.guideTeacherId = u.ID || guidEmpty;
 			},
 			selectRoom(e) {
@@ -131,6 +132,10 @@
 				this.model.startDate=e.value[0];
 				this.model.endDate=e.value[1];
 				this.selectDateTime();
+			},
+			havePermission(e)
+			{
+				return app.checkPermission(e);
 			}
 		},
 		data() {
@@ -157,7 +162,8 @@
 				ID: '',
 				roomIndex: [0, 0],
 				stepInfo: {},
-				showPicker: false
+				showPicker: false,
+				havePermission: false
 			}
 		},
 	}

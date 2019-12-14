@@ -23,7 +23,6 @@
 				</view>
 			</view>
 		</view>
-		<view class="padding-bottom bg-white"></view>
 	</view>
 </template>
 
@@ -44,7 +43,7 @@
 		},
 		methods: {
 			inStep(steps, state) {
-				let s = state || this.model.State;
+				let s = state;
 				return steps.indexOf(s) > -1;
 			}
 		}

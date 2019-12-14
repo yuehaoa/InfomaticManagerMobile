@@ -4,7 +4,7 @@
 			<block slot="backText">返回</block>
 			<block slot="content">实验室详细信息</block>
 		</cu-custom>
-		<labInfoCard class="margin-lr" :lab="labInfo"></labInfoCard>
+		<labInfoCard class="margin-lr-xl" :lab="labInfo"></labInfoCard>
 		<scroll-view scroll-x class="bg-white nav text-center cardPosition shadow" :style="[{height:customBar + 'px'}]">
 			<view class="cu-item" :class="index==tabCur?'text-informatic-brown text-bold cur':''" v-for="(item,index) in arrays" :key="index" @tap="tabSelect" :data-id="index">
 				{{item}}
@@ -19,13 +19,14 @@
 				<view class="cu-tag round sm" :class="'bg-' + wColor[item.State]">{{ workflow[item.State] }}</view>
 			</view>
 		</view>
-		<view class="padding flex flex-direction" @click="create()">
+		<view v-if="labInfo.RoomType==10" class="padding flex flex-direction" @click="create()">
 			<button class="cu-btn bg-blue lg">申请</button>
 		</view>
 	</view>
 </template>
 
 <script>
+	let app = require("@/config");
 	let enums = require("../enumsv1.js");
 	export default{
 		onLoad(opt) {

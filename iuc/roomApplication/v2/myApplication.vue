@@ -29,22 +29,21 @@
 			
 		},
 		methods: {
-			getData(p) {
-				let page = p || this.page;
-				let pageSize = this.pageSize;
-				uni.post("/api/roomApp/v1/GetMyApplication", {
-					page,
-					pageSize
-				}, msg => {
-					if (msg.success) {
-						this.data = msg.data;
-						this.data = this.data.filter(e => e.State != 0);
-					}
+			getData() {
+				uni.post("/api/workflow/MyFlow", {}, msg => {
+					this.data = msg.data;
+					//this.data = this.data.filter(e => e.State != 0);
 				})
 			},
 			toExecute(item) {
-				uni.navigateTo({
-					url: item.RouteData
+				uni.setStorage({
+					key : 'jmpInfo',
+					data:item,
+					success: () => {	//如果缓存成功则跳转
+						uni.navigateTo({
+							url: './flowsCtrl'
+						})
+					}
 				})
 			}
 		},
@@ -52,9 +51,6 @@
 			return {
 				workflow: enums.workflow,
 				wColor: enums.workflowColor,
-				icon: app.webInfo.avatar,
-				page: 1,
-				pageSize: 10,
 				data: [],
 				modalName: null,
 				listTouchStart: 0,
@@ -65,6 +61,9 @@
 </script>
 	
 <style>
+	.cu-card>.cu-item {
+		transition: all 1s;
+	}
 	.list-move{
 		transition: all 0.8s;
 	}

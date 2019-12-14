@@ -1,8 +1,8 @@
 <template>
-	<view>
+	<view id="all-apply-list">
 		<cu-custom bgColor="bg-informatic-brown" isBack>
 			<block slot="backText">返回</block>
-			<block slot="content">我的参与</block>
+			<block slot="content">所有申请</block>
 		</cu-custom>
 		<view class="cu-bar bg-white solids-bottom">
 			<view class="action">
@@ -33,53 +33,29 @@
 	let enums = require("../enumsv1.js");
 	export default {
 		onShow() {
-			this.getData(1);
+			this.getData();
 		},
 		onLoad() {
-			this.getData(1);
+			this.getData();
 		},
 		methods: {
-			getData(p) {
-				let page = p || this.page;
-				let pageSize = this.pageSize;
-				uni.post("/api/roomApp/v1/GetAllMyApplication", {
-					page,
-					pageSize,
-				}, msg => {
-					if (msg.success) {
+			getData() {
+
+				uni.post("/api/workflow/AllFlow", {name:'按团队申请实验室'}, msg => {
 						this.data = msg.data;
-					}
 				})
 			},
 			toExecute(item) {
-				uni.navigateTo({
-					url: item.RouteData
+				uni.setStorage({
+					key : 'jmpInfo',
+					data:item,
+					success: () => {	//如果缓存成功则跳转
+						uni.navigateTo({
+							url: './flowsCtrl'
+						})
+					}
 				})
 			},
-			toDetail(id) {
-				uni.navigateTo({
-					url: "/iuc/roomApplication/v1/detail?id=" + id
-				})
-			},
-			/*// ListTouch触摸开始
-			ListTouchStart(e) {
-				this.listTouchStart = e.touches[0].pageX
-			},
-
-			// ListTouch计算方向
-			listTouchMove(e) {
-				this.listTouchDirection = e.touches[0].pageX - this.listTouchStart > 0 ? 'right' : 'left'
-			},
-
-			// ListTouch计算滚动
-			listTouchEnd(e) {
-				if (this.listTouchDirection == 'left') {
-					this.modalName = e.currentTarget.dataset.target
-				} else {
-					this.modalName = null
-				}
-				this.listTouchDirection = null
-			},*/
 			foldUp() {
 				this.display = !this.display
 			}
@@ -103,8 +79,6 @@
 
 <style>
 	.cu-list>.cu-item {
-		padding-top: 16rpx;
-		padding-bottom: 6rpx;
 		transition: all 1s;
 	}
 

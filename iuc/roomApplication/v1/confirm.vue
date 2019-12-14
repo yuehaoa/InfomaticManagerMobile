@@ -38,7 +38,7 @@
 			</view>
 		</view>
 		<labTimeLine :timeline="timeline" v-show="displayTimeline"></labTimeLine>
-		<view class="action-list cu-list grid col-4 margin-top margin-top">
+		<view class="action-list cu-list grid col-3 margin-top margin-top">
 			<view class="cu-item" @click="submit('')">
 				<view class="cuIcon-roundcheckfill text-green"></view>
 				<text>同意申请</text>
