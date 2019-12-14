@@ -14,6 +14,26 @@
 			"style": {}
 		},
 		{
+			"path":"iuc/roomApplication/v2/myApplication",
+			"style": {}
+		},
+		{
+			"path":"iuc/roomApplication/v2/flowsCtrl",
+			"style": {}
+		},
+		{
+			"path":"iuc/roomApplication/v2/todoList",
+			"style": {}
+		},
+		{
+			"path":"iuc/roomApplication/v2/myAttend",
+			"style": {}
+		},
+		{
+			"path":"iuc/roomApplication/v2/allList",
+			"style": {}
+		},
+		{
 			"path":"iuc/softwareInstall/v1/create",
 			"style": {}
 		},
