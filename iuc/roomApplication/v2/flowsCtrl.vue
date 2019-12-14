@@ -104,7 +104,7 @@
 				<text class="padding-lr-xs text-bold" :class="displayTimeline?'cuIcon-fold':'cuIcon-unfold'"></text>
 			</view>
 		</view>
-		<labTimeLine :timeline="io.allSteps" v-show="displayTimeline"></labTimeLine>
+		<labTimeLine :timeline="io.timelines" v-show="displayTimeline"></labTimeLine>
 		<view v-if="io.isMyStep" class="margin-top">
 			<button @click="onSubmit()" v-if="io.submitBtns.length===1">{{io.submitBtns[0].Text}}</button>
 			<view class="cu-list grid" :class="['col-'+io.submitBtns.length]" v-else>
@@ -169,6 +169,15 @@
 							detail: true
 						}, msg => {
 							this.io = msg;
+							if(this.io.intstanceState===5){
+								for(let index in this.io.allSteps){
+									if(this.io.allSteps[index].status===0){
+										this.io.allSteps[index-1].status=30;
+										this.io.timelines[0].steps[0].State=4;
+										break;
+									}
+								}
+							}
 						});
 					}
 				});
@@ -237,7 +246,9 @@
 					submitBtns: [],
 					shouldUpload: [],
 					allSteps: [],
-					isMyStep: false
+					isMyStep: false,
+					timelines: [],
+					intstanceState:''
 				},
 				assistInfo: {
 					buildings: [],

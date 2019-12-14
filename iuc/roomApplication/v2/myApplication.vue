@@ -61,6 +61,9 @@
 </script>
 	
 <style>
+	.cu-card>.cu-item {
+		transition: all 1s;
+	}
 	.list-move{
 		transition: all 0.8s;
 	}

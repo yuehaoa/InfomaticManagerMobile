@@ -43,7 +43,7 @@
 		},
 		methods: {
 			inStep(steps, state) {
-				let s = state || this.model.State;
+				let s = state;
 				return steps.indexOf(s) > -1;
 			}
 		}
