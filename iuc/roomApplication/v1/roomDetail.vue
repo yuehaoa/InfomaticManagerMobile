@@ -4,7 +4,7 @@
 			<block slot="backText">返回</block>
 			<block slot="content">实验室详细信息</block>
 		</cu-custom>
-		<labInfoCard class="margin-lr" :lab="labInfo"></labInfoCard>
+		<labInfoCard class="margin-lr-xl" :lab="labInfo"></labInfoCard>
 		<scroll-view scroll-x class="bg-white nav text-center cardPosition shadow" :style="[{height:customBar + 'px'}]">
 			<view class="cu-item" :class="index==tabCur?'text-informatic-brown text-bold cur':''" v-for="(item,index) in arrays" :key="index" @tap="tabSelect" :data-id="index">
 				{{item}}
@@ -45,14 +45,6 @@
 				this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60
 			},
 			create() {
-				if(app.checkPermission("ItemManager.CreateRoomApplicationWorkflow")==-1||app.checkPermission("ItemManager.CreateRoomApplicationWorkflow")==false)
-				{
-					uni.showToast({
-						title: "您没有权限",
-						icon: "none"
-					})
-					return;
-				};
 				uni.navigateTo({
 					url: "./create?buildingID="+this.labInfo.BuildingId+"&roomID="+this.labInfo.ID+"&BuildingName="+this.labInfo.Building.Name+"&labName="+this.labInfo.Name
 				})
