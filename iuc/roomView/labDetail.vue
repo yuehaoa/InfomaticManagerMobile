@@ -55,9 +55,9 @@
 				uni.post("/api/building/GetRoom", { ID: this.labInfo.ID }, msg => {
 					this.labInfo = msg.data;
 				});
-				uni.post("/api/roomApp/v1/GetApplicationByRoom",{ ID: this.labInfo.ID },msg=>{
+				/*uni.post("/api/roomApp/v1/GetApplicationByRoom",{ ID: this.labInfo.ID },msg=>{
 					this.applicationData = msg.data;
-				});
+				});*/
 				uni.post("/api/building/GetSeats",{ID: this.labInfo.ID},msg=>{
 					this.applicationData = msg.data;
 				})
