@@ -6,10 +6,14 @@
 		</cu-custom>
 		<labInfoCard class="margin-lr-xl" :lab="labInfo"></labInfoCard>
 		<view v-if="labInfo.RoomType===10" class="text-center">
-			<button class="cu-btn bg-blue lg">以团队申请该实验室</button>
+			<button v-if="!applicationData.data" class="cu-btn bg-blue lg">以团队申请该实验室</button>
+			<button disabled="true" v-if="applicationData.data" class="cu-btn bg-blue lg">已占用[从{{applicationData.data}}到{{applicationData.data}}]</button>
 		</view>
 		<view v-else-if="labInfo.RoomType===20">
-			<view class="bg-blue">机位列表</view>
+			<view class="action text-xl bg-white solids-bottom padding-sm">
+				<text class="cuIcon-title text-blue text-xl"></text>
+				<text class="text-bold text-xl">机位列表</text>
+			</view>
 			<view class="cu-list menu">
 				<view class="cu-item" v-for="(item,index) in applicationData" :key="index">
 					<view class="content">
@@ -25,8 +29,8 @@
 				</view>
 			</view>
 		</view>
-		<view v-else class="text-center">
-			<text>开放实验室无需申请</text>
+		<view v-else class="margin-lr-xl padding-lr-xl">
+			<image mode="aspectFit" src="../../static/无需申请.png"></image>
 		</view>
 	</view>
 </template>
