@@ -11,10 +11,10 @@
 					<image class="cu-avatar round xl center" v-bind:src="avatar" v-on:click="navToInfor()" />
 				</view>
 				<view class="basis-lg margin">
-					<p class="text-white">
-						<span class="text-xxl block margin-bottom-xs">{{realName}}</span>
-						<span>detail information</span>
-					</p>
+					<view class="text-white">
+						<text class="text-xxl block margin-bottom-xs">{{realName}}</text>
+						<text>detail information</text>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -113,7 +113,7 @@
 				})
 			},
 			navTo(e) {
-				if(!e)return;
+				if (!e) return;
 				uni.navigateTo({
 					url: e
 				})
@@ -123,8 +123,6 @@
 </script>
 
 <style lang="less">
-	@import'../../colorui/icon.css';
-
 	.head {
 		height: 360rpx;
 		width: 100%;
@@ -135,11 +133,9 @@
 		position: fixed;
 		z-index: -1;
 	}
-
 	.info-bar {
 		height: 360rpx;
 	}
-
 	.navs-bar {
 		margin-top: -70rpx;
 		border-radius: 28rpx;
