@@ -47,12 +47,12 @@
 			getLabs(pid) {
 				uni.post("/api/building/GetRooms", {pid}, msg => {
 					this.labs = msg.data;
-					this.labs = this.labs.filter(e => e.ID !== '00000000-0000-0000-0000-000000000000');
+					//this.labs = this.labs.filter(e => e.ID !== '00000000-0000-0000-0000-000000000000');
 				})
 			},
 			labDetail(id) {
 				uni.navigateTo({ 
-					url: './roomDetail?id=' + id
+					url: './labDetail?id=' + id
 				})
 			}
 		}
