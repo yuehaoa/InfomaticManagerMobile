@@ -6,8 +6,13 @@
 		</cu-custom>
 		<labInfoCard class="margin-lr-xl" :lab="labInfo"></labInfoCard>
 		<view v-if="labInfo.RoomType===10" class="text-center">
-			<button v-if="!applicationData.data" class="cu-btn bg-blue lg">以团队申请该实验室</button>
-			<button disabled="true" v-if="applicationData.data" class="cu-btn bg-blue lg">已占用[从{{applicationData.data}}到{{applicationData.data}}]</button>
+			<view v-if="!applicationData">
+				<button class="cu-btn bg-blue lg margin" @click="submit("")">以团队申请该实验室</button>
+			</view>
+			<view v-if="applicationData">
+				<view class="text-gray text-df margin">从{{applicationData[0].StartDate}}到{{applicationData[0].EndDate}}</view>
+				<button disabled class="cu-btn bg-blue lg" type="">实验室已被占用</button>
+			</view>
 		</view>
 		<view v-else-if="labInfo.RoomType===20">
 			<view class="action text-xl bg-white solids-bottom padding-sm">
@@ -23,7 +28,7 @@
 						</text>
 					</view>
 					<view class="action">
-						<button class="cu-btn round bg-green shadow" :disabled="item.State!==0">
+						<button class="cu-btn round bg-green shadow" :disabled="item.State!==0" @click="submit(item.ID)">
 							<text class="cuIcon-upload"></text>申请</button>
 					</view>
 				</view>
@@ -38,33 +43,53 @@
 <script>
 	let app = require("@/config");
 	let enums = require("../roomApplication/enumsv1.js");
-	export default{
+	export default {
 		onLoad(opt) {
 			this.labInfo.ID = opt.id;
 			this.getData();
 			uni.getStorage({
 				key: 'buildingDic',
-				success: res =>{
+				success: res => {
 					this.buildingDic = res.data;
 				}
 			})
 		},
-		methods:{
-			getData(){
+		methods: {
+			getData() {
 				if (!this.labInfo.ID) return;
-				uni.post("/api/building/GetRoom", { ID: this.labInfo.ID }, msg => {
+				uni.post("/api/building/GetRoom", {
+					ID: this.labInfo.ID
+				}, msg => {
 					this.labInfo = msg.data;
+					if (this.labInfo.RoomType == 10) {
+						uni.post("/api/roomApp/v1/GetApplicationByRoom", {
+							ID: this.labInfo.ID
+						}, msg => {
+							this.applicationData = msg.data;
+						});
+					} else if (this.labInfo.RoomType == 20) {
+						uni.post("/api/building/GetSeats", {
+							ID: this.labInfo.ID
+						}, msg => {
+							this.applicationData = msg.data;
+						});
+					}
 				});
-				/*uni.post("/api/roomApp/v1/GetApplicationByRoom",{ ID: this.labInfo.ID },msg=>{
-					this.applicationData = msg.data;
-				});*/
-				uni.post("/api/building/GetSeats",{ID: this.labInfo.ID},msg=>{
-					this.applicationData = msg.data;
-				})
+			},
+			submit(e) {
+				if (!e) {
+					uni.navigateTo({
+						url: "../roomApplication/v2/flowsCtrl?create=true&RoomId=" + this.labInfo.RoomId
+					})
+				} else {
+					uni.navigateTo({
+						url: "../roomApplication/v2/flowsCtrl?create=true&RoomId=" + this.labInfo.RoomId + "&ID=" + e
+					})
+				}
 			}
 		},
-		data(){
-			return{
+		data() {
+			return {
 				workflow: enums.workflow,
 				wColor: enums.workflowColor,
 				roomType: enums.roomType,
@@ -89,15 +114,14 @@
 				},
 				applicationData: [],
 				buildingDic: {},
-				labs:[]
+				labs: []
 			}
 		}
 	}
 </script>
 
 <style>
-	.cardPosition
-	{
+	.cardPosition {
 		z-index: 100;
 		position: sticky;
 		top: 90rpx;
