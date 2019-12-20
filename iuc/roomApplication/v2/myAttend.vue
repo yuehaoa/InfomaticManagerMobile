@@ -36,7 +36,6 @@
 			this.getData();
 		},
 		onLoad() {
-			this.getData();
 		},
 		methods: {
 			getData() {

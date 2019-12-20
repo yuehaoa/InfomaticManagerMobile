@@ -97,7 +97,7 @@
 				functionList: [{
 						image: "../../static/实验室列表.png",
 						text: "实验室列表",
-						source: "../roomApplication/v1/labList"
+						source: "../roomView/labList"
 					},
 					{
 						image: "../../static/实验室申请.png",

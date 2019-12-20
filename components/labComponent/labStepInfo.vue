@@ -2,7 +2,7 @@
 	<scroll-view scroll-x class="cu-steps margin-tb response">
 		<view class="cu-item padding-lr" :class="item.color" v-for="(item, index) in steps" :key="item.id">
 			<text class="num" :class="item.icon" :data-index="index + 1"></text>
-			{{item.stepName}}
+			<text class="step-name">{{item.stepName}}</text>
 		</view>
 	</scroll-view>
 </template>
@@ -54,5 +54,10 @@
 <style>
 	.cu-steps .cu-item[class*="text-"] .num.loading::after {
 		content: "\e74f";
+	}
+	.cu-steps .cu-item .step-name {
+		width: 6em;
+		display: inline-block;
+		overflow: hidden;
 	}
 </style>

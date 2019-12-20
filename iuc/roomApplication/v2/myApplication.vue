@@ -23,10 +23,9 @@
 	let enums = require("../enumsv1.js");
 	export default {
 		onShow() {
-			this.getData(1);
+			this.getData();
 		},
 		onLoad() {
-			
 		},
 		methods: {
 			getData() {

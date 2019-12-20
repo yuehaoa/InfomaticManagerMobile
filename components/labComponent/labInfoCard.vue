@@ -21,7 +21,7 @@
 	export default{
 		data(){
 			return{
-				icon: '../../../static/Informatic.png',
+				icon: '../../static/Informatic.png',
 			}
 		},
 		props:{

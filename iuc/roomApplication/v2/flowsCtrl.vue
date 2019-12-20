@@ -54,7 +54,7 @@
 			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.ReviewOpinion">
 				<view class="title">管理组审核人意见</view>
-				<input :disabled="io.fieldAccess.ReviewOpinion!=='w'||!io.isMyStep"></input>
+				<input v-model="io.data.ReviewOpinion" :disabled="io.fieldAccess.ReviewOpinion!=='w'||!io.isMyStep"></input>
 			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.Reviewer">
 				<view class="title">管理组审核人名称</view>
@@ -149,12 +149,12 @@
 					this.roomDic = res.data;
 				}
 			});
-			uni.getStorage({
+			/*uni.getStorage({
 				key: 'teacherDic',
 				success: (res) => {
 					this.teacherDic = res.data;
 				}
-			});
+			});*/
 			if (opt.create) {
 				uni.post("/api/workflow/CreateInstance", {
 					workflowName: "按团队申请实验室"
@@ -169,11 +169,11 @@
 							detail: true
 						}, msg => {
 							this.io = msg;
-							if(this.io.intstanceState===5){
-								for(let index in this.io.allSteps){
-									if(this.io.allSteps[index].status===0){
-										this.io.allSteps[index-1].status=30;
-										this.io.timelines[0].steps[0].State=4;
+							if (this.io.intstanceState === 5) {
+								for (let index in this.io.allSteps) {
+									if (this.io.allSteps[index].status === 0) {
+										this.io.allSteps[index - 1].status = 30;
+										this.io.timelines[0].steps[0].State = 4;
 										break;
 									}
 								}
@@ -234,8 +234,8 @@
 				this.selectDateTime();
 				console.log(this.io.data)
 			},
-			foldUp(){
-				this.displayTimeline=!this.displayTimeline;
+			foldUp() {
+				this.displayTimeline = !this.displayTimeline;
 			}
 		},
 		data() {
@@ -248,7 +248,7 @@
 					allSteps: [],
 					isMyStep: false,
 					timelines: [],
-					intstanceState:''
+					intstanceState: ''
 				},
 				assistInfo: {
 					buildings: [],
