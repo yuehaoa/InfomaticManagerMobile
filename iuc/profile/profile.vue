@@ -18,15 +18,15 @@
 				</view>
 			</view>
 		</view>
-		<view class=" cu-list grid no-border col-4 margin navs-bar shadow">
+		<view class="cu-list grid no-border col-4 margin margin-lr-xl navs-bar shadow">
 			<view class="cu-item" v-for="(item,index) in navs" :key="index" @click="navTo(item.url)">
-				<view :class="'cuIcon-'+item.cuIcon" class="text-informatic-brown"></view>
-				<text class="text-informatic-brown text-bold">{{item.name}}</text>
+				<view :class="'cuIcon-'+item.cuIcon" class="text-informatic-brown "></view>
+				<text class="text-informatic-brown text-bold ">{{item.name}}</text>
 			</view>
 		</view>
 		<view class="cu-list menu">
 			<view class="arrow cu-item" v-for="(item,index) in list" :key="index" @click="navTo(item.url)">
-				<view class="content" :class="{'margin-top':index == 4}">
+				<view class="content margin-lr" :class="{'margin-top':index == 4}">
 					<text class="text-informatic-brown" :class="'cuIcon-'+item.cuIcon"></text>
 					<text class="text-informatic-brown text-bold">{{item.name}}</text>
 				</view>
@@ -34,7 +34,7 @@
 		</view>
 		<view class="cu-list menu">
 			<view class="arrow cu-item" @click="navTo()">
-				<view class="content">
+				<view class="content margin-lr">
 					<text class="text-informatic-brown cuIcon-roundcheckfill"></text>
 					<text class="text-informatic-brown text-bold">联系管理员</text>
 				</view>
@@ -139,7 +139,10 @@
 	.navs-bar {
 		margin-top: -70rpx;
 		border-radius: 28rpx;
-		-webkit-box-shadow: 3px 3px 4px rgba(26, 26, 26, 0.2);
-		box-shadow: 3px 3px 4px rgba(26, 26, 26, 0.2);
+		box-shadow: 3px 3px 4px rgba(109, 59, 94, 0.3);;
+		padding: 10px 20px;
+	}
+	.cu-list.menu>.cu-item.arrow:before{
+		right: 40px;
 	}
 </style>
