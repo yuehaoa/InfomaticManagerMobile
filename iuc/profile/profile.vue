@@ -89,7 +89,6 @@
 			}
 		},
 		onLoad() {
-			this.avatar = app.userInfo.avatar;
 			this.currentUserGuid = app.userInfo.token;
 		},
 		onShow() {
@@ -104,6 +103,9 @@
 					if (msg.success) {
 						this.userInfo = msg.data;
 						this.realName = msg.data.RealName;
+						if(this.userInfo.Avatar.includes("http://"))
+						this.avatar = this.userInfo.Avatar;
+						else this.avatar = "http://item.ricebird.cn"+this.userInfo.Avatar;
 					}
 				})
 			},
