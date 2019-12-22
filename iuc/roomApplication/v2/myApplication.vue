@@ -23,10 +23,9 @@
 	let enums = require("../enumsv1.js");
 	export default {
 		onShow() {
-			this.getData(1);
+			this.getData();
 		},
 		onLoad() {
-			
 		},
 		methods: {
 			getData() {
@@ -36,15 +35,29 @@
 				})
 			},
 			toExecute(item) {
-				uni.setStorage({
-					key : 'jmpInfo',
-					data:item,
-					success: () => {	//如果缓存成功则跳转
-						uni.navigateTo({
-							url: './flowsCtrl'
-						})
-					}
-				})
+				item.StepId=undefined;
+				if(item.WorkflowName==="按团队申请实验室"){
+					uni.setStorage({
+						key : 'jmpInfo',
+						data:item,
+						success: () => {	//如果缓存成功则跳转
+							uni.navigateTo({
+								url: './roomFlowsCtrl'
+							})
+						}
+					})
+				}
+				else if(item.WorkflowName==="按机位申请实验室"){
+					uni.setStorage({
+						key : 'jmpInfo',
+						data:item,
+						success: () => {	//如果缓存成功则跳转
+							uni.navigateTo({
+								url: './seatFlowsCtrl'
+							})
+						}
+					})
+				}
 			}
 		},
 		data() {

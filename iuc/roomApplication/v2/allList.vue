@@ -36,25 +36,36 @@
 			this.getData();
 		},
 		onLoad() {
-			this.getData();
 		},
 		methods: {
 			getData() {
-
 				uni.post("/api/workflow/AllFlow", {name:'按团队申请实验室'}, msg => {
 						this.data = msg.data;
 				})
 			},
 			toExecute(item) {
-				uni.setStorage({
-					key : 'jmpInfo',
-					data:item,
-					success: () => {	//如果缓存成功则跳转
-						uni.navigateTo({
-							url: './flowsCtrl'
-						})
-					}
-				})
+				item.StepId = undefined;
+				if (item.WorkflowName === "按团队申请实验室") {
+					uni.setStorage({
+						key: 'jmpInfo',
+						data: item,
+						success: () => { //如果缓存成功则跳转
+							uni.navigateTo({
+								url: './roomFlowsCtrl'
+							})
+						}
+					})
+				} else if (item.WorkflowName === "按机位申请实验室") {
+					uni.setStorage({
+						key: 'jmpInfo',
+						data: item,
+						success: () => { //如果缓存成功则跳转
+							uni.navigateTo({
+								url: './seatFlowsCtrl'
+							})
+						}
+					})
+				}
 			},
 			foldUp() {
 				this.display = !this.display

@@ -15,12 +15,12 @@
 			</view>
 		</view>
 		<transition-group class="cu-list cu-card" name="list">
-			<view class="cu-item bg-informatic-brown shadow"
-			 v-for="(item,index) in data" :key="index" @click="toExecute(item)" v-show="display">
+			<view class="cu-item bg-informatic-brown shadow" v-for="(item,index) in roomData" :key="index" @click="toExecute(item)"
+			 v-show="display">
 				<sticky :item="item" />
 			</view>
 		</transition-group>
-		<template v-if="data.length===0 && display">
+		<template v-if="roomData.length===0 && display">
 			<view class="padding-tb text-center text-lg">
 				<text class="text-bold text-gray">暂无数据</text>
 			</view>
@@ -35,26 +35,39 @@
 		onShow() {
 			this.getData();
 		},
-		onLoad() {
-			this.getData();
-		},
+		onLoad() {},
 		methods: {
 			getData() {
-				uni.post("/api/workflow/MyAttend", {name:'按团队申请实验室'
-				}, msg => {
-					this.data = msg.data;
+				uni.post("/api/workflow/MyAttend", {name:"按团队申请实验室"}, msg => {
+					this.roomData = msg.data;
+				})
+				uni.post("/api/workflow/MyAttend", {name:"按机位申请实验室"}, msg => {
+					this.seatData = msg.data;
 				})
 			},
 			toExecute(item) {
-				uni.setStorage({
-					key : 'jmpInfo',
-					data:item,
-					success: () => {	//如果缓存成功则跳转
-						uni.navigateTo({
-							url: './flowsCtrl'
-						})
-					}
-				})
+				item.StepId = undefined;
+				if (item.WorkflowName === "按团队申请实验室") {
+					uni.setStorage({
+						key: 'jmpInfo',
+						data: item,
+						success: () => { //如果缓存成功则跳转
+							uni.navigateTo({
+								url: './roomFlowsCtrl'
+							})
+						}
+					})
+				} else if (item.WorkflowName === "按机位申请实验室") {
+					uni.setStorage({
+						key: 'jmpInfo',
+						data: item,
+						success: () => { //如果缓存成功则跳转
+							uni.navigateTo({
+								url: './seatFlowsCtrl'
+							})
+						}
+					})
+				}
 			},
 			/*// ListTouch触摸开始
 			ListTouchStart(e) {
@@ -86,7 +99,8 @@
 				icon: app.webInfo.avatar,
 				page: 1,
 				pageSize: 10,
-				data: [],
+				roomData: [],
+				seatData: [],
 				modalName: null,
 				listTouchStart: 0,
 				listTouchDirection: null,

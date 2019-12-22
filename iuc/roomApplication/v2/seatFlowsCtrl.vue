@@ -10,6 +10,9 @@
 				<view class="title">申请人名称</view>
 				<input placeholder="三字标题" v-model="io.data.Owner" :disabled="io.fieldAccess.Owner==='r'||!io.isMyStep"></input>
 			</view>
+			<view class="cu-form-group" v-show="io.fieldAccess.OwnerRoles">
+				<view class="title">申请人身份<text class="content padding-left" v-for="(item,index) in io.data.OwnerRoles" :key="index">{{item}}</text></view>
+			</view>
 			<view class="cu-form-group" @click="selectDateTime(io.fieldAccess.StartDate)" v-show="io.fieldAccess.StartDate">
 				<view class="title">申请时段</view>
 				<text style="flex: 1;">{{!io.data.StartDate?"请选择申请时段"
@@ -23,20 +26,21 @@
 				<view class="title">申请事由</view>
 				<input placeholder="三字标题" v-model="io.data.ApplicationReason" :disabled="io.fieldAccess.ApplicationReason==='r'||!io.isMyStep"></input>
 			</view>
-			<view class="cu-form-group" v-show="io.fieldAccess.RoomId">
-				<view class="title">房间号</view>
-				<picker mode="multiSelector" :range='[assistInfo.buildings,assistInfo.roomTemp]' range-key="Name" @columnchange="selectBuilding"
-				 @change="selectRoom" :value="assistInfo.roomIndex" :disabled="io.fieldAccess.RoomId!=='w'||!io.isMyStep">
-					<view>
-						{{roomDic[io.data.RoomId]}}
+			<view class="cu-form-group" v-show="io.fieldAccess.SeatId">
+				<view class="title">机位</view>
+				<picker mode="selector" :range="assistInfo.seats" range-key="Code" @change="selectSeat" :disabled="io.fieldAccess.SeatId==='r'||io.isMyStep">
+					<view class="content">
+						{{seatsDic[io.data.SeatId]}}
 					</view>
 				</picker>
 			</view>
-			<view class="cu-form-group" v-show="io.fieldAccess.GuideTeacherOpinion">
-				<view class="title">指导老师审核意见</view>
-				<input v-model="io.data.GuideTeacherOpinion" :disabled="io.fieldAccess.GuideTeacherOpinion!=='w'||!io.isMyStep"></input>
+			<view class="cu-form-group" v-show="io.fieldAccess.SeatInfo">
+				<view class="title">
+					机位信息
+					<text class="content padding-left">{{io.data.SeatInfo.building.Name}}{{io.data.SeatInfo.room.Name}}{{io.data.SeatInfo.seat.Code}}</text>
+				</view>
 			</view>
-			<view class="cu-form-group" v-show="io.fieldAccess.GuideTeacherId">
+			<view class="cu-form-group" v-show="io.fieldAccess.GuideTeacherId&&isStudent">
 				<view class="title">选择指导老师</view>
 				<picker :range="assistInfo.teachers" range-key="RealName" @change="selectTeacher" :disabled="io.fieldAccess.GuideTeacherId!=='w'||!io.isMyStep">
 					<view class="content">
@@ -48,13 +52,17 @@
 				<view class="title">指导老师姓名</view>
 				<input v-model="io.data.GuideTeacher" :disabled="io.fieldAccess.GuideTeacher!=='w'||!io.isMyStep"></input>
 			</view>
+			<view class="cu-form-group" v-show="io.fieldAccess.GuideTeacherOpinion">
+				<view class="title">指导老师审核意见</view>
+				<input v-model="io.data.GuideTeacherOpinion" :disabled="io.fieldAccess.GuideTeacherOpinion!=='w'||!io.isMyStep"></input>
+			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.GuideTeacherTime">
 				<view class="title">指导老师审核时间</view>
 				<input v-model="io.data.GuideTeacherTime" :disabled="io.fieldAccess.GuideTeacherTime!=='w'||!io.isMyStep"></input>
 			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.ReviewOpinion">
 				<view class="title">管理组审核人意见</view>
-				<input :disabled="io.fieldAccess.ReviewOpinion!=='w'||!io.isMyStep"></input>
+				<input v-model="io.data.ReviewOpinion" :disabled="io.fieldAccess.ReviewOpinion!=='w'||!io.isMyStep"></input>
 			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.Reviewer">
 				<view class="title">管理组审核人名称</view>
@@ -121,11 +129,11 @@
 	export default {
 		onLoad(opt) {
 			uni.post("/api/roomApp/v1/GetRoomAndTeacher", {}, msg => {
-				this.assistInfo = { ...this.assistInfo,
+				this.assistInfo = {
+					...this.assistInfo,
 					...msg
 				};
-				let roomDic = {},
-					teacherDic = {};
+				let roomDic = {};
 				this.assistInfo.rooms.forEach(value => {
 					roomDic[value.ID] = value.Name;
 				});
@@ -134,14 +142,6 @@
 					key: 'roomDic',
 					data: roomDic
 				});
-				/*this.assistInfo.teachers.forEach(value=>{
-					teacherDic[value.ID]=value.RealName;
-				});
-				teacherDic['00000000-0000-0000-0000-000000000000']='请选择指导老师';
-				uni.setStorage({
-					key:'teacherDic',
-					data:teacherDic
-				});*/
 			});
 			uni.getStorage({
 				key: 'roomDic',
@@ -149,18 +149,52 @@
 					this.roomDic = res.data;
 				}
 			});
-			uni.getStorage({
-				key: 'teacherDic',
-				success: (res) => {
-					this.teacherDic = res.data;
-				}
-			});
 			if (opt.create) {
-				uni.post("/api/workflow/CreateInstance", {
-					workflowName: "按团队申请实验室"
-				}, msg => {
-					this.io = msg;
-				});
+				this.displayTimeline = false;
+				uni.getStorage({
+					key: 'seatid',
+					success: (res) => {
+						let id = res.data;
+						uni.post("/api/seatApp/v1/Applicate", {
+							id
+						}, msg => {
+							if (msg.success) {
+								this.io = msg;
+								for (let role in this.io.data.OwnerRoles) {
+									if (this.io.data.OwnerRoles[role] === "老师") {
+										this.isStudent = false;
+										break;
+									}
+								}
+								uni.post("/api/building/GetSeats", {
+									ID: opt.RoomId
+								}, msg => {
+									let seatsDic = {};
+									this.assistInfo.seats = msg.data;
+									this.assistInfo.seats.forEach(value => {
+										seatsDic[value.ID] = value.Code;
+									});
+									seatsDic['00000000-0000-0000-0000-000000000000'] = '请选择机位';
+									uni.setStorage({
+										key: 'seatsDic',
+										data: seatsDic
+									});
+								})
+							} else {
+								uni.showToast({
+									icon: 'none',
+									title: msg.msg
+								});
+								setTimeout(function() {
+									uni.navigateBack({
+										delta: 1
+									});
+									uni.hideToast();
+								}, 1500);
+							}
+						});
+					}
+				})
 			} else {
 				uni.getStorage({
 					key: 'jmpInfo',
@@ -169,11 +203,25 @@
 							detail: true
 						}, msg => {
 							this.io = msg;
-							if(this.io.intstanceState===5){
-								for(let index in this.io.allSteps){
-									if(this.io.allSteps[index].status===0){
-										this.io.allSteps[index-1].status=30;
-										this.io.timelines[0].steps[0].State=4;
+							uni.post("/api/building/GetSeats", {
+								ID: this.io.data.SeatInfo.room.ID
+							}, msg => {
+								let seatsDic = {};
+								this.assistInfo.seats = msg.data;
+								this.assistInfo.seats.forEach(value => {
+									seatsDic[value.ID] = value.Code;
+								});
+								seatsDic['00000000-0000-0000-0000-000000000000'] = '请选择机位';
+								uni.setStorage({
+									key: 'seatsDic',
+									data: seatsDic
+								});
+							})
+							if (this.io.intstanceState === 5) {
+								for (let index in this.io.allSteps) {
+									if (this.io.allSteps[index].status === 0) {
+										this.io.allSteps[index - 1].status = 30;
+										this.io.timelines[0].steps[0].State = 4;
 										break;
 									}
 								}
@@ -181,19 +229,29 @@
 						});
 					}
 				});
-			}
+			};
+			uni.getStorage({
+				key: 'seatsDic',
+				success: (res) => {
+					this.seatsDic = res.data;
+				}
+			});
 		},
 		methods: {
 			onSubmit(item) {
+				if (this.isStudent && this.io.data.GuideTeacherId === "00000000-0000-0000-0000-000000000000") {
+
+				}
 				if (item) {
 					this.io.data[item.Field] = item.Value;
 				}
 				this.io.shouldUpload.forEach(value => {
 					this.upLoad[value] = this.io[value] || this.io.data[value]
 				});
-				uni.post("/api/workflow/SubmitInstance", { ...this.upLoad
+				uni.post("/api/workflow/SubmitInstance", {
+					...this.upLoad
 				}, msg => {
-					if (msg.success === true) {
+					if (msg.success) {
 						uni.showToast({
 							title: '提交成功',
 							icon: 'success',
@@ -201,28 +259,31 @@
 						});
 						setTimeout(function() {
 							uni.navigateBack({
-
+								delta: 1
 							});
+							uni.hideToast();
+						}, 1500);
+					} else {
+						uni.showToast({
+							icon: 'none',
+							title: msg.msg
+						});
+						setTimeout(function() {
+							uni.navigateBack({});
 							uni.hideToast();
 						}, 1500);
 					}
 				})
 			},
-			selectBuilding(e) {
-				let column = e.detail.column
-				let value = e.detail.value;
-				let buildingId = this.assistInfo.buildings[value].ID;
-				this.assistInfo.roomTemp = this.assistInfo.rooms.filter(e => e.BuildingId === buildingId);
-			},
-			selectRoom(e) {
-				let index = e.detail.value[1];
-				let v = this.assistInfo.roomTemp[index];
-				this.io.data.RoomId = v.ID;
-			},
 			selectTeacher(e) {
 				let u = this.assistInfo.teachers[e.detail.value];
 				this.io.data.GuideTeacherId = u.ID;
 				this.assistInfo.guideTeacherName = u.RealName;
+			},
+			selectSeat(e) {
+				let u = this.assistInfo.seats[e.detail.value];
+				this.io.data.SeatId = u.ID;
+				this.io.data.SeatInfo.seat = u;
 			},
 			selectDateTime(access) {
 				if (access && access !== 'w' || !this.io.isMyStep) return;
@@ -232,37 +293,44 @@
 				this.io.data.StartDate = e.value[0];
 				this.io.data.EndDate = e.value[1];
 				this.selectDateTime();
-				console.log(this.io.data)
 			},
-			foldUp(){
-				this.displayTimeline=!this.displayTimeline;
+			foldUp() {
+				this.displayTimeline = !this.displayTimeline;
 			}
 		},
 		data() {
 			return {
 				io: {
-					fieldAccess: {},
-					data: {},
-					submitBtns: [],
-					shouldUpload: [],
 					allSteps: [],
+					data: {
+						SeatInfo: {
+							building: {},
+							room: {},
+							seat: {}
+						}
+					},
+					fieldAccess: {},
+					intstanceState: '',
 					isMyStep: false,
-					timelines: [],
-					intstanceState:''
+					shouldUpload: [],
+					submitBtns: [],
+					timeLines: []
 				},
 				assistInfo: {
 					buildings: [],
 					rooms: [],
+					seats: [],
 					teachers: [],
-					roomTemp: [],
+					roomtemp: [],
 					roomIndex: [0, 0],
-					guideTeacherName: '请选择指导老师'
+					guideTeacherName: "请选择指导老师"
 				},
 				displayTimeline: true,
 				upLoad: [],
 				roomDic: {},
-				teacherDic: {},
+				seatsDic: {},
 				showPicker: false,
+				isStudent: true
 			}
 		}
 	}

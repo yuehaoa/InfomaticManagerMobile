@@ -18,7 +18,11 @@
 			"style": {}
 		},
 		{
-			"path":"iuc/roomApplication/v2/flowsCtrl",
+			"path":"iuc/roomApplication/v2/roomFlowsCtrl",
+			"style": {}
+		},
+		{
+			"path":"iuc/roomApplication/v2/seatFlowsCtrl",
 			"style": {}
 		},
 		{
@@ -34,71 +38,11 @@
 			"style": {}
 		},
 		{
-			"path":"iuc/softwareInstall/v1/create",
+			"path":"iuc/roomView/labDetail",
 			"style": {}
 		},
 		{
-			"path":"iuc/softwareInstall/v1/list",
-			"style": {}
-		},
-		{
-			"path":"iuc/softwareInstall/v1/detail",
-			"style": {}
-		},
-		{
-			"path":"iuc/softwareInstall/v1/allot",
-			"style":{}
-		},
-		{
-			"path":"iuc/softwareInstall/v1/process",
-			"style": {}
-		},
-		{
-			"path":"iuc/softwareInstall/v1/confirm",
-			"style": {}
-		},
-		{
-			"path":"iuc/roomApplication/v1/list",
-			"style": {}
-		},
-		{
-			"path":"iuc/roomApplication/v1/allot",
-			"style": {}
-		},
-		{
-			"path":"iuc/roomApplication/v1/check",
-			"style": {}
-		},
-		{
-			"path":"iuc/roomApplication/v1/detail",
-			"style": {}
-		},
-		{
-			"path":"iuc/roomApplication/v1/confirm",
-			"style": {}
-		},
-		{
-			"path":"iuc/roomApplication/v1/create",
-			"style": {}
-		},
-		{
-			"path": "iuc/roomApplication/v1/labList",
-			"style": {}
-		},
-		{
-			"path": "iuc/roomApplication/v1/alllist",
-			"style": {}
-		},
-		{
-			"path":"iuc/roomApplication/v1/roomDetail",
-			"style": {}
-		},
-		{
-			"path":"iuc/roomApplication/v1/myList",
-			"style": {}
-		},
-		{
-			"path":"iuc/roomApplication/v1/myInvolve",
+			"path":"iuc/roomView/labList",
 			"style": {}
 		},
 		{
