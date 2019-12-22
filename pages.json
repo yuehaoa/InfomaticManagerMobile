@@ -18,7 +18,11 @@
 			"style": {}
 		},
 		{
-			"path":"iuc/roomApplication/v2/flowsCtrl",
+			"path":"iuc/roomApplication/v2/roomFlowsCtrl",
+			"style": {}
+		},
+		{
+			"path":"iuc/roomApplication/v2/seatFlowsCtrl",
 			"style": {}
 		},
 		{

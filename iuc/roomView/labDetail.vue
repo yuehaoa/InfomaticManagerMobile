@@ -6,8 +6,15 @@
 		</cu-custom>
 		<labInfoCard class="margin-lr-xl" :lab="labInfo"></labInfoCard>
 		<view v-if="labInfo.RoomType===10" class="text-center">
-			<button v-if="!applicationData.data" class="cu-btn bg-blue lg">以团队申请该实验室</button>
-			<button disabled="true" v-if="applicationData.data" class="cu-btn bg-blue lg">已占用[从{{applicationData.data}}到{{applicationData.data}}]</button>
+			<view v-if="applicationData.length===0">
+				<button class="cu-btn bg-blue lg margin" @click="submit(labInfo.ID,'按团队申请实验室')">以团队申请该实验室</button>
+			</view>
+			<view v-if="applicationData.length>0">
+				<view class="text-gray text-df margin">从{{applicationData[0].StartDate}}到{{applicationData[0].EndDate}}</view>
+				<button disabled class="cu-btn bg-blue lg" type="">实验室已被占用</button>
+				</br>
+				<button class="cu-btn bg-blue lg margin-top" type="" @click="releaseRoom(labInfo.ID)">强制释放</button>
+			</view>
 		</view>
 		<view v-else-if="labInfo.RoomType===20">
 			<view class="action text-xl bg-white solids-bottom padding-sm">
@@ -23,8 +30,12 @@
 						</text>
 					</view>
 					<view class="action">
-						<button class="cu-btn round bg-green shadow" :disabled="item.State!==0">
+						<button class="cu-btn round bg-green shadow" :disabled="item.State!==0" @click="submit(item.ID)">
 							<text class="cuIcon-upload"></text>申请</button>
+					</view>
+					<view class="action">
+						<button class="cu-btn round bg-green shadow" :disabled="item.State===0" @click="release(item.ID)">
+							<text class="cuIcon-upload"></text>释放</button>
 					</view>
 				</view>
 			</view>
@@ -38,42 +49,119 @@
 <script>
 	let app = require("@/config");
 	let enums = require("../roomApplication/enumsv1.js");
-	export default{
+	export default {
 		onLoad(opt) {
 			this.labInfo.ID = opt.id;
 			this.getData();
 			uni.getStorage({
 				key: 'buildingDic',
-				success: res =>{
+				success: res => {
 					this.buildingDic = res.data;
 				}
 			})
 		},
-		methods:{
-			getData(){
+		methods: {
+			getData() {
 				if (!this.labInfo.ID) return;
-				uni.post("/api/building/GetRoom", { ID: this.labInfo.ID }, msg => {
+				uni.post("/api/building/GetRoom", {
+					ID: this.labInfo.ID
+				}, msg => {
 					this.labInfo = msg.data;
+					if (this.labInfo.RoomType === 10) {
+						uni.post("/api/roomApp/v1/GetApplicationByRoom", {
+							ID: this.labInfo.ID
+						}, msg => {
+							this.applicationData = msg.data;
+						});
+					} else if (this.labInfo.RoomType === 20) {
+						uni.post("/api/building/GetSeats", {
+							ID: this.labInfo.ID
+						}, msg => {
+							this.applicationData = msg.data;
+							/*let seatsDic= {};
+							this.applicationData.forEach(value=>{
+								seatsDic[value.ID]=value.code;
+							})
+							uni.setStorage({
+								key: 'seatsDic',
+								data: seatsDic
+							});*/
+						});
+					}
 				});
-				/*uni.post("/api/roomApp/v1/GetApplicationByRoom",{ ID: this.labInfo.ID },msg=>{
-					this.applicationData = msg.data;
-				});*/
-				uni.post("/api/building/GetSeats",{ID: this.labInfo.ID},msg=>{
-					this.applicationData = msg.data;
+			},
+			submit(id, description) {
+				if (description==="按团队申请实验室") {
+					uni.setStorage({
+						key:'labid',
+						data:id,
+						success: () => {
+							uni.navigateTo({
+								url: "../roomApplication/v2/roomFlowsCtrl?create=true"
+							})
+						}
+					})
+					
+				} else {
+					uni.setStorage({
+						key:'seatid',
+						data:id,
+						success: () => {
+							uni.navigateTo({
+								url: "../roomApplication/v2/seatFlowsCtrl?create=true"
+							})
+						}
+					})
+				}
+			},
+			release(e) {
+				uni.post("/api/seatApp/v1/Release", {
+					id: e
+				}, msg => {
+					if(msg.success){
+						//location.reload();
+					} else {
+						uni.showToast({
+							icon: 'none',
+							title: msg.msg,
+							position: 'center'
+						});
+						setTimeout(function() {
+							uni.navigateBack({
+								
+							});
+							uni.hideToast();
+						}, 1500);
+					}
+				})
+			},
+			releaseRoom(e) {
+				uni.post("/api/roomApp/v1/Release", {
+					id: e
+				}, msg => {
+					if(msg.success){
+						location.reload();
+					} else {
+						uni.showToast({
+							icon: 'none',
+							title: msg.msg,
+							position: 'center'
+						});
+						setTimeout(function() {
+							uni.navigateBack({
+								
+							});
+							uni.hideToast();
+						}, 1500);
+					}
 				})
 			}
 		},
-		data(){
-			return{
+		data() {
+			return {
 				workflow: enums.workflow,
 				wColor: enums.workflowColor,
 				roomType: enums.roomType,
-				arrays: [
-					"时间安排表",
-					"申请记录"
-				],
-				tabCur: 0,
-				scrollLeft: 0,
 				labInfo: {
 					ID: "",
 					Name: "",
@@ -89,15 +177,14 @@
 				},
 				applicationData: [],
 				buildingDic: {},
-				labs:[]
+				labs: []
 			}
 		}
 	}
 </script>
 
 <style>
-	.cardPosition
-	{
+	.cardPosition {
 		z-index: 100;
 		position: sticky;
 		top: 90rpx;
