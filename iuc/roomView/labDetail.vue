@@ -12,6 +12,8 @@
 			<view v-else>
 				<!--view class="text-gray text-df margin">从{{applicationData[0].StartDate}}到{{applicationData[0].EndDate}}</view-->
 				<button disabled class="cu-btn bg-blue lg" type="">实验室已被占用</button>
+				</br>
+				<button class="cu-btn bg-blue lg margin-top" type="" @click="releaseRoom(labInfo.ID)">强制释放</button>
 			</view>
 		</view>
 		<view v-else-if="labInfo.RoomType===20">
@@ -71,20 +73,89 @@
 							ID: this.labInfo.ID
 						}, msg => {
 							this.applicationData = msg.data;
+							/*let seatsDic= {};
+							this.applicationData.forEach(value=>{
+								seatsDic[value.ID]=value.code;
+							})
+							uni.setStorage({
+								key: 'seatsDic',
+								data: seatsDic
+							});*/
 						});
 					}
 				});
 			},
-			submit(e) {
-				if (!e) {
-					uni.navigateTo({
-						url: "../roomApplication/v2/flowsCtrl?create=true&RoomId=" + this.labInfo.RoomId
+			submit(id, description) {
+				if (description === "按团队申请实验室") {
+					uni.setStorage({
+						key: 'labid',
+						data: id,
+						success: () => {
+							uni.navigateTo({
+								url: "../roomApplication/v2/roomFlowsCtrl?create=true"
+							})
+						}
 					})
+
 				} else {
-					uni.navigateTo({
-						url: "../roomApplication/v2/flowsCtrl?create=true&RoomId=" + this.labInfo.RoomId + "&ID=" + e
+					uni.setStorage({
+						key: 'seatid',
+						data: id,
+						success: () => {
+							uni.navigateTo({
+								url: "../roomApplication/v2/seatFlowsCtrl?create=true"
+							})
+						}
 					})
 				}
+			},
+			release(seatID) {
+				/*console.log(seatID);
+				uni.post("/api/seatApp/v1/GetMyApplicate", {}, msg => {
+					debugger;
+					for (let index in msg.data)
+						console.log(msg.data[index].SeatId);
+				})*/
+				uni.post("/api/seatApp/v1/Release", {
+					id: seatID
+				}, msg => {
+					if (msg.success) {
+						//location.reload();
+					} else {
+						uni.showToast({
+							icon: 'none',
+							title: msg.msg,
+							position: 'center'
+						});
+						setTimeout(function() {
+							uni.navigateBack({
+
+							});
+							uni.hideToast();
+						}, 1500);
+					}
+				})
+			},
+			releaseRoom(roomID) {
+				uni.post("/api/roomApp/v1/Release", {
+					id: roomID
+				}, msg => {
+					if (msg.success) {
+						//location.reload();
+					} else {
+						uni.showToast({
+							icon: 'none',
+							title: msg.msg,
+							position: 'center'
+						});
+						setTimeout(function() {
+							uni.navigateBack({
+
+							});
+							uni.hideToast();
+						}, 1500);
+					}
+				})
 			}
 		},
 		data() {

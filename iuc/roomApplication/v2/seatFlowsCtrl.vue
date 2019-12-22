@@ -167,7 +167,7 @@
 									}
 								}
 								uni.post("/api/building/GetSeats", {
-									ID: opt.RoomId
+									ID: id
 								}, msg => {
 									let seatsDic = {};
 									this.assistInfo.seats = msg.data;
@@ -239,41 +239,50 @@
 		},
 		methods: {
 			onSubmit(item) {
-				if (this.isStudent && this.io.data.GuideTeacherId === "00000000-0000-0000-0000-000000000000") {
-
-				}
-				if (item) {
-					this.io.data[item.Field] = item.Value;
-				}
-				this.io.shouldUpload.forEach(value => {
-					this.upLoad[value] = this.io[value] || this.io.data[value]
-				});
-				uni.post("/api/workflow/SubmitInstance", {
-					...this.upLoad
-				}, msg => {
-					if (msg.success) {
-						uni.showToast({
-							title: '提交成功',
-							icon: 'success',
-							position: 'center'
-						});
-						setTimeout(function() {
-							uni.navigateBack({
-								delta: 1
-							});
-							uni.hideToast();
-						}, 1500);
-					} else {
-						uni.showToast({
-							icon: 'none',
-							title: msg.msg
-						});
-						setTimeout(function() {
-							uni.navigateBack({});
-							uni.hideToast();
-						}, 1500);
+				if (this.isStudent && this.io.data.GuideTeacherId === "00000000-0000-0000-0000-000000000000" && this.io.currentStep ===
+					"填写申请表") {
+					uni.showToast({
+						title: '必须选择指导老师',
+						icon: 'none',
+						position: 'center'
+					});
+					setTimeout(function() {
+						uni.hideToast();
+					}, 1500);
+				} else {
+					if (item) {
+						this.io.data[item.Field] = item.Value;
 					}
-				})
+					this.io.shouldUpload.forEach(value => {
+						this.upLoad[value] = this.io[value] || this.io.data[value]
+					});
+					uni.post("/api/workflow/SubmitInstance", {
+						...this.upLoad
+					}, msg => {
+						if (msg.success) {
+							uni.showToast({
+								title: '提交成功',
+								icon: 'success',
+								position: 'center'
+							});
+							setTimeout(function() {
+								uni.navigateBack({
+									delta: 1
+								});
+								uni.hideToast();
+							}, 1500);
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: msg.msg
+							});
+							setTimeout(function() {
+								uni.navigateBack({});
+								uni.hideToast();
+							}, 1500);
+						}
+					})
+				}
 			},
 			selectTeacher(e) {
 				let u = this.assistInfo.teachers[e.detail.value];
