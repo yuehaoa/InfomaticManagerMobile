@@ -15,8 +15,8 @@
 			</view>
 		</view>
 		<transition-group class="cu-list cu-card" name="list">
-			<view class="cu-item bg-informatic-brown shadow"
-			 v-for="(item,index) in data" :key="index" @click="toExecute(item)" v-show="display">
+			<view class="cu-item bg-informatic-brown shadow" v-for="(item,index) in data" :key="index" @click="toExecute(item)"
+			 v-show="display">
 				<sticky :item="item" />
 			</view>
 		</transition-group>
@@ -35,25 +35,36 @@
 		onShow() {
 			this.getData();
 		},
-		onLoad() {
-		},
+		onLoad() {},
 		methods: {
 			getData() {
-				uni.post("/api/workflow/MyAttend", {name:'按团队申请实验室'
-				}, msg => {
+				uni.post("/api/workflow/MyAttend", {}, msg => {
 					this.data = msg.data;
 				})
 			},
 			toExecute(item) {
-				uni.setStorage({
-					key : 'jmpInfo',
-					data:item,
-					success: () => {	//如果缓存成功则跳转
-						uni.navigateTo({
-							url: './flowsCtrl'
-						})
-					}
-				})
+				item.StepId = undefined;
+				if (item.WorkflowName === "按团队申请实验室") {
+					uni.setStorage({
+						key: 'jmpInfo',
+						data: item,
+						success: () => { //如果缓存成功则跳转
+							uni.navigateTo({
+								url: './roomFlowsCtrl'
+							})
+						}
+					})
+				} else if (item.WorkflowName === "按机位申请实验室") {
+					uni.setStorage({
+						key: 'jmpInfo',
+						data: item,
+						success: () => { //如果缓存成功则跳转
+							uni.navigateTo({
+								url: './seatFlowsCtrl'
+							})
+						}
+					})
+				}
 			},
 			/*// ListTouch触摸开始
 			ListTouchStart(e) {

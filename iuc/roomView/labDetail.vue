@@ -6,11 +6,11 @@
 		</cu-custom>
 		<labInfoCard class="margin-lr-xl" :lab="labInfo"></labInfoCard>
 		<view v-if="labInfo.RoomType===10" class="text-center">
-			<view v-if="applicationData.length===0">
+			<view v-if="applicationData.length===0&&labInfo.State!==1">
 				<button class="cu-btn bg-blue lg margin" @click="submit(labInfo.ID,'按团队申请实验室')">以团队申请该实验室</button>
 			</view>
-			<view v-if="applicationData.length>0">
-				<view class="text-gray text-df margin">从{{applicationData[0].StartDate}}到{{applicationData[0].EndDate}}</view>
+			<view v-else>
+				<!--view class="text-gray text-df margin">从{{applicationData[0].StartDate}}到{{applicationData[0].EndDate}}</view-->
 				<button disabled class="cu-btn bg-blue lg" type="">实验室已被占用</button>
 				</br>
 				<button class="cu-btn bg-blue lg margin-top" type="" @click="releaseRoom(labInfo.ID)">强制释放</button>
@@ -64,16 +64,11 @@
 			getData() {
 				if (!this.labInfo.ID) return;
 				uni.post("/api/building/GetRoom", {
-					ID: this.labInfo.ID
+					ID: this.labInfo.ID,
 				}, msg => {
 					this.labInfo = msg.data;
-					if (this.labInfo.RoomType === 10) {
-						uni.post("/api/roomApp/v1/GetApplicationByRoom", {
-							ID: this.labInfo.ID
-						}, msg => {
-							this.applicationData = msg.data;
-						});
-					} else if (this.labInfo.RoomType === 20) {
+					this.applicationData = msg.applications;
+					if (this.labInfo.RoomType === 20) {
 						uni.post("/api/building/GetSeats", {
 							ID: this.labInfo.ID
 						}, msg => {
@@ -159,9 +154,6 @@
 		},
 		data() {
 			return {
-				workflow: enums.workflow,
-				wColor: enums.workflowColor,
-				roomType: enums.roomType,
 				labInfo: {
 					ID: "",
 					Name: "",

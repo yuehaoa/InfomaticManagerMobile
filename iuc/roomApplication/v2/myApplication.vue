@@ -47,7 +47,7 @@
 						}
 					})
 				}
-				if(item.WorkflowName==="按机位申请实验室"){
+				else if(item.WorkflowName==="按机位申请实验室"){
 					uni.setStorage({
 						key : 'jmpInfo',
 						data:item,
