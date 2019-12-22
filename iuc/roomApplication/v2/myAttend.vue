@@ -15,12 +15,12 @@
 			</view>
 		</view>
 		<transition-group class="cu-list cu-card" name="list">
-			<view class="cu-item bg-informatic-brown shadow" v-for="(item,index) in data" :key="index" @click="toExecute(item)"
+			<view class="cu-item bg-informatic-brown shadow" v-for="(item,index) in roomData" :key="index" @click="toExecute(item)"
 			 v-show="display">
 				<sticky :item="item" />
 			</view>
 		</transition-group>
-		<template v-if="data.length===0 && display">
+		<template v-if="roomData.length===0 && display">
 			<view class="padding-tb text-center text-lg">
 				<text class="text-bold text-gray">暂无数据</text>
 			</view>
@@ -38,8 +38,11 @@
 		onLoad() {},
 		methods: {
 			getData() {
-				uni.post("/api/workflow/MyAttend", {}, msg => {
-					this.data = msg.data;
+				uni.post("/api/workflow/MyAttend", {name:"按团队申请实验室"}, msg => {
+					this.roomData = msg.data;
+				})
+				uni.post("/api/workflow/MyAttend", {name:"按机位申请实验室"}, msg => {
+					this.seatData = msg.data;
 				})
 			},
 			toExecute(item) {
@@ -96,7 +99,8 @@
 				icon: app.webInfo.avatar,
 				page: 1,
 				pageSize: 10,
-				data: [],
+				roomData: [],
+				seatData: [],
 				modalName: null,
 				listTouchStart: 0,
 				listTouchDirection: null,
