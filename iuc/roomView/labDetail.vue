@@ -6,14 +6,12 @@
 		</cu-custom>
 		<labInfoCard class="margin-lr-xl" :lab="labInfo"></labInfoCard>
 		<view v-if="labInfo.RoomType===10" class="text-center">
-			<view v-if="applicationData.length===0">
-				<button class="cu-btn bg-blue lg margin" @click="submit(labInfo.ID,'按团队申请实验室')">以团队申请该实验室</button>
+			<view v-if="!applicationData">
+				<button class="cu-btn bg-blue lg margin" @click="submit("")">以团队申请该实验室</button>
 			</view>
-			<view v-if="applicationData.length>0">
+			<view v-if="applicationData">
 				<view class="text-gray text-df margin">从{{applicationData[0].StartDate}}到{{applicationData[0].EndDate}}</view>
 				<button disabled class="cu-btn bg-blue lg" type="">实验室已被占用</button>
-				</br>
-				<button class="cu-btn bg-blue lg margin-top" type="" @click="releaseRoom(labInfo.ID)">强制释放</button>
 			</view>
 		</view>
 		<view v-else-if="labInfo.RoomType===20">
@@ -67,94 +65,31 @@
 					ID: this.labInfo.ID
 				}, msg => {
 					this.labInfo = msg.data;
-					if (this.labInfo.RoomType === 10) {
+					if (this.labInfo.RoomType == 10) {
 						uni.post("/api/roomApp/v1/GetApplicationByRoom", {
 							ID: this.labInfo.ID
 						}, msg => {
 							this.applicationData = msg.data;
 						});
-					} else if (this.labInfo.RoomType === 20) {
+					} else if (this.labInfo.RoomType == 20) {
 						uni.post("/api/building/GetSeats", {
 							ID: this.labInfo.ID
 						}, msg => {
 							this.applicationData = msg.data;
-							/*let seatsDic= {};
-							this.applicationData.forEach(value=>{
-								seatsDic[value.ID]=value.code;
-							})
-							uni.setStorage({
-								key: 'seatsDic',
-								data: seatsDic
-							});*/
 						});
 					}
 				});
 			},
-			submit(id, description) {
-				if (description==="按团队申请实验室") {
-					uni.setStorage({
-						key:'labid',
-						data:id,
-						success: () => {
-							uni.navigateTo({
-								url: "../roomApplication/v2/roomFlowsCtrl?create=true"
-							})
-						}
+			submit(e) {
+				if (!e) {
+					uni.navigateTo({
+						url: "../roomApplication/v2/flowsCtrl?create=true&RoomId=" + this.labInfo.RoomId
 					})
-					
 				} else {
-					uni.setStorage({
-						key:'seatid',
-						data:id,
-						success: () => {
-							uni.navigateTo({
-								url: "../roomApplication/v2/seatFlowsCtrl?create=true"
-							})
-						}
+					uni.navigateTo({
+						url: "../roomApplication/v2/flowsCtrl?create=true&RoomId=" + this.labInfo.RoomId + "&ID=" + e
 					})
 				}
-			},
-			release(e) {
-				uni.post("/api/seatApp/v1/Release", {
-					id: e
-				}, msg => {
-					if(msg.success){
-						//location.reload();
-					} else {
-						uni.showToast({
-							icon: 'none',
-							title: msg.msg,
-							position: 'center'
-						});
-						setTimeout(function() {
-							uni.navigateBack({
-								
-							});
-							uni.hideToast();
-						}, 1500);
-					}
-				})
-			},
-			releaseRoom(e) {
-				uni.post("/api/roomApp/v1/Release", {
-					id: e
-				}, msg => {
-					if(msg.success){
-						location.reload();
-					} else {
-						uni.showToast({
-							icon: 'none',
-							title: msg.msg,
-							position: 'center'
-						});
-						setTimeout(function() {
-							uni.navigateBack({
-								
-							});
-							uni.hideToast();
-						}, 1500);
-					}
-				})
 			}
 		},
 		data() {
