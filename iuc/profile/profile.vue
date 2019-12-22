@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view class="head border" :style="{'background-image': 'url('+avatar+')'}"></view>
+		<view class="head border" :style="{'background-image': 'url('+userInfo.Avatar+')'}"></view>
 		<view class="info-bar">
 			<view class="cf text-xxl">
 				<navigator class="fr cuIcon-settings text-white justify-end padding-lr padding-top" url="../userInfo/userInfo"></navigator>
@@ -8,11 +8,11 @@
 			<view class="flex justify-center">
 				<view class="basis-xs"></view>
 				<view class="basis-xs margin">
-					<image class="cu-avatar round xl center" v-bind:src="avatar" v-on:click="navToInfor()" />
+					<image class="cu-avatar round xl center" v-bind:src="userInfo.Avatar" v-on:click="navToInfor()" />
 				</view>
 				<view class="basis-lg margin">
 					<view class="text-white">
-						<text class="text-xxl block margin-bottom-xs">{{realName}}</text>
+						<text class="text-xxl block margin-bottom-xs">{{userInfo.RealName}}</text>
 						<text>detail information</text>
 					</view>
 				</view>
@@ -49,9 +49,9 @@
 	export default {
 		data() {
 			return {
+				userInfo: {},
 				realName: "",
 				avatar: "",
-				currentUserGuid: "",
 				navs: [{
 					name: "我的待办",
 					url: "../roomApplication/v2/todoList",
@@ -89,21 +89,18 @@
 			}
 		},
 		onLoad() {
-			this.avatar = app.userInfo.avatar;
-			this.currentUserGuid = app.userInfo.token;
+			
 		},
 		onShow() {
 			this.GetInfo();
 		},
 		methods: {
 			GetInfo() {
-				let currentUserGuid = this.currentUserGuid;
+				
 				uni.post("/uc/GetUserInfo", {
-					currentUserGuid
 				}, msg => {
 					if (msg.success) {
 						this.userInfo = msg.data;
-						this.realName = msg.data.RealName;
 					}
 				})
 			},
@@ -133,16 +130,20 @@
 		position: fixed;
 		z-index: -1;
 	}
+
 	.info-bar {
 		height: 360rpx;
 	}
+
 	.navs-bar {
 		margin-top: -70rpx;
 		border-radius: 28rpx;
-		box-shadow: 3px 3px 4px rgba(109, 59, 94, 0.3);;
+		box-shadow: 3px 3px 4px rgba(109, 59, 94, 0.3);
+		;
 		padding: 10px 20px;
 	}
-	.cu-list.menu>.cu-item.arrow:before{
+
+	.cu-list.menu>.cu-item.arrow:before {
 		right: 40px;
 	}
 </style>
