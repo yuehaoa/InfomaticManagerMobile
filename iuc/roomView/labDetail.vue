@@ -50,6 +50,9 @@
 	let app = require("@/config");
 	let enums = require("../roomApplication/enumsv1.js");
 	export default {
+		onShow() {
+			this.getData();
+		},
 		onLoad(opt) {
 			this.labInfo.ID = opt.id;
 			this.getData();
@@ -112,7 +115,6 @@
 			release(seatID) {
 				/*console.log(seatID);
 				uni.post("/api/seatApp/v1/GetMyApplicate", {}, msg => {
-					debugger;
 					for (let index in msg.data)
 						console.log(msg.data[index].SeatId);
 				})*/
@@ -121,6 +123,7 @@
 				}, msg => {
 					if (msg.success) {
 						//location.reload();
+						this.getData();
 					} else {
 						uni.showToast({
 							icon: 'none',
@@ -135,6 +138,10 @@
 						}, 1500);
 					}
 				})
+				/*uni.post("/api/seatApp/v1/GetMyApplicate", {}, msg => {
+					for (let index in msg.data)
+						console.log(msg.data[index].SeatId);
+				})*/
 			},
 			releaseRoom(roomID) {
 				uni.post("/api/roomApp/v1/Release", {

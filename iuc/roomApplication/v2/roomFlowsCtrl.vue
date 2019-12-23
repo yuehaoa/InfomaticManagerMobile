@@ -39,7 +39,7 @@
 					</view>
 				</picker>
 			</view>
-			<view class="cu-form-group" v-show="io.fieldAccess.GuideTeacherId">
+			<view class="cu-form-group" v-show="io.fieldAccess.GuideTeacherId&&isStudent">
 				<view class="title">选择指导老师</view>
 				<picker :range="assistInfo.teachers" range-key="RealName" @change="selectTeacher" :disabled="io.fieldAccess.GuideTeacherId!=='w'||!io.isMyStep">
 					<view class="content">
@@ -199,6 +199,13 @@
 							id
 						}, msg => {
 							this.io = msg;
+							for (let role in this.io.data.OwnerRoles) {
+								if (this.io.data.OwnerRoles[role] === "老师") {
+									this.isStudent = false;
+									break;
+								}
+							}
+							console.log(this.isStudent);
 						});
 					}
 				})
@@ -226,28 +233,52 @@
 		},
 		methods: {
 			onSubmit(item) {
-				if (item) {
-					this.io.data[item.Field] = item.Value;
-				}
-				this.io.shouldUpload.forEach(value => {
-					this.upLoad[value] = this.io[value] || this.io.data[value]
-				});
-				uni.post("/api/workflow/SubmitInstance", { ...this.upLoad
-				}, msg => {
-					if (msg.success === true) {
-						uni.showToast({
-							title: '提交成功',
-							icon: 'success',
-							position: 'center'
-						});
-						setTimeout(function() {
-							uni.navigateBack({
-
-							});
-							uni.hideToast();
-						}, 1500);
+				if (this.isStudent && this.io.data.GuideTeacherId === "00000000-0000-0000-0000-000000000000" && this.io.currentStep ===
+					"填写申请表") {
+					uni.showToast({
+						title: '必须选择指导老师',
+						icon: 'none',
+						position: 'center'
+					});
+					setTimeout(function() {
+						uni.hideToast();
+					}, 1500);
+				} else {
+					if (item) {
+						this.io.data[item.Field] = item.Value;
 					}
-				})
+					this.io.shouldUpload.forEach(value => {
+						this.upLoad[value] = this.io[value] || this.io.data[value]
+					});
+					uni.post("/api/workflow/SubmitInstance", { ...this.upLoad
+					}, msg => {
+						if (msg.success === true) {
+							uni.showToast({
+								title: '提交成功',
+								icon: 'success',
+								position: 'center'
+							});
+							setTimeout(function() {
+								uni.navigateBack({
+					
+								});
+								uni.hideToast();
+							}, 1500);
+						} else {
+							uni.showToast({
+								title: msg.msg,
+								icon: 'none',
+								position: 'center'
+							});
+							setTimeout(function() {
+								uni.navigateBack({
+								
+								});
+								uni.hideToast();
+							}, 3000);
+						}
+					})
+				}
 			},
 			selectBuilding(e) {
 				let column = e.detail.column
@@ -304,6 +335,7 @@
 				roomDic: {},
 				teacherDic: {},
 				showPicker: false,
+				isStudent: true
 			}
 		}
 	}
