@@ -6,6 +6,12 @@
 		</cu-custom>
 		<lab-Steps :value="io.allSteps"></lab-Steps>
 		<form>
+			<view class="cu-bar bg-white solids-bottom">
+				<view class="action text-xl">
+					<text class="cuIcon-title text-blue text-xl"></text>
+					<text class="text-bold text-xl">个人申请实验室</text>
+				</view>
+			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.Owner">
 				<view class="title">申请人名称</view>
 				<input placeholder="三字标题" v-model="io.data.Owner" :disabled="io.fieldAccess.Owner==='r'||!io.isMyStep"></input>
@@ -48,17 +54,29 @@
 					</view>
 				</picker>
 			</view>
-			<view class="cu-form-group" v-show="io.fieldAccess.GuideTeacher">
-				<view class="title">指导老师姓名</view>
-				<input v-model="io.data.GuideTeacher" :disabled="io.fieldAccess.GuideTeacher!=='w'||!io.isMyStep"></input>
+			<view class="cu-bar bg-white solids-bottom margin-top" v-show="io.fieldAccess.GuideTeacherOpinion">
+				<view class="action text-xl">
+					<text class="cuIcon-title text-blue text-xl"></text>
+					<text class="text-bold text-xl">指导老师审核</text>
+				</view>
 			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.GuideTeacherOpinion">
 				<view class="title">指导老师审核意见</view>
 				<input v-model="io.data.GuideTeacherOpinion" :disabled="io.fieldAccess.GuideTeacherOpinion!=='w'||!io.isMyStep"></input>
 			</view>
+			<view class="cu-form-group" v-show="io.fieldAccess.GuideTeacher">
+				<view class="title">指导老师姓名</view>
+				<input v-model="io.data.GuideTeacher" :disabled="io.fieldAccess.GuideTeacher!=='w'||!io.isMyStep"></input>
+			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.GuideTeacherTime">
 				<view class="title">指导老师审核时间</view>
 				<input v-model="io.data.GuideTeacherTime" :disabled="io.fieldAccess.GuideTeacherTime!=='w'||!io.isMyStep"></input>
+			</view>
+			<view class="cu-bar bg-white solids-bottom margin-top" v-show="io.fieldAccess.ReviewOpinion"> 
+				<view class="action text-xl">
+					<text class="cuIcon-title text-blue text-xl"></text>
+					<text class="text-bold text-xl">管理组老师审核</text>
+				</view>
 			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.ReviewOpinion">
 				<view class="title">管理组审核人意见</view>
@@ -72,6 +90,12 @@
 				<view class="title">管理组审核时间</view>
 				<input v-model="io.data.ReviewTime" :disabled="io.fieldAccess.ReviewTime!=='w'||!io.isMyStep"></input>
 			</view>
+			<view class="cu-bar bg-white solids-bottom margin-top" v-show="io.fieldAccess.Director">
+				<view class="action text-xl">
+					<text class="cuIcon-title text-blue text-xl"></text>
+					<text class="text-bold text-xl">中心办公室审核</text>
+				</view>
+			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.Director">
 				<view class="title">中心办公室主任名称</view>
 				<input v-model="io.data.Director" :disabled="io.fieldAccess.Director!=='w'||!io.isMyStep"></input>
@@ -81,7 +105,7 @@
 				<input v-model="io.data.DirectorOpinion" :disabled="io.fieldAccess.DirectorOpinion!=='w'||!io.isMyStep"></input>
 			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.ExpertOpinion">
-				<view class="title">其他专家意见</view>
+				<view class="title">办公会意见</view>
 				<input v-model="io.data.ExpertOpinion" placeholder="请填写" :disabled="io.fieldAccess.ExpertOpinion!=='w'||!io.isMyStep"></input>
 			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.DirectorTime">
@@ -113,12 +137,14 @@
 			</view>
 		</view>
 		<labTimeLine :timeline="io.timelines" v-show="displayTimeline"></labTimeLine>
-		<view v-if="io.isMyStep" class="margin-top">
-			<button @click="onSubmit()" v-if="io.submitBtns.length===1">{{io.submitBtns[0].Text}}</button>
-			<view class="cu-list grid" :class="['col-'+io.submitBtns.length]" v-else>
-				<view v-for="(item,index) in io.submitBtns" class="cu-item" @click="onSubmit(item)" :key="index">
-					<view :class="item.Icon"></view>
-					<text>{{item.Text}}</text>
+		<view v-if="io.isMyStep">
+			<button class="flex-sub bg-cyan margin-top" @click="onSubmit()" v-if="io.submitBtns.length===1">{{io.submitBtns[0].Text}}</button>
+			<view style="height: 180rpx; width: 100%;" v-else>
+				<view class="flex-sub cu-list grid cu-bar foot" :class="['col-'+io.submitBtns.length]">
+					<view v-for="(item,index) in io.submitBtns" class="cu-item" @click="onSubmit(item)" :key="index">
+						<view :class="item.Icon"></view>
+						<text>{{item.Text}}</text>
+					</view>
 				</view>
 			</view>
 		</view>
