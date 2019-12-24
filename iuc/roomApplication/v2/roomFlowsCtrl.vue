@@ -15,7 +15,7 @@
 			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.Owner">
 				<view class="title">申请人名称</view>
-				<input placeholder="三字标题" v-model="io.data.Owner" :disabled="io.fieldAccess.Owner==='r'||!io.isMyStep"></input>
+				<input placeholder="请输入申请人名称" v-model="io.data.Owner" :disabled="io.fieldAccess.Owner==='r'||!io.isMyStep"></input>
 			</view>
 			<view class="cu-form-group" @click="selectDateTime(io.fieldAccess.StartDate)" v-show="io.fieldAccess.StartDate">
 				<view class="title">申请时段</view>
@@ -24,11 +24,11 @@
 			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.Telephone">
 				<view class="title">申请人电话</view>
-				<input placeholder="三字标题" v-model="io.data.Telephone" :disabled="io.fieldAccess.Telephone==='r'||!io.isMyStep"></input>
+				<input placeholder="请输入申请人电话" v-model="io.data.Telephone" :disabled="io.fieldAccess.Telephone==='r'||!io.isMyStep"></input>
 			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.ApplicationReason">
 				<view class="title">申请事由</view>
-				<input placeholder="三字标题" v-model="io.data.ApplicationReason" :disabled="io.fieldAccess.ApplicationReason==='r'||!io.isMyStep"></input>
+				<input placeholder="请输入申请事由" v-model="io.data.ApplicationReason" :disabled="io.fieldAccess.ApplicationReason==='r'||!io.isMyStep"></input>
 			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.RoomId">
 				<view class="title">房间号</view>
@@ -124,7 +124,7 @@
 				<input v-model="io.data.HandleTime" :disabled="io.fieldAccess.HandleTime!=='w'||!io.isMyStep"></input>
 			</view>
 		</form>
-		<timePicker :show="showPicker" type="rangetime" color="#6d3b5e" @cancel="selectDateTime()" @confirm="confirmDateTime" />
+		<timePicker :value="[now, now]" :show="showPicker" type="rangetime" color="#6d3b5e" @cancel="selectDateTime()" @confirm="confirmDateTime" />
 		<view class="cu-bar bg-white solids-bottom margin-top">
 			<view class="action text-xl">
 				<text class="cuIcon-title text-blue text-xl"></text>
@@ -163,7 +163,6 @@
 					roomDic[value.ID] = value.Name;
 				});
 				roomDic['00000000-0000-0000-0000-000000000000'] = '请选择房间号';
-				console.log(roomDic);
 				uni.setStorage({
 					key: 'roomDic',
 					data: roomDic
@@ -311,7 +310,9 @@
 			}
 		},
 		data() {
+			var now = new Date();
 			return {
+				now,
 				io: {
 					fieldAccess: {},
 					data: {},

@@ -1,5 +1,6 @@
 <template>
 	<view class="flex flex-direction padding">
+		<a href="javascript:;" class="cu-btn bg-red lg margin-top" @click="go('eed2dec4-a868-4696-b911-c70ca8f9f7d9','roomApplication')">以游客身份登录</a>
 		<a href="javascript:;" class="cu-btn bg-green lg margin-top" @click="go('5516da53-739f-454a-a3a9-7e7824987a6d','roomApplication')">以普通学生身份登录</a>
 		<a href="javascript:;" class="cu-btn bg-green lg margin-top" @click="go('d9824e8c-c998-45e2-8156-34d723049855','roomApplication')">以指导老师身份登录</a>
 		<a href="javascript:;" class="cu-btn bg-green lg margin-top" @click="go('63d57029-eb82-45e0-9b99-10a829912e0c','roomApplication')">以管理组老师身份登录</a>

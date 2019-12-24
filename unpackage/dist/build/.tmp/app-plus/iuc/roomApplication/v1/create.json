@@ -1,6 +1,0 @@
-{
-  "usingComponents": {
-    "cu-custom": "/colorui/components/cu-custom",
-    "date": "/components/dy-Date/dy-Date"
-  }
-}
