@@ -117,11 +117,6 @@
 				}
 			},
 			release(seatID) {
-				/*console.log(seatID);
-				uni.post("/api/seatApp/v1/GetMyApplicate", {}, msg => {
-					for (let index in msg.data)
-						console.log(msg.data[index].SeatId);
-				})*/
 				uni.post("/api/seatApp/v1/Release", {
 					id: seatID
 				}, msg => {
@@ -142,17 +137,12 @@
 						}, 1500);
 					}
 				})
-				/*uni.post("/api/seatApp/v1/GetMyApplicate", {}, msg => {
-					for (let index in msg.data)
-						console.log(msg.data[index].SeatId);
-				})*/
 			},
 			releaseRoom(roomID) {
 				uni.post("/api/roomApp/v1/Release", {
 					id: roomID
 				}, msg => {
 					if (msg.success) {
-						//location.reload();
 					} else {
 						uni.showToast({
 							icon: 'none',
