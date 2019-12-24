@@ -1,2 +1,0 @@
-setCssToHead(["body { background-color: #FFFFFF; }\n",],undefined,{path:"./iuc/userInfo/modifyGrade.wxss"})();
-document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./iuc/userInfo/modifyGrade.wxml') } }));

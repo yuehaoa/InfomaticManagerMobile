@@ -1,1 +1,0 @@
-<view class="cu-steps margin-top"><block wx:for="{{steps}}" wx:for-item="item" wx:for-index="index" wx:key="id"><view class="{{['cu-item',item.FinalState]}}"><text class="{{['num',item.err]}}" data-index="{{index+1}}"></text>{{''+item.name+''}}</view></block></view>

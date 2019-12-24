@@ -14,7 +14,7 @@
 			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.Owner">
 				<view class="title">申请人名称</view>
-				<input placeholder="三字标题" v-model="io.data.Owner" :disabled="io.fieldAccess.Owner==='r'||!io.isMyStep"></input>
+				<input placeholder="请输入申请人名称" v-model="io.data.Owner" :disabled="io.fieldAccess.Owner==='r'||!io.isMyStep"></input>
 			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.OwnerRoles">
 				<view class="title">申请人身份<text class="content padding-left" v-for="(item,index) in io.data.OwnerRoles" :key="index">{{item}}</text></view>
@@ -26,20 +26,20 @@
 			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.Telephone">
 				<view class="title">申请人电话</view>
-				<input placeholder="三字标题" v-model="io.data.Telephone" :disabled="io.fieldAccess.Telephone==='r'||!io.isMyStep"></input>
+				<input placeholder="请输入申请人电话" v-model="io.data.Telephone" :disabled="io.fieldAccess.Telephone==='r'||!io.isMyStep"></input>
 			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.ApplicationReason">
 				<view class="title">申请事由</view>
-				<input placeholder="三字标题" v-model="io.data.ApplicationReason" :disabled="io.fieldAccess.ApplicationReason==='r'||!io.isMyStep"></input>
+				<input placeholder="请输入申请事由" v-model="io.data.ApplicationReason" :disabled="io.fieldAccess.ApplicationReason==='r'||!io.isMyStep"></input>
 			</view>
-			<view class="cu-form-group" v-show="io.fieldAccess.SeatId">
+			<!-- <view class="cu-form-group" v-show="io.fieldAccess.SeatId">
 				<view class="title">机位</view>
 				<picker mode="selector" :range="assistInfo.seats" range-key="Code" @change="selectSeat" :disabled="io.fieldAccess.SeatId==='r'||io.isMyStep">
 					<view class="content">
 						{{seatsDic[io.data.SeatId]}}
 					</view>
 				</picker>
-			</view>
+			</view> -->
 			<view class="cu-form-group" v-show="io.fieldAccess.SeatInfo">
 				<view class="title">
 					机位信息

@@ -61,11 +61,11 @@
 					url: "../roomApplication/v2/myAttend",
 					cuIcon: "newshotfill"
 				}, {
-					name: "机位申请",
-					url: "../roomApplication/v2/flowsCtrl?create=true",
+					name: "实验室列表",
+					url: "../roomView/labList?type=-1",
 					cuIcon: "formfill"
 				}, {
-					name: "核心功能",
+					name: "通讯录（未开放）",
 					url: "",
 					cuIcon: "timefill"
 				}],

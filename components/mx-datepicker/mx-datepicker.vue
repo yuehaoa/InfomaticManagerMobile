@@ -340,7 +340,7 @@
 						this.beginTime = [this.date.getHours(), this.date.getMinutes(), this.date.getSeconds()];
 						if (this.isMultiSelect) this.endTime = [...this.beginTime];
 					}
-					this.checkeds.push(new Date(this.date));
+					// this.checkeds.push(new Date(this.date));
 				}
 				if (this.type != 'time') this.refreshCalendars(true);
 				else this.onShowTimePicker('begin');
