@@ -39,12 +39,12 @@
 						nav: '../../iuc/News/newsList'
 					},
 					{
-						icon: 'cuIcon-notice',
-						text: '待开发',
-						nav: ''
+						icon: 'cuIcon-addressbook',
+						text: '通讯录',
+						nav: '../../iuc/addressBook/addressBook'
 					},
 					{
-						icon: 'cuIcon-my',
+						icon: 'cuIcon-profile',
 						text: '我的',
 						nav: '../profile/profile'
 					}
