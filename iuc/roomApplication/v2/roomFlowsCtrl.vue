@@ -124,7 +124,7 @@
 				<input v-model="io.data.HandleTime" :disabled="io.fieldAccess.HandleTime!=='w'||!io.isMyStep"></input>
 			</view>
 		</form>
-		<timePicker :value="[now, now]" :show="showPicker" type="rangetime" color="#6d3b5e" @cancel="selectDateTime()" @confirm="confirmDateTime" />
+		<timePicker :show="showPicker" type="rangetime" color="#6d3b5e" @cancel="selectDateTime()" @confirm="confirmDateTime" />
 		<view class="cu-bar bg-white solids-bottom margin-top">
 			<view class="action text-xl">
 				<text class="cuIcon-title text-blue text-xl"></text>
@@ -204,7 +204,6 @@
 									break;
 								}
 							}
-							console.log(this.isStudent);
 						});
 					}
 				})
@@ -303,7 +302,6 @@
 				this.io.data.StartDate = e.value[0];
 				this.io.data.EndDate = e.value[1];
 				this.selectDateTime();
-				console.log(this.io.data)
 			},
 			foldUp() {
 				this.displayTimeline = !this.displayTimeline;
