@@ -132,7 +132,7 @@
 					}
 				],
 				functionList: [{
-						image: "../../static/申请机位.png",
+						image: "../../static/通讯录.png",
 						text: "通讯录（未开放）",
 						source: ""
 					} //,
