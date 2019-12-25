@@ -133,8 +133,8 @@
 				],
 				functionList: [{
 						image: "../../static/通讯录.png",
-						text: "通讯录（未开放）",
-						source: ""
+						text: "通讯录",
+						source: "../addressBook/addressBook"
 					} //,
 					// {
 					// 	image: "../../static/实验室申请.png",

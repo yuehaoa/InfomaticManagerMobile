@@ -40,8 +40,8 @@
 					},
 					{
 						icon: 'cuIcon-addressbook',
-						text: '待开发',
-						nav: ''
+						text: '通讯录',
+						nav: '../../iuc/addressBook/addressBook'
 					},
 					{
 						icon: 'cuIcon-profile',

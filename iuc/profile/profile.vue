@@ -65,8 +65,8 @@
 					url: "../roomView/labList?type=-1",
 					cuIcon: "formfill"
 				}, {
-					name: "通讯录（未开放）",
-					url: "",
+					name: "通讯录",
+					url: "../addressBook/addressBook",
 					cuIcon: "timefill"
 				}],
 				list: [{
@@ -96,7 +96,6 @@
 		},
 		methods: {
 			GetInfo() {
-				
 				uni.post("/uc/GetUserInfo", {
 				}, msg => {
 					if (msg.success) {
