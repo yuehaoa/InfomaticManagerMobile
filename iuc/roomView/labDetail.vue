@@ -121,7 +121,6 @@
 					id: seatID
 				}, msg => {
 					if (msg.success) {
-						//location.reload();
 						this.getData();
 					} else {
 						uni.showToast({
@@ -143,6 +142,7 @@
 					id: roomID
 				}, msg => {
 					if (msg.success) {
+						this.getData();
 					} else {
 						uni.showToast({
 							icon: 'none',
