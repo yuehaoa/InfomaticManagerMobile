@@ -39,7 +39,7 @@
 		<view>
 			<view class="cu-bar bg-white">
 				<view class="action">
-					<text class="text-bold text-xl">实验室列表</text>
+					<text class="text-bold text-xl">申请实验室</text>
 				</view>
 				<view class="action text-informatic-brown" @click="labShow=!labShow">{{labShow ? "收起" : "展开"}}<text :class="functionshow ? 'cuIcon-triangleupfill' : 'cuIcon-triangledownfill'"
 					 style="font-size:25px;"></text></view>
