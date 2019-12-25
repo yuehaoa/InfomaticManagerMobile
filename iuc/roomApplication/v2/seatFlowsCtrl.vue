@@ -36,8 +36,8 @@
 				<view class="title">机位信息
 					<text class="content padding-left">{{`${io.data.SeatInfo.building.Name}-${io.data.SeatInfo.room.Name}-${io.data.SeatInfo.seat.Code}机位`}}</text>
 				</view>
-
 			</view>
+			
 			<view class="cu-form-group" v-show="io.fieldAccess.GuideTeacherId&&isStudent">
 				<view class="title">选择指导老师</view>
 				<picker :range="assistInfo.teachers" range-key="RealName" @change="selectTeacher" :disabled="io.fieldAccess.GuideTeacherId!=='w'||!io.isMyStep">
