@@ -157,24 +157,18 @@
 				this.assistInfo = { ...this.assistInfo,
 					...msg
 				};
-				let roomDic = {},
-					teacherDic = {};
-				this.assistInfo.rooms.forEach(value => {
-					roomDic[value.ID] = value.Name;
+				let roomDic = {};
+				this.assistInfo.buildings.forEach(building => {
+					let buildingName = building.Name;
+					building.Rooms.forEach(room =>{
+						roomDic[room.ID] =buildingName+'-'+room.RoomCode+'-'+room.Name;
+					})
 				});
 				roomDic['00000000-0000-0000-0000-000000000000'] = '请选择房间号';
 				uni.setStorage({
 					key: 'roomDic',
 					data: roomDic
 				});
-				/*this.assistInfo.teachers.forEach(value=>{
-					teacherDic[value.ID]=value.RealName;
-				});
-				teacherDic['00000000-0000-0000-0000-000000000000']='请选择指导老师';
-				uni.setStorage({
-					key:'teacherDic',
-					data:teacherDic
-				});*/
 			});
 			uni.getStorage({
 				key: 'roomDic',
@@ -182,12 +176,6 @@
 					this.roomDic = res.data;
 				}
 			});
-			/*uni.getStorage({
-				key: 'teacherDic',
-				success: (res) => {
-					this.teacherDic = res.data;
-				}
-			});*/
 			if (opt.create) {
 				this.displayTimeline = false;
 				uni.getStorage({
@@ -281,8 +269,7 @@
 			selectBuilding(e) {
 				let column = e.detail.column
 				let value = e.detail.value;
-				let buildingId = this.assistInfo.buildings[value].ID;
-				this.assistInfo.roomTemp = this.assistInfo.rooms.filter(e => e.BuildingId === buildingId);
+				this.assistInfo.roomTemp=this.assistInfo.buildings[value].Rooms;
 			},
 			selectRoom(e) {
 				let index = e.detail.value[1];

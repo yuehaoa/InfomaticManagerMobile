@@ -126,7 +126,7 @@
 						source: "../roomView/labList?type=10"
 					},
 					{
-						image: "../../static/实验室列表.png",
+						image: "../../static/申请机位.png",
 						text: "个人实验室",
 						source: "../roomView/labList?type=20"
 					}

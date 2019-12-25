@@ -12,7 +12,6 @@
 		<a href="javascript:;" class="cu-btn bg-blue lg margin-top" @click="go('8094cf84-01e6-484d-bb01-04a299f5ef5b','softwareInstall')">以维修者主管身份登录</a>
 		<a href="javascript:;" class="cu-btn bg-blue lg margin-top" @click="go('b15f7cdb-9f96-4041-a7b2-4cfeebabaa8d','softwareInstall')">以普通维修者身份登录</a>
 		<button @click="clear">清空缓存</button>
-		<a href="javascript:;" class="cu-btn bg-blue lg margin-top" @click="iii">123</a>
 	</view>
 </template>
 
@@ -55,11 +54,6 @@
 				uni.navigateBack({
 					
 				});
-			},
-			iii(){
-				uni.navigateTo({
-					url:'../roomApplication/v2/flowsCtrl'
-				})
 			}
 		},
 		data() {
