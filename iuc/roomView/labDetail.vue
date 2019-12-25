@@ -52,18 +52,11 @@
 	let enums = require("../roomApplication/enumsv1.js");
 	export default {
 		onShow() {
-			console.log(app)
 			this.getData();
 		},
 		onLoad(opt) {
 			this.labInfo.ID = opt.id;
 			this.getData();
-			uni.getStorage({
-				key: 'buildingDic',
-				success: res => {
-					this.buildingDic = res.data;
-				}
-			})
 		},
 		methods: {
 			getData() {
@@ -80,14 +73,6 @@
 							pageSize: 1000
 						}, msg => {
 							this.applicationData = msg.data;
-							/*let seatsDic= {};
-							this.applicationData.forEach(value=>{
-								seatsDic[value.ID]=value.code;
-							})
-							uni.setStorage({
-								key: 'seatsDic',
-								data: seatsDic
-							});*/
 						});
 					}
 				});
@@ -103,7 +88,6 @@
 							})
 						}
 					})
-
 				} else {
 					uni.setStorage({
 						key: 'seatid',
@@ -176,7 +160,6 @@
 				},
 				app,
 				applicationData: [],
-				buildingDic: {},
 				labs: []
 			}
 		}
