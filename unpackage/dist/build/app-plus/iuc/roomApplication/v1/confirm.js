@@ -1,2 +1,0 @@
-setCssToHead(["#lab-apply-confirm wx-form .",[1],"title { width: 6em; }\n",],"Some selectors are not allowed in component wxss, including tag name selectors, ID selectors, and attribute selectors.(./iuc/roomApplication/v1/confirm.wxss:1:1)",{path:"./iuc/roomApplication/v1/confirm.wxss"})();
-document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./iuc/roomApplication/v1/confirm.wxml') } }));

@@ -15,7 +15,7 @@
 			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.Owner">
 				<view class="title">申请人名称</view>
-				<input placeholder="三字标题" v-model="io.data.Owner" :disabled="io.fieldAccess.Owner==='r'||!io.isMyStep"></input>
+				<input placeholder="请输入申请人名称" v-model="io.data.Owner" :disabled="io.fieldAccess.Owner==='r'||!io.isMyStep"></input>
 			</view>
 			<view class="cu-form-group" @click="selectDateTime(io.fieldAccess.StartDate)" v-show="io.fieldAccess.StartDate">
 				<view class="title">申请时段</view>
@@ -24,11 +24,11 @@
 			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.Telephone">
 				<view class="title">申请人电话</view>
-				<input placeholder="三字标题" v-model="io.data.Telephone" :disabled="io.fieldAccess.Telephone==='r'||!io.isMyStep"></input>
+				<input placeholder="请输入申请人电话" v-model="io.data.Telephone" :disabled="io.fieldAccess.Telephone==='r'||!io.isMyStep"></input>
 			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.ApplicationReason">
 				<view class="title">申请事由</view>
-				<input placeholder="三字标题" v-model="io.data.ApplicationReason" :disabled="io.fieldAccess.ApplicationReason==='r'||!io.isMyStep"></input>
+				<input placeholder="请输入申请事由" v-model="io.data.ApplicationReason" :disabled="io.fieldAccess.ApplicationReason==='r'||!io.isMyStep"></input>
 			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.RoomId">
 				<view class="title">房间号</view>
@@ -157,25 +157,18 @@
 				this.assistInfo = { ...this.assistInfo,
 					...msg
 				};
-				let roomDic = {},
-					teacherDic = {};
-				this.assistInfo.rooms.forEach(value => {
-					roomDic[value.ID] = value.Name;
+				let roomDic = {};
+				this.assistInfo.buildings.forEach(building => {
+					let buildingName = building.Name;
+					building.Rooms.forEach(room =>{
+						roomDic[room.ID] =buildingName+'-'+room.RoomCode+'-'+room.Name;
+					})
 				});
 				roomDic['00000000-0000-0000-0000-000000000000'] = '请选择房间号';
-				console.log(roomDic);
 				uni.setStorage({
 					key: 'roomDic',
 					data: roomDic
 				});
-				/*this.assistInfo.teachers.forEach(value=>{
-					teacherDic[value.ID]=value.RealName;
-				});
-				teacherDic['00000000-0000-0000-0000-000000000000']='请选择指导老师';
-				uni.setStorage({
-					key:'teacherDic',
-					data:teacherDic
-				});*/
 			});
 			uni.getStorage({
 				key: 'roomDic',
@@ -183,12 +176,6 @@
 					this.roomDic = res.data;
 				}
 			});
-			/*uni.getStorage({
-				key: 'teacherDic',
-				success: (res) => {
-					this.teacherDic = res.data;
-				}
-			});*/
 			if (opt.create) {
 				this.displayTimeline = false;
 				uni.getStorage({
@@ -205,7 +192,6 @@
 									break;
 								}
 							}
-							console.log(this.isStudent);
 						});
 					}
 				})
@@ -283,8 +269,7 @@
 			selectBuilding(e) {
 				let column = e.detail.column
 				let value = e.detail.value;
-				let buildingId = this.assistInfo.buildings[value].ID;
-				this.assistInfo.roomTemp = this.assistInfo.rooms.filter(e => e.BuildingId === buildingId);
+				this.assistInfo.roomTemp=this.assistInfo.buildings[value].Rooms;
 			},
 			selectRoom(e) {
 				let index = e.detail.value[1];
@@ -304,14 +289,15 @@
 				this.io.data.StartDate = e.value[0];
 				this.io.data.EndDate = e.value[1];
 				this.selectDateTime();
-				console.log(this.io.data)
 			},
 			foldUp() {
 				this.displayTimeline = !this.displayTimeline;
 			}
 		},
 		data() {
+			var now = new Date();
 			return {
+				now,
 				io: {
 					fieldAccess: {},
 					data: {},

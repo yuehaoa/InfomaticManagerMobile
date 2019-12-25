@@ -1,6 +1,0 @@
-{
-  "usingComponents": {
-    "cu-custom": "/colorui/components/cu-custom",
-    "lab-steps": "/iuc/roomApplication/v1/LabStepInfo"
-  }
-}

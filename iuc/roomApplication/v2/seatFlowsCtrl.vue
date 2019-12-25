@@ -14,7 +14,7 @@
 			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.Owner">
 				<view class="title">申请人名称</view>
-				<input placeholder="三字标题" v-model="io.data.Owner" :disabled="io.fieldAccess.Owner==='r'||!io.isMyStep"></input>
+				<input placeholder="请输入申请人名称" v-model="io.data.Owner" :disabled="io.fieldAccess.Owner==='r'||!io.isMyStep"></input>
 			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.OwnerRoles">
 				<view class="title">申请人身份<text class="content padding-left" v-for="(item,index) in io.data.OwnerRoles" :key="index">{{item}}</text></view>
@@ -26,25 +26,17 @@
 			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.Telephone">
 				<view class="title">申请人电话</view>
-				<input placeholder="三字标题" v-model="io.data.Telephone" :disabled="io.fieldAccess.Telephone==='r'||!io.isMyStep"></input>
+				<input placeholder="请输入申请人电话" v-model="io.data.Telephone" :disabled="io.fieldAccess.Telephone==='r'||!io.isMyStep"></input>
 			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.ApplicationReason">
 				<view class="title">申请事由</view>
-				<input placeholder="三字标题" v-model="io.data.ApplicationReason" :disabled="io.fieldAccess.ApplicationReason==='r'||!io.isMyStep"></input>
-			</view>
-			<view class="cu-form-group" v-show="io.fieldAccess.SeatId">
-				<view class="title">机位</view>
-				<picker mode="selector" :range="assistInfo.seats" range-key="Code" @change="selectSeat" :disabled="io.fieldAccess.SeatId==='r'||io.isMyStep">
-					<view class="content">
-						{{seatsDic[io.data.SeatId]}}
-					</view>
-				</picker>
+				<input placeholder="请输入申请事由" v-model="io.data.ApplicationReason" :disabled="io.fieldAccess.ApplicationReason==='r'||!io.isMyStep"></input>
 			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.SeatInfo">
-				<view class="title">
-					机位信息
-					<text class="content padding-left">{{io.data.SeatInfo.building.Name}}{{io.data.SeatInfo.room.Name}}{{io.data.SeatInfo.seat.Code}}</text>
+				<view class="title">机位信息
+					<text class="content padding-left">{{`${io.data.SeatInfo.building.Name}-${io.data.SeatInfo.room.Name}-${io.data.SeatInfo.seat.Code}机位`}}</text>
 				</view>
+
 			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.GuideTeacherId&&isStudent">
 				<view class="title">选择指导老师</view>
@@ -72,7 +64,7 @@
 				<view class="title">指导老师审核时间</view>
 				<input v-model="io.data.GuideTeacherTime" :disabled="io.fieldAccess.GuideTeacherTime!=='w'||!io.isMyStep"></input>
 			</view>
-			<view class="cu-bar bg-white solids-bottom margin-top" v-show="io.fieldAccess.ReviewOpinion"> 
+			<view class="cu-bar bg-white solids-bottom margin-top" v-show="io.fieldAccess.ReviewOpinion">
 				<view class="action text-xl">
 					<text class="cuIcon-title text-blue text-xl"></text>
 					<text class="text-bold text-xl">管理组老师审核</text>
@@ -159,21 +151,6 @@
 					...this.assistInfo,
 					...msg
 				};
-				let roomDic = {};
-				this.assistInfo.rooms.forEach(value => {
-					roomDic[value.ID] = value.Name;
-				});
-				roomDic['00000000-0000-0000-0000-000000000000'] = '请选择房间号';
-				uni.setStorage({
-					key: 'roomDic',
-					data: roomDic
-				});
-			});
-			uni.getStorage({
-				key: 'roomDic',
-				success: (res) => {
-					this.roomDic = res.data;
-				}
 			});
 			if (opt.create) {
 				this.displayTimeline = false;
@@ -191,21 +168,7 @@
 										this.isStudent = false;
 										break;
 									}
-								}
-								uni.post("/api/building/GetSeats", {
-									ID: id
-								}, msg => {
-									let seatsDic = {};
-									this.assistInfo.seats = msg.data;
-									this.assistInfo.seats.forEach(value => {
-										seatsDic[value.ID] = value.Code;
-									});
-									seatsDic['00000000-0000-0000-0000-000000000000'] = '请选择机位';
-									uni.setStorage({
-										key: 'seatsDic',
-										data: seatsDic
-									});
-								})
+								};
 							} else {
 								uni.showToast({
 									icon: 'none',
@@ -229,21 +192,8 @@
 							detail: true
 						}, msg => {
 							this.io = msg;
-							uni.post("/api/building/GetSeats", {
-								ID: this.io.data.SeatInfo.room.ID
-							}, msg => {
-								let seatsDic = {};
-								this.assistInfo.seats = msg.data;
-								this.assistInfo.seats.forEach(value => {
-									seatsDic[value.ID] = value.Code;
-								});
-								seatsDic['00000000-0000-0000-0000-000000000000'] = '请选择机位';
-								uni.setStorage({
-									key: 'seatsDic',
-									data: seatsDic
-								});
-							})
-							if (this.io.intstanceState === 5) {
+							if (this.io.intstanceState === 5
+							) {
 								for (let index in this.io.allSteps) {
 									if (this.io.allSteps[index].status === 0) {
 										this.io.allSteps[index - 1].status = 30;
@@ -256,12 +206,6 @@
 					}
 				});
 			};
-			uni.getStorage({
-				key: 'seatsDic',
-				success: (res) => {
-					this.seatsDic = res.data;
-				}
-			});
 		},
 		methods: {
 			onSubmit(item) {

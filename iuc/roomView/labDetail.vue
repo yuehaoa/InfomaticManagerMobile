@@ -13,7 +13,7 @@
 				<!--view class="text-gray text-df margin">从{{applicationData[0].StartDate}}到{{applicationData[0].EndDate}}</view-->
 				<button disabled class="cu-btn bg-blue lg" type="">实验室已被占用</button>
 				</br>
-				<button class="cu-btn bg-blue lg margin-top" type="" @click="releaseRoom(labInfo.ID)">强制释放</button>
+				<button v-if="app.checkPermission('ItemManager.ReleaseRoom')" class="cu-btn bg-blue lg margin-top" type="" @click="releaseRoom(labInfo.ID)">强制释放</button>
 			</view>
 		</view>
 		<view v-else-if="labInfo.RoomType===20">
@@ -34,7 +34,7 @@
 							<text class="cuIcon-upload"></text>申请</button>
 					</view>
 					<view class="action">
-						<button class="cu-btn round bg-green shadow" :disabled="item.State===0" @click="release(item.ID)">
+						<button v-if="app.checkPermission('ItemManager.ReleaseSeat')" class="cu-btn round bg-green shadow" :disabled="item.State===0" @click="release(item.ID)">
 							<text class="cuIcon-upload"></text>释放</button>
 					</view>
 				</view>
@@ -43,6 +43,7 @@
 		<view v-else class="margin-lr-xl padding-lr-xl">
 			<image mode="aspectFit" src="../../static/无需申请.png"></image>
 		</view>
+		<navTab :selection='0' />
 	</view>
 </template>
 
@@ -56,34 +57,22 @@
 		onLoad(opt) {
 			this.labInfo.ID = opt.id;
 			this.getData();
-			uni.getStorage({
-				key: 'buildingDic',
-				success: res => {
-					this.buildingDic = res.data;
-				}
-			})
 		},
 		methods: {
 			getData() {
 				if (!this.labInfo.ID) return;
 				uni.post("/api/building/GetRoom", {
-					ID: this.labInfo.ID,
+					ID: this.labInfo.ID
 				}, msg => {
 					this.labInfo = msg.data;
 					this.applicationData = msg.applications;
 					if (this.labInfo.RoomType === 20) {
 						uni.post("/api/building/GetSeats", {
-							ID: this.labInfo.ID
+							pid: this.labInfo.ID,
+							page: 1,
+							pageSize: 1000
 						}, msg => {
 							this.applicationData = msg.data;
-							/*let seatsDic= {};
-							this.applicationData.forEach(value=>{
-								seatsDic[value.ID]=value.code;
-							})
-							uni.setStorage({
-								key: 'seatsDic',
-								data: seatsDic
-							});*/
 						});
 					}
 				});
@@ -99,7 +88,6 @@
 							})
 						}
 					})
-
 				} else {
 					uni.setStorage({
 						key: 'seatid',
@@ -113,16 +101,10 @@
 				}
 			},
 			release(seatID) {
-				/*console.log(seatID);
-				uni.post("/api/seatApp/v1/GetMyApplicate", {}, msg => {
-					for (let index in msg.data)
-						console.log(msg.data[index].SeatId);
-				})*/
 				uni.post("/api/seatApp/v1/Release", {
 					id: seatID
 				}, msg => {
 					if (msg.success) {
-						//location.reload();
 						this.getData();
 					} else {
 						uni.showToast({
@@ -138,17 +120,13 @@
 						}, 1500);
 					}
 				})
-				/*uni.post("/api/seatApp/v1/GetMyApplicate", {}, msg => {
-					for (let index in msg.data)
-						console.log(msg.data[index].SeatId);
-				})*/
 			},
 			releaseRoom(roomID) {
 				uni.post("/api/roomApp/v1/Release", {
 					id: roomID
 				}, msg => {
 					if (msg.success) {
-						//location.reload();
+						this.getData();
 					} else {
 						uni.showToast({
 							icon: 'none',
@@ -180,8 +158,8 @@
 					CreatedOn: "",
 					RoomType: ""
 				},
+				app,
 				applicationData: [],
-				buildingDic: {},
 				labs: []
 			}
 		}

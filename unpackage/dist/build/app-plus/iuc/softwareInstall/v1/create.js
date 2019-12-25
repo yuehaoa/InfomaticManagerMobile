@@ -1,2 +1,0 @@
-setCssToHead(["#software-install-create .",[1],"title { width: 6em; text-align: justify; }\n",],"Some selectors are not allowed in component wxss, including tag name selectors, ID selectors, and attribute selectors.(./iuc/softwareInstall/v1/create.wxss:1:1)",{path:"./iuc/softwareInstall/v1/create.wxss"})();
-document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./iuc/softwareInstall/v1/create.wxml') } }));
