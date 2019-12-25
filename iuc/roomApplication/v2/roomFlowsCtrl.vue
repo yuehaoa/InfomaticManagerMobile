@@ -13,39 +13,41 @@
 					<text class="text-bold text-xl">团队申请实验室</text>
 				</view>
 			</view>
-			<view class="cu-form-group" v-show="io.fieldAccess.Owner">
-				<view class="title">申请人名称</view>
-				<input placeholder="请输入申请人名称" v-model="io.data.Owner" :disabled="io.fieldAccess.Owner==='r'||!io.isMyStep"></input>
-			</view>
-			<view class="cu-form-group" @click="selectDateTime(io.fieldAccess.StartDate)" v-show="io.fieldAccess.StartDate">
-				<view class="title">申请时段</view>
-				<text style="flex: 1;">{{!io.data.StartDate?"请选择申请时段"
-				:io.data.StartDate+'&nbsp;至&nbsp;'+io.data.EndDate}}</text>
-			</view>
-			<view class="cu-form-group" v-show="io.fieldAccess.Telephone">
-				<view class="title">申请人电话</view>
-				<input placeholder="请输入申请人电话" v-model="io.data.Telephone" :disabled="io.fieldAccess.Telephone==='r'||!io.isMyStep"></input>
-			</view>
-			<view class="cu-form-group" v-show="io.fieldAccess.ApplicationReason">
-				<view class="title">申请事由</view>
-				<input placeholder="请输入申请事由" v-model="io.data.ApplicationReason" :disabled="io.fieldAccess.ApplicationReason==='r'||!io.isMyStep"></input>
-			</view>
-			<view class="cu-form-group" v-show="io.fieldAccess.RoomId">
-				<view class="title">房间号</view>
-				<picker mode="multiSelector" :range='[assistInfo.buildings,assistInfo.roomTemp]' range-key="Name" @columnchange="selectBuilding"
-				 @change="selectRoom" :value="assistInfo.roomIndex" :disabled="io.fieldAccess.RoomId!=='w'||!io.isMyStep">
-					<view>
-						{{roomDic[io.data.RoomId]}}
-					</view>
-				</picker>
-			</view>
-			<view class="cu-form-group" v-show="io.fieldAccess.GuideTeacherId&&isStudent">
-				<view class="title">选择指导老师</view>
-				<picker :range="assistInfo.teachers" range-key="RealName" @change="selectTeacher" :disabled="io.fieldAccess.GuideTeacherId!=='w'||!io.isMyStep">
-					<view class="content">
-						{{assistInfo.guideTeacherName}}
-					</view>
-				</picker>
+			<view class="form1">
+				<view class="cu-form-group" v-show="io.fieldAccess.Owner">
+					<view class="title">申请人名称</view>
+					<input placeholder="请输入申请人名称" v-model="io.data.Owner" :disabled="io.fieldAccess.Owner==='r'||!io.isMyStep"></input>
+				</view>
+				<view class="cu-form-group" @click="selectDateTime(io.fieldAccess.StartDate)" v-show="io.fieldAccess.StartDate">
+					<view class="title">申请时段</view>
+					<text style="flex: 1;">{{!io.data.StartDate?"请选择申请时段"
+					:io.data.StartDate+'&nbsp;至&nbsp;'+io.data.EndDate}}</text>
+				</view>
+				<view class="cu-form-group" v-show="io.fieldAccess.Telephone">
+					<view class="title">申请人电话</view>
+					<input placeholder="请输入申请人电话" v-model="io.data.Telephone" :disabled="io.fieldAccess.Telephone==='r'||!io.isMyStep"></input>
+				</view>
+				<view class="cu-form-group" v-show="io.fieldAccess.ApplicationReason">
+					<view class="title">申请事由</view>
+					<input placeholder="请输入申请事由" v-model="io.data.ApplicationReason" :disabled="io.fieldAccess.ApplicationReason==='r'||!io.isMyStep"></input>
+				</view>
+				<view class="cu-form-group" v-show="io.fieldAccess.RoomId">
+					<view class="title">房间号</view>
+					<picker mode="multiSelector" :range='[assistInfo.buildings,assistInfo.roomTemp]' range-key="Name" @columnchange="selectBuilding"
+					 @change="selectRoom" :value="assistInfo.roomIndex" :disabled="io.fieldAccess.RoomId!=='w'||!io.isMyStep">
+						<view>
+							{{roomDic[io.data.RoomId]}}
+						</view>
+					</picker>
+				</view>
+				<view class="cu-form-group" v-show="io.fieldAccess.GuideTeacherId&&isStudent">
+					<view class="title">指导老师</view>
+					<picker :range="assistInfo.teachers" range-key="RealName" @change="selectTeacher" :disabled="io.fieldAccess.GuideTeacherId!=='w'||!io.isMyStep">
+						<view class="content">
+							{{assistInfo.guideTeacherName}}
+						</view>
+					</picker>
+				</view>
 			</view>
 			<view class="cu-bar bg-white solids-bottom margin-top" v-show="io.fieldAccess.GuideTeacherOpinion">
 				<view class="action text-xl">
@@ -62,7 +64,7 @@
 				<input v-model="io.data.GuideTeacher" :disabled="io.fieldAccess.GuideTeacher!=='w'||!io.isMyStep"></input>
 			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.GuideTeacherTime">
-				<view class="title">指导老师审核时间</view>
+				<view class="title">审核时间</view>
 				<input v-model="io.data.GuideTeacherTime" :disabled="io.fieldAccess.GuideTeacherTime!=='w'||!io.isMyStep"></input>
 			</view>
 			<view class="cu-bar bg-white solids-bottom margin-top" v-show="io.fieldAccess.ReviewOpinion"> 
@@ -80,7 +82,7 @@
 				<input v-model="io.data.Reviewer" :disabled="io.fieldAccess.Reviewer!=='w'||!io.isMyStep"></input>
 			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.ReviewTime">
-				<view class="title">管理组审核时间</view>
+				<view class="title">审核时间</view>
 				<input v-model="io.data.ReviewTime" :disabled="io.fieldAccess.ReviewTime!=='w'||!io.isMyStep"></input>
 			</view>
 			<view class="cu-bar bg-white solids-bottom margin-top" v-show="io.fieldAccess.Director">
@@ -102,7 +104,7 @@
 				<input v-model="io.data.ExpertOpinion" placeholder="请填写" :disabled="io.fieldAccess.ExpertOpinion!=='w'||!io.isMyStep"></input>
 			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.DirectorTime">
-				<view class="title">中心办公室主任审核时间</view>
+				<view class="title">审核时间</view>
 				<input v-model="io.data.DirectorTime" :disabled="io.fieldAccess.DirectorTime!=='w'||!io.isMyStep"></input>
 			</view>
 			<view class="cu-bar bg-white solids-bottom margin-top" v-show="io.fieldAccess.HandlerName">
@@ -120,7 +122,7 @@
 				<input v-model="io.data.HandleOpinion" :disabled="io.fieldAccess.HandleOpinion!=='w'||!io.isMyStep"></input>
 			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.HandleTime">
-				<view class="title">实验室管理人员审核时间</view>
+				<view class="title">审核时间</view>
 				<input v-model="io.data.HandleTime" :disabled="io.fieldAccess.HandleTime!=='w'||!io.isMyStep"></input>
 			</view>
 		</form>
@@ -328,4 +330,10 @@
 </script>
 
 <style>
+	.form1>view>view {
+		flex-basis: 30%;
+	}
+	form>span>view.cu-form-group>view {
+		flex-basis: 44%;
+	}
 </style>

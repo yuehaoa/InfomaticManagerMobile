@@ -12,31 +12,40 @@
 					<text class="text-bold text-xl">个人申请实验室</text>
 				</view>
 			</view>
-			<view class="cu-form-group" v-show="io.fieldAccess.Owner">
-				<view class="title">申请人名称</view>
-				<input placeholder="请输入申请人名称" v-model="io.data.Owner" :disabled="io.fieldAccess.Owner==='r'||!io.isMyStep"></input>
-			</view>
-			<view class="cu-form-group" v-show="io.fieldAccess.OwnerRoles">
-				<view class="title">申请人身份<text class="content padding-left" v-for="(item,index) in io.data.OwnerRoles" :key="index">{{item}}</text></view>
-			</view>
-			<view class="cu-form-group" @click="selectDateTime(io.fieldAccess.StartDate)" v-show="io.fieldAccess.StartDate">
-				<view class="title">申请时段</view>
-				<text style="flex: 1;">{{!io.data.StartDate?"请选择申请时段"
-				:io.data.StartDate+'&nbsp;至&nbsp;'+io.data.EndDate}}</text>
-			</view>
-			<view class="cu-form-group" v-show="io.fieldAccess.Telephone">
-				<view class="title">申请人电话</view>
-				<input placeholder="请输入申请人电话" v-model="io.data.Telephone" :disabled="io.fieldAccess.Telephone==='r'||!io.isMyStep"></input>
-			</view>
-			<view class="cu-form-group" v-show="io.fieldAccess.ApplicationReason">
-				<view class="title">申请事由</view>
-				<input placeholder="请输入申请事由" v-model="io.data.ApplicationReason" :disabled="io.fieldAccess.ApplicationReason==='r'||!io.isMyStep"></input>
-			</view>
-			<view class="cu-form-group" v-show="io.fieldAccess.SeatInfo">
-				<view class="title">机位信息
-					<text class="content padding-left">{{`${io.data.SeatInfo.building.Name}-${io.data.SeatInfo.room.Name}-${io.data.SeatInfo.seat.Code}机位`}}</text>
+			<view class="form1">
+				<view class="cu-form-group" v-show="io.fieldAccess.Owner">
+					<view class="title">申请人名称</view>
+					<input placeholder="请输入申请人名称" v-model="io.data.Owner" :disabled="io.fieldAccess.Owner==='r'||!io.isMyStep"></input>
 				</view>
-
+				<view class="cu-form-group" v-show="io.fieldAccess.OwnerRoles">
+					<view class="title">申请人身份</view>
+					<text style="flex: 1;" v-for="(item,index) in io.data.OwnerRoles" :key="index">{{item}}</text>
+				</view>
+				<view class="cu-form-group" @click="selectDateTime(io.fieldAccess.StartDate)" v-show="io.fieldAccess.StartDate">
+					<view class="title">申请时段</view>
+					<text style="flex: 1;">{{!io.data.StartDate?"请选择申请时段"
+					:io.data.StartDate+'&nbsp;至&nbsp;'+io.data.EndDate}}</text>
+				</view>
+				<view class="cu-form-group" v-show="io.fieldAccess.Telephone">
+					<view class="title">申请人电话</view>
+					<input placeholder="请输入申请人电话" v-model="io.data.Telephone" :disabled="io.fieldAccess.Telephone==='r'||!io.isMyStep"></input>
+				</view>
+				<view class="cu-form-group" v-show="io.fieldAccess.ApplicationReason">
+					<view class="title">申请事由</view>
+					<input placeholder="请输入申请事由" v-model="io.data.ApplicationReason" :disabled="io.fieldAccess.ApplicationReason==='r'||!io.isMyStep"></input>
+				</view>
+				<view class="cu-form-group" v-show="io.fieldAccess.SeatInfo">
+					<view class="title">机位信息</view>
+					<text style="flex: 1;">{{`${io.data.SeatInfo.building.Name}-${io.data.SeatInfo.room.Name}-${io.data.SeatInfo.seat.Code}机位`}}</text>
+				</view>
+				<view class="cu-form-group" v-show="io.fieldAccess.GuideTeacherId&&isStudent">
+					<view class="title">指导老师</view>
+					<picker :range="assistInfo.teachers" range-key="RealName" @change="selectTeacher" :disabled="io.fieldAccess.GuideTeacherId!=='w'||!io.isMyStep">
+						<view class="content">
+							{{assistInfo.guideTeacherName}}
+						</view>
+					</picker>
+				</view>
 			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.GuideTeacherId&&isStudent">
 				<view class="title">选择指导老师</view>
@@ -64,15 +73,11 @@
 				<view class="title">指导老师审核时间</view>
 				<input v-model="io.data.GuideTeacherTime" :disabled="io.fieldAccess.GuideTeacherTime!=='w'||!io.isMyStep"></input>
 			</view>
-			<view class="cu-bar bg-white solids-bottom margin-top" v-show="io.fieldAccess.ReviewOpinion">
+			<view class="cu-bar bg-white solids-bottom margin-top" v-show="io.fieldAccess.Reviewer">
 				<view class="action text-xl">
 					<text class="cuIcon-title text-blue text-xl"></text>
 					<text class="text-bold text-xl">管理组老师审核</text>
 				</view>
-			</view>
-			<view class="cu-form-group" v-show="io.fieldAccess.ReviewOpinion">
-				<view class="title">管理组审核人意见</view>
-				<input v-model="io.data.ReviewOpinion" :disabled="io.fieldAccess.ReviewOpinion!=='w'||!io.isMyStep"></input>
 			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.Reviewer">
 				<view class="title">管理组审核人名称</view>
@@ -192,8 +197,7 @@
 							detail: true
 						}, msg => {
 							this.io = msg;
-							if (this.io.intstanceState === 5
-							) {
+							if (this.io.intstanceState === 5) {
 								for (let index in this.io.allSteps) {
 									if (this.io.allSteps[index].status === 0) {
 										this.io.allSteps[index - 1].status = 30;
@@ -316,4 +320,10 @@
 </script>
 
 <style>
+	.form1>view>view {
+		flex-basis: 30%;
+	}
+	form>span>view.cu-form-group>view {
+		flex-basis: 40%;
+	}
 </style>
