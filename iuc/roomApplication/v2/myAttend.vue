@@ -9,18 +9,40 @@
 				<text class="cuIcon-title text-blue text-xxl"></text>
 				<text class="text-xxl text-bold">实验室申请</text>
 			</view>
-			<view class="action" @click="foldUp">
-				<text class="text-df">{{display?'收起':'展开'}}</text>
-				<text class="padding-lr-xs" :class="display?'cuIcon-fold':'cuIcon-unfold'"></text>
+			<view class="action" @click="foldUp('displayRoom')">
+				<text class="text-df">{{displayRoom?'收起':'展开'}}</text>
+				<text class="padding-lr-xs" :class="displayRoom?'cuIcon-fold':'cuIcon-unfold'"></text>
 			</view>
 		</view>
 		<transition-group class="cu-list cu-card" name="list">
 			<view class="cu-item bg-informatic-brown shadow" v-for="(item,index) in roomData" :key="index" @click="toExecute(item)"
-			 v-show="display">
+			 v-show="displayRoom">
 				<sticky :item="item" />
 			</view>
 		</transition-group>
-		<template v-if="roomData.length===0 && display">
+		<template v-if="roomData.length===0 && displayRoom">
+			<view class="padding-tb text-center text-lg">
+				<text class="text-bold text-gray">暂无数据</text>
+			</view>
+		</template>
+		
+		<view class="cu-bar bg-white solids-bottom">
+			<view class="action">
+				<text class="cuIcon-title text-blue text-xxl"></text>
+				<text class="text-xxl text-bold">机位申请</text>
+			</view>
+			<view class="action" @click="foldUp('displaySeat')">
+				<text class="text-df">{{displaySeat?'收起':'展开'}}</text>
+				<text class="padding-lr-xs" :class="displaySeat?'cuIcon-fold':'cuIcon-unfold'"></text>
+			</view>
+		</view>
+		<transition-group class="cu-list cu-card" name="list">
+			<view class="cu-item bg-informatic-brown shadow" v-for="(item,index) in seatData" :key="index" @click="toExecute(item)"
+			 v-show="displaySeat">
+				<sticky :item="item" />
+			</view>
+		</transition-group>
+		<template v-if="seatData.length===0 && displaySeat">
 			<view class="padding-tb text-center text-lg">
 				<text class="text-bold text-gray">暂无数据</text>
 			</view>
@@ -88,8 +110,8 @@
 				}
 				this.listTouchDirection = null
 			},*/
-			foldUp() {
-				this.display = !this.display
+			foldUp(e) {
+				this[e] = !this[e];
 			}
 		},
 		data() {
@@ -104,7 +126,8 @@
 				modalName: null,
 				listTouchStart: 0,
 				listTouchDirection: null,
-				display: true
+				displayRoom: true,
+				displaySeat: true
 			}
 		}
 	}

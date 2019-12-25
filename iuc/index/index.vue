@@ -13,7 +13,9 @@
 			</view>
 			<swiper style="height: 40rpx;width: 400rpx;" class="swiper" autoplay="true" interval="4000" duration="500" circular="true"
 			 vertical="true">
-				<swiper-item v-for="(item,index) in swiperArray" :key='index' class="text-cut">{{item}}</swiper-item>
+				<swiper-item v-for="(item,index) in swiperArray" :key='index' @click="toNewsDetail(item.url)" class="text-cut">
+					{{item.text}}
+				</swiper-item>
 			</swiper>
 			<view class="margin-right text-informatic-brown" @click="navToNews">更多<text class="cuIcon-playfill"></text></view>
 		</view>
@@ -31,6 +33,23 @@
 						<image :src="item.image" class="cu-avatar bg-white lg" mode="aspectFit"></image>
 					</view>
 					<text class="text-df">{{item.text}}</text>
+				</view>
+			</view>
+		</view>
+		<view>
+			<view class="cu-bar bg-white">
+				<view class="action">
+					<text class="text-bold text-xl">申请实验室</text>
+				</view>
+				<view class="action text-informatic-brown" @click="labShow=!labShow">{{labShow ? "收起" : "展开"}}<text :class="functionshow ? 'cuIcon-triangleupfill' : 'cuIcon-triangledownfill'"
+					 style="font-size:25px;"></text></view>
+			</view>
+			<view class="cu-list grid col-4 no-border" v-show="labShow">
+				<view v-if="p(item.permission)||true" class="cu-item" v-for='(item,index) in labList' :key='index' @click="navTo(item.source)">
+					<view>
+						<image :src="item.image" class="cu-avatar bg-white lg" mode="aspectFit"></image>
+					</view>
+					<text>{{item.text}}</text>
 				</view>
 			</view>
 		</view>
@@ -59,14 +78,15 @@
 	let app = require("@/config");
 	export default {
 		onLoad() {
-			
+			this.loadNews()
 		},
 		data() {
 			return {
 				swiperArray: [
-					"厦门大学100周年校庆网站开通",
-					"数字城市与人工智能实验室签约挂牌",
-					"中心党支部开展“不忘初心”系列学习活动！"
+					{
+						text: "加载中",
+						url: ""
+					}
 				],
 				swiperList: {
 					img1: "../../static/轮播图片画板1.png",
@@ -94,33 +114,68 @@
 						soure: "../roomApplication/v1/myInvolve"
 					}
 				],
-				functionList: [{
-						image: "../../static/实验室列表.png",
-						text: "实验室列表",
-						source: "../roomView/labList"
-					},
+				labList: [
 					{
-						image: "../../static/实验室申请.png",
-						text: "申请实验室",
-						source: "../roomApplication/v2/flowsCtrl?create=true",
-						permission: "ItemManager.CreateRoomApplicationWorkflow"
+						image: "../../static/实验室列表.png",
+						text: "基础实验室",
+						source: "../roomView/labList?type=1"
 					},
 					{
 						image: "../../static/实验室列表.png",
-						text: "所有申请",
-						source: "../roomApplication/v2/allList"
+						text: "团队实验室",
+						source: "../roomView/labList?type=10"
 					},
 					{
 						image: "../../static/申请机位.png",
-						text: "机位申请",
-						soure: "../roomApplication/v1/alllist"
+						text: "个人实验室",
+						source: "../roomView/labList?type=20"
 					}
 				],
+				functionList: [{
+						image: "../../static/通讯录.png",
+						text: "通讯录",
+						source: "../addressBook/addressBook"
+					} //,
+					// {
+					// 	image: "../../static/实验室申请.png",
+					// 	text: "申请实验室",
+					// 	source: "../roomApplication/v2/flowsCtrl?create=true",
+					// 	permission: "ItemManager.CreateRoomApplicationWorkflow"
+					// },
+					// {
+					// 	image: "../../static/实验室列表.png",
+					// 	text: "所有申请",
+					// 	source: "../roomApplication/v2/allList"
+					// },
+					// {
+					// 	image: "../../static/申请机位.png",
+					// 	text: "机位申请",
+					// 	soure: "../roomApplication/v1/alllist"
+					// }
+				],
 				mineShow: true,
-				functionshow: true
+				functionshow: true,
+				labShow: true
 			}
 		},
 		methods: {
+			loadNews () {
+				uni.post("/api/cms/getArticles",{ page: 1, pageSize: 5},msg=>{
+					this.swiperArray = msg.data
+					.filter(e => e.ID !== '00000000-0000-0000-0000-000000000000')
+					.map(e => {
+						return {
+							text: e.Topic,
+							url: `../News/newsDetail?id=${e.ID}`
+						}
+					});
+				});
+			},
+			toNewsDetail (url) {
+				uni.navigateTo({
+					url
+				})
+			},
 			functionClick() {
 				this.functionshow = !this.functionshow;
 			},

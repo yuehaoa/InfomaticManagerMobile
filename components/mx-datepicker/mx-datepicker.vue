@@ -9,7 +9,8 @@
 				<view class="picker-icon picker-icon-you" :hover-stay-time="100" hover-class="picker-icon-active" @click="onSetMonth('+1')"></view>
 				<view class="picker-icon picker-icon-youyou" :hover-stay-time="100" hover-class="picker-icon-active" @click="onSetYear('+1')"></view>
 			</view>
-			<swiper class="picker-modal-body" :circular="true" :duration="200" :skip-hidden-item-layout="true" :current="calendarIndex" @change="onSwiperChange">
+			<swiper class="picker-modal-body" :circular="true" :duration="200" :skip-hidden-item-layout="true" :current="calendarIndex"
+			 @change="onSwiperChange">
 				<swiper-item class="picker-calendar" v-for="(calendar,calendarIndex2) in calendars" :key="calendarIndex2">
 					<view class="picker-calendar-view" v-for="(week,index) in weeks" :key="index - 7">
 						<view class="picker-calendar-view-item">{{week}}</view>
@@ -67,13 +68,13 @@
 				</view>
 				<picker-view class="picker-modal-time" indicator-class="picker-modal-time-item" :value="timeValue" @change="onTimeChange">
 					<picker-view-column>
-						<view v-for="(v,i) in 24" :key="i">{{i<10?'0'+i:i}}时</view>
+						<view v-for="(v,i) in 24" :key="i">{{i &lt; 10 ?'0'+i:i}}时</view>
 					</picker-view-column>
 					<picker-view-column>
-						<view v-for="(v,i) in 60" :key="i">{{i<10?'0'+i:i}}分</view>
+						<view v-for="(v,i) in 60" :key="i">{{i &lt; 10?'0'+i:i}}分</view>
 					</picker-view-column>
 					<picker-view-column v-if="showSeconds">
-						<view v-for="(v,i) in 60" :key="i">{{i<10?'0'+i:i}}秒</view>
+						<view v-for="(v,i) in 60" :key="i">{{i &lt; 10?'0'+i:i}}秒</view>
 					</picker-view-column>
 				</picker-view>
 				<view class="picker-modal-footer">
@@ -292,7 +293,11 @@
 				date: {}, //当前日期对象
 				weeks: ["一", "二", "三", "四", "五", "六", "日"],
 				title: '初始化', //标题
-				calendars: [[],[],[]], //日历数组
+				calendars: [
+					[],
+					[],
+					[]
+				], //日历数组
 				calendarIndex: 1, //当前日历索引
 				checkeds: [], //选中的日期对象集合
 				showTimePicker: false, //是否显示时间选择器
@@ -340,7 +345,7 @@
 						this.beginTime = [this.date.getHours(), this.date.getMinutes(), this.date.getSeconds()];
 						if (this.isMultiSelect) this.endTime = [...this.beginTime];
 					}
-					this.checkeds.push(new Date(this.date));
+					// this.checkeds.push(new Date(this.date));
 				}
 				if (this.type != 'time') this.refreshCalendars(true);
 				else this.onShowTimePicker('begin');
@@ -413,7 +418,8 @@
 						item.bgStyle.type = 'bgbegin';
 					}
 					if (DateTools.isSameDay(this.checkeds[1], item.dateObj)) { //结束日期
-						if (this.isMultiSelect && this.showTips) item.tips = item.bgStyle.type ? this.beginText + ' / ' + this.endText : this.endText;
+						if (this.isMultiSelect && this.showTips) item.tips = item.bgStyle.type ? this.beginText + ' / ' + this.endText :
+							this.endText;
 						if (!item.bgStyle.type) { //开始日期不等于结束日期
 							item.bgStyle.type = 'bgend';
 						} else {
@@ -437,17 +443,17 @@
 				let before = DateTools.getDateToMonth(date, date.getMonth() - 1);
 				let after = DateTools.getDateToMonth(date, date.getMonth() + 1);
 				if (this.calendarIndex == 0) {
-					if(refresh) this.calendars.splice(0, 1, DateTools.getCalendar(date, this.procCalendar));
+					if (refresh) this.calendars.splice(0, 1, DateTools.getCalendar(date, this.procCalendar));
 					this.calendars.splice(1, 1, DateTools.getCalendar(after, this.procCalendar));
 					this.calendars.splice(2, 1, DateTools.getCalendar(before, this.procCalendar));
 				} else if (this.calendarIndex == 1) {
 					this.calendars.splice(0, 1, DateTools.getCalendar(before, this.procCalendar));
-					if(refresh) this.calendars.splice(1, 1, DateTools.getCalendar(date, this.procCalendar));
+					if (refresh) this.calendars.splice(1, 1, DateTools.getCalendar(date, this.procCalendar));
 					this.calendars.splice(2, 1, DateTools.getCalendar(after, this.procCalendar));
 				} else if (this.calendarIndex == 2) {
 					this.calendars.splice(0, 1, DateTools.getCalendar(after, this.procCalendar));
 					this.calendars.splice(1, 1, DateTools.getCalendar(before, this.procCalendar));
-					if(refresh) this.calendars.splice(2, 1, DateTools.getCalendar(date, this.procCalendar));
+					if (refresh) this.calendars.splice(2, 1, DateTools.getCalendar(date, this.procCalendar));
 				}
 				this.title = DateTools.format(this.date, 'yyyy年mm月');
 			},
@@ -567,7 +573,7 @@
 				this.isShow = newValue;
 			},
 			value(newValue, oldValue) {
-				setTimeout(()=>{
+				setTimeout(() => {
 					this.setValue(newValue);
 				}, 0);
 			}

@@ -1,2 +1,0 @@
-setCssToHead(["#application-detail wx-view .",[1],"title { width: 6em; }\n",],"Some selectors are not allowed in component wxss, including tag name selectors, ID selectors, and attribute selectors.(./iuc/softwareInstall/v1/detail.wxss:1:1)",{path:"./iuc/softwareInstall/v1/detail.wxss"})();
-document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./iuc/softwareInstall/v1/detail.wxml') } }));
