@@ -6,14 +6,8 @@
 				<block slot="content">通讯录</block>
 			</cu-custom>
 		</view>
-		<view class="cu-bar bg-white search">
-			<view class="search-form round">
-				<text class="cuIcon-search"></text>
-				<input type="text" placeholder="输入搜索的关键词" confirm-type="search"></input>
-			</view>
-			<view class="action">
-				<button class="cu-btn bg-gradual-green shadow-blur round">搜索</button>
-			</view>
+		<view class="cu-bar bg-white search" style="text-align: center;">
+			点击号码可以直接播打或者保存到通讯录。
 		</view>
 		<view class="VerticalBox">
 			<scroll-view class="VerticalNav nav" scroll-y scroll-with-animation :scroll-top="verticalNavTop" style="height:calc(100vh - 290upx)">
@@ -39,10 +33,10 @@
 									<view class="text-grey">{{person.Address}}</view>
 								</view>
 								<view class="text-grey" style="margin-bottom: -12rpx;">
-									<text class="cuIcon-phone text-sm">{{person.Mobile}}</text>
+									<text class="cuIcon-phone text-sm" @click="toTel(person.Mobile)">{{person.Mobile}}</text>
 								</view>
 								<view class="text-grey" v-if="person.Telephone">
-									<text class="cuIcon-dianhua text-sm">{{person.Telephone}}</text>
+									<text class="cuIcon-dianhua text-sm" @click="toTel(person.Telephone)">{{person.Telephone}}</text>
 								</view>
 							</view>
 						</view>
@@ -72,6 +66,9 @@
 			
 		},
 		methods: {
+			toTel (number) {
+				window.location.href = "tel:" + number;
+			},
 			getData(){
 				uni.post("/api/security/GetAddressBook",{},msg=>{
 					this.list=msg.data;
