@@ -11,9 +11,9 @@
 		</view>
 		<view class="VerticalBox">
 			<scroll-view class="VerticalNav nav" scroll-y scroll-with-animation :scroll-top="verticalNavTop" style="height:calc(100vh - 290upx)">
-				<view class="cu-item text-sm" :class="index==tabCur?'text-informatic-brown cur':''" v-for="(depart,dptName,index) in list" :key="index"
-				 @tap="TabSelect" :data-id="index">
-					{{dptName.slice(0,dptName.indexOf("("))}}
+				<view class="cu-item text-sm align-center" :class="index==tabCur?'text-informatic-brown cur':''" v-for="(depart,dptName,index) in list"
+				 :key="index" @tap="TabSelect" :data-id="index">
+					<text class="align-center">{{dptName.slice(0,dptName.indexOf("("))}}</text>
 				</view>
 			</scroll-view>
 			<scroll-view class="VerticalMain" scroll-y scroll-with-animation style="height:calc(100vh - 325upx)"
@@ -24,19 +24,18 @@
 							<text class="cuIcon-title text-informatic-brown"></text> {{dptName}}</view>
 					</view>
 					<view class="cu-list menu">
-						<view class="cu-item" v-for="(person,index) in depart" :key="index" >
-							<view class="cu-avatar round lg margin-right-sm margin-tb-sm"
-							:style="'background-image:url('+person.Avatar+');'"></view>
+						<view class="cu-item" v-for="(person,index) in depart" :key="index">
+							<view class="cu-avatar round lg margin-right-sm margin-tb-sm" :style="'background-image:url('+person.Avatar+');'"></view>
 							<view class="content">
-								<view class="flex justify-between">
+								<view class="flex">
 									<view class="text-informatic-brown text-bold text-xl">{{person.RealName}}</view>
-									<view class="text-grey">{{person.Address}}</view>
+									<view class="text-grey padding-left-sm text-sm">{{person.Address}}</view>
 								</view>
-								<view class="text-grey" style="margin-bottom: -12rpx;">
-									<text class="cuIcon-phone text-sm" @click="toTel(person.Mobile)">{{person.Mobile}}</text>
+								<view class="text-black text-xs" style="margin-bottom: -12rpx;">
+									<text class="cuIcon-phone text-black" @click="toTel(person.Mobile)">{{person.Mobile}}</text>
 								</view>
-								<view class="text-grey" v-if="person.Telephone">
-									<text class="cuIcon-dianhua text-sm" @click="toTel(person.Telephone)">{{person.Telephone}}</text>
+								<view class="text-black text-xs" v-if="person.Telephone">
+									<text class="cuIcon-dianhua text-black" @click="toTel(person.Telephone)">{{person.Telephone}}</text>
 								</view>
 							</view>
 						</view>
@@ -65,20 +64,20 @@
 			this.getData();
 		},
 		onReady() {
-			
+
 		},
 		methods: {
-			toTel (number) {
+			toTel(number) {
 				window.location.href = "tel:" + number;
 			},
-			getData(){
-				uni.post("/api/security/GetAddressBook",{},msg=>{
+			getData() {
+				uni.post("/api/security/GetAddressBook", {}, msg => {
 					let length = 0;
-					for(let i in msg.data){
+					for (let i in msg.data) {
 						this.keys[length] = i;
 						msg.data[i].id = length++;
 					}
-					this.list=msg.data;
+					this.list = msg.data;
 					this.length = length;
 				})
 			},
@@ -122,16 +121,33 @@
 </script>
 
 <style>
+	.VerticalNav.nav[data-v-3df9e3b5] {
+		width: 140rpx;
+		white-space: initial;
+	
+	}
+
+	.VerticalNav.nav .cu-item[data-v-3df9e3b5] {
+		width: 100%;
+		text-align: left;
+		background-color: #fff;
+		margin: 0;
+		border: none;
+		height: 120rpx;
+		position: relative;
+		line-height: 50rpx;
+	}
+
 	.fixed {
 		position: fixed;
 		z-index: 99;
 	}
-	
+
 	.VerticalNav.nav {
 		width: 200upx;
 		white-space: initial;
 	}
-	
+
 	.VerticalNav.nav .cu-item {
 		width: 100%;
 		text-align: center;
@@ -141,11 +157,11 @@
 		height: 50px;
 		position: relative;
 	}
-	
+
 	.VerticalNav.nav .cu-item.cur {
 		background-color: #f1f1f1;
 	}
-	
+
 	.VerticalNav.nav .cu-item.cur::after {
 		content: "";
 		width: 8upx;
@@ -158,11 +174,11 @@
 		bottom: 0;
 		margin: auto;
 	}
-	
+
 	.VerticalBox {
 		display: flex;
 	}
-	
+
 	.VerticalMain {
 		background-color: #f1f1f1;
 		flex: 1;

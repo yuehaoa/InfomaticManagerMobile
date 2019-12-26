@@ -47,14 +47,6 @@
 					</picker>
 				</view>
 			</view>
-			<view class="cu-form-group" v-show="io.fieldAccess.GuideTeacherId&&isStudent">
-				<view class="title">选择指导老师</view>
-				<picker :range="assistInfo.teachers" range-key="RealName" @change="selectTeacher" :disabled="io.fieldAccess.GuideTeacherId!=='w'||!io.isMyStep">
-					<view class="content">
-						{{assistInfo.guideTeacherName}}
-					</view>
-				</picker>
-			</view>
 			<view class="cu-bar bg-white solids-bottom margin-top" v-show="io.fieldAccess.GuideTeacherOpinion">
 				<view class="action text-xl">
 					<text class="cuIcon-title text-blue text-xl"></text>
@@ -213,23 +205,31 @@
 		},
 		methods: {
 			onSubmit(item) {
+				if (item) {
+					this.io.data[item.Field] = item.Value;
+				}
+				this.io.shouldUpload.forEach(value => {
+					this.upLoad[value] = this.io[value] || this.io.data[value]
+				});
+				let errors=[];
 				if (this.isStudent && this.io.data.GuideTeacherId === "00000000-0000-0000-0000-000000000000" && this.io.currentStep ===
 					"填写申请表") {
+					errors.push("必须选择指导老师");
+				}
+				if(this.upLoad.Telephone!==undefined){
+					var pat=new RegExp('^(13[0-9]|14[5|7]|15[0|1|2|3|4|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\\d{8}$');
+					if(pat.test(this.upLoad.Telephone)===false)
+						errors.push("请输入正确的电话号码");
+				}
+				if(errors.length>0){
 					uni.showToast({
-						title: '必须选择指导老师',
 						icon: 'none',
-						position: 'center'
+						title: errors[0]
 					});
 					setTimeout(function() {
 						uni.hideToast();
 					}, 1500);
 				} else {
-					if (item) {
-						this.io.data[item.Field] = item.Value;
-					}
-					this.io.shouldUpload.forEach(value => {
-						this.upLoad[value] = this.io[value] || this.io.data[value]
-					});
 					uni.post("/api/workflow/SubmitInstance", {
 						...this.upLoad
 					}, msg => {
