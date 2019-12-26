@@ -19,7 +19,7 @@
 			<scroll-view class="VerticalNav nav" scroll-y scroll-with-animation :scroll-top="verticalNavTop" style="height:calc(100vh - 290upx)">
 				<view class="cu-item text-sm" :class="index==tabCur?'text-informatic-brown cur':''" v-for="(depart,dptName,index) in list" :key="index"
 				 @tap="TabSelect" :data-id="index">
-					{{dptName}}
+					{{dptName.slice(0,dptName.indexOf("("))}}
 				</view>
 			</scroll-view>
 			<scroll-view class="VerticalMain" scroll-y scroll-with-animation style="height:calc(100vh - 325upx)"
@@ -62,18 +62,11 @@
 				tabCur: 0,
 				mainCur: 0,
 				verticalNavTop: 0,
+				load: true
 			};
 		},
 		onLoad() {
 			this.getData();
-			/*let list = [{}];
-			for (let i = 0; i < 26; i++) {
-				list[i] = {};
-				list[i].name = String.fromCharCode(65 + i);
-				list[i].id = i;
-			}
-			this.list = list;
-			this.listCur = list[0];*/
 		},
 		onReady() {
 			
@@ -93,7 +86,7 @@
 				// #ifdef MP-ALIPAY
 				return false //支付宝小程序暂时不支持双向联动 
 				// #endif
-				//let that = this;
+				let that = this;
 				let tabHeight = 0;
 				if (this.load) {
 					for (let i = 0; i < this.list.length; i++) {

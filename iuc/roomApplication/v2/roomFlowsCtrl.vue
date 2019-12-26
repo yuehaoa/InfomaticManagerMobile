@@ -167,16 +167,7 @@
 					})
 				});
 				roomDic['00000000-0000-0000-0000-000000000000'] = '请选择房间号';
-				uni.setStorage({
-					key: 'roomDic',
-					data: roomDic
-				});
-			});
-			uni.getStorage({
-				key: 'roomDic',
-				success: (res) => {
-					this.roomDic = res.data;
-				}
+				this.roomDic = roomDic;
 			});
 			if (opt.create) {
 				this.displayTimeline = false;
