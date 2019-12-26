@@ -205,6 +205,12 @@
 									}
 								}
 							}
+							for (let role in this.io.data.OwnerRoles) {
+								if (this.io.data.OwnerRoles[role] === "老师") {
+									this.isStudent = false;
+									break;
+								}
+							}
 						});
 					}
 				});

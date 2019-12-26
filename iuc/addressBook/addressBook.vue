@@ -6,7 +6,7 @@
 				<block slot="content">通讯录</block>
 			</cu-custom>
 		</view>
-		<view class="cu-bar bg-white search" style="text-align: center;">
+		<view class="cu-bar bg-white text-center">
 			点击号码可以直接播打或者保存到通讯录。
 		</view>
 		<view class="VerticalBox">
@@ -56,7 +56,9 @@
 				tabCur: 0,
 				mainCur: 0,
 				verticalNavTop: 0,
-				load: true
+				load: true,
+				length: 0,
+				keys: {}
 			};
 		},
 		onLoad() {
@@ -71,7 +73,13 @@
 			},
 			getData(){
 				uni.post("/api/security/GetAddressBook",{},msg=>{
+					let length = 0;
+					for(let i in msg.data){
+						this.keys[length] = i;
+						msg.data[i].id = length++;
+					}
 					this.list=msg.data;
+					this.length = length;
 				})
 			},
 			TabSelect(e) {
@@ -86,25 +94,26 @@
 				let that = this;
 				let tabHeight = 0;
 				if (this.load) {
-					for (let i = 0; i < this.list.length; i++) {
-						let view = uni.createSelectorQuery().select("#main-" + this.list[i].id);
+					for (let i = 0; i < this.length; i++) {
+						let key = this.keys[i];
+						let view = uni.createSelectorQuery().select("#main-" + i);
 						view.fields({
 							size: true
 						}, data => {
-							this.list[i].top = tabHeight;
+							that.list[key].top = tabHeight;
 							tabHeight = tabHeight + data.height;
-							this.list[i].bottom = tabHeight;
+							that.list[key].bottom = tabHeight;
 						}).exec();
 					}
 					this.load = false
 				}
 				let scrollTop = e.detail.scrollTop + 10;
-				for (let i = 0; i < this.list.length; i++) {
-					if (scrollTop > this.list[i].top && scrollTop < this.list[i].bottom) {
-						this.verticalNavTop = (this.list[i].id - 1) * 50
-						this.tabCur = this.list[i].id
-						console.log(scrollTop)
-						return false
+				for (let i = 0; i < this.length; i++) {
+					let key = this.keys[i];
+					if (scrollTop > this.list[key].top && scrollTop < this.list[key].bottom) {
+						this.verticalNavTop = (i - 1) * 50;
+						this.tabCur = i;
+						return false;
 					}
 				}
 			}
