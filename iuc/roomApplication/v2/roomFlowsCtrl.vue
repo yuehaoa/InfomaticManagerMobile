@@ -67,7 +67,7 @@
 				<view class="title">审核时间</view>
 				<input v-model="io.data.GuideTeacherTime" :disabled="io.fieldAccess.GuideTeacherTime!=='w'||!io.isMyStep"></input>
 			</view>
-			<view class="cu-bar bg-white solids-bottom margin-top" v-show="io.fieldAccess.ReviewOpinion"> 
+			<view class="cu-bar bg-white solids-bottom margin-top" v-show="io.fieldAccess.ReviewOpinion">
 				<view class="action text-xl">
 					<text class="cuIcon-title text-blue text-xl"></text>
 					<text class="text-bold text-xl">管理组老师审核</text>
@@ -162,8 +162,8 @@
 				let roomDic = {};
 				this.assistInfo.buildings.forEach(building => {
 					let buildingName = building.Name;
-					building.Rooms.forEach(room =>{
-						roomDic[room.ID] =buildingName+'-'+room.RoomCode+'-'+room.Name;
+					building.Rooms.forEach(room => {
+						roomDic[room.ID] = buildingName + '-' + room.RoomCode + '-' + room.Name;
 					})
 				});
 				roomDic['00000000-0000-0000-0000-000000000000'] = '请选择房间号';
@@ -224,17 +224,17 @@
 				this.io.shouldUpload.forEach(value => {
 					this.upLoad[value] = this.io[value] || this.io.data[value]
 				});
-				let errors=[];
+				let errors = [];
 				if (this.isStudent && this.io.data.GuideTeacherId === "00000000-0000-0000-0000-000000000000" && this.io.currentStep ===
 					"填写申请表") {
 					errors.push("必须选择指导老师");
 				}
-				if(this.upLoad.Telephone!==undefined){
-					var pat=new RegExp('^(13[0-9]|14[5|7]|15[0|1|2|3|4|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\\d{8}$');
-					if(pat.test(this.upLoad.Telephone)===false)
+				if (this.upLoad.Telephone !== undefined) {
+					var pat = new RegExp('^(13[0-9]|14[5|7]|15[0|1|2|3|4|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\\d{8}$');
+					if (pat.test(this.upLoad.Telephone) === false)
 						errors.push("请输入正确的电话号码");
 				}
-				if(errors.length>0){
+				if (errors.length > 0) {
 					uni.showToast({
 						title: errors[0],
 						icon: 'none',
@@ -254,7 +254,7 @@
 							});
 							setTimeout(function() {
 								uni.navigateBack({
-					
+
 								});
 								uni.hideToast();
 							}, 1500);
@@ -266,7 +266,7 @@
 							});
 							setTimeout(function() {
 								uni.navigateBack({
-								
+
 								});
 								uni.hideToast();
 							}, 3000);
@@ -277,7 +277,7 @@
 			selectBuilding(e) {
 				let column = e.detail.column
 				let value = e.detail.value;
-				this.assistInfo.roomTemp=this.assistInfo.buildings[value].Rooms;
+				this.assistInfo.roomTemp = this.assistInfo.buildings[value].Rooms;
 			},
 			selectRoom(e) {
 				let index = e.detail.value[1];
@@ -339,6 +339,7 @@
 	.form1>view>view {
 		flex-basis: 30%;
 	}
+
 	form>span>view.cu-form-group>view {
 		flex-basis: 44%;
 	}

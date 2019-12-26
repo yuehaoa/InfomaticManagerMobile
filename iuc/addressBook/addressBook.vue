@@ -11,9 +11,9 @@
 		</view>
 		<view class="VerticalBox">
 			<scroll-view class="VerticalNav nav" scroll-y scroll-with-animation :scroll-top="verticalNavTop" style="height:calc(100vh - 290upx)">
-				<view class="cu-item text-sm align-center" :class="index==tabCur?'text-informatic-brown cur':''" v-for="(depart,dptName,index) in list"
-				 :key="index" @tap="TabSelect" :data-id="index">
-					<text class="align-center">{{dptName.slice(0,dptName.indexOf("("))}}</text>
+				<view class="cu-item text-sm align-center text-center" :class="index==tabCur?'text-informatic-brown cur':''" v-for="(depart,dptName,index) in list"
+				 style="display: inline-grid" :key="index" @tap="TabSelect" :data-id="index">
+					{{dptName.slice(0,dptName.indexOf("("))}}
 				</view>
 			</scroll-view>
 			<scroll-view class="VerticalMain" scroll-y scroll-with-animation style="height:calc(100vh - 325upx)"
@@ -29,12 +29,12 @@
 							<view class="content">
 								<view class="flex">
 									<view class="text-informatic-brown text-bold text-xl">{{person.RealName}}</view>
-									<view class="text-grey padding-left-sm text-sm">{{person.Address}}</view>
+									<view class="text-grey padding-left-sm text-df">{{person.Address}}</view>
 								</view>
-								<view class="text-black text-xs" style="margin-bottom: -12rpx;">
+								<view class="text-black text-sm" style="margin-bottom: -12rpx;">
 									<text class="cuIcon-phone text-black" @click="toTel(person.Mobile)">{{person.Mobile}}</text>
 								</view>
-								<view class="text-black text-xs" v-if="person.Telephone">
+								<view class="text-black text-sm" v-if="person.Telephone">
 									<text class="cuIcon-dianhua text-black" @click="toTel(person.Telephone)">{{person.Telephone}}</text>
 								</view>
 							</view>
@@ -121,30 +121,13 @@
 </script>
 
 <style>
-	.VerticalNav.nav[data-v-3df9e3b5] {
-		width: 140rpx;
-		white-space: initial;
-	
-	}
-
-	.VerticalNav.nav .cu-item[data-v-3df9e3b5] {
-		width: 100%;
-		text-align: left;
-		background-color: #fff;
-		margin: 0;
-		border: none;
-		height: 120rpx;
-		position: relative;
-		line-height: 50rpx;
-	}
-
 	.fixed {
 		position: fixed;
 		z-index: 99;
 	}
 
 	.VerticalNav.nav {
-		width: 200upx;
+		width: 150upx;
 		white-space: initial;
 	}
 
@@ -155,6 +138,7 @@
 		margin: 0;
 		border: none;
 		height: 50px;
+		line-height: 18px;
 		position: relative;
 	}
 
