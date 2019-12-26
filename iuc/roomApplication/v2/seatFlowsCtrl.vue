@@ -47,6 +47,14 @@
 					</picker>
 				</view>
 			</view>
+			<view class="cu-form-group" v-show="io.fieldAccess.GuideTeacherId&&isStudent">
+				<view class="title">选择指导老师</view>
+				<picker :range="assistInfo.teachers" range-key="RealName" @change="selectTeacher" :disabled="io.fieldAccess.GuideTeacherId!=='w'||!io.isMyStep">
+					<view class="content">
+						{{assistInfo.guideTeacherName}}
+					</view>
+				</picker>
+			</view>
 			<view class="cu-bar bg-white solids-bottom margin-top" v-show="io.fieldAccess.GuideTeacherOpinion">
 				<view class="action text-xl">
 					<text class="cuIcon-title text-blue text-xl"></text>
