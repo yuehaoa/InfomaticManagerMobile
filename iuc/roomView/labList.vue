@@ -10,9 +10,12 @@
 				<span>{{item.Name}}</span>
 			</view>
 		</scroll-view>
-		<view v-for="(item,index) in labs" :key="index" @click="labDetail(item.ID)">
-			<labInfoCard class="margin-lr-xl" :lab="item" displayArrow></labInfoCard>
+		<view v-if="labs.length>0">
+			<view v-for="(item,index) in labs" :key="index" @click="labDetail(item.ID)">
+				<labInfoCard class="margin-lr-xl" :lab="item" displayArrow></labInfoCard>
+			</view>
 		</view>
+		<view v-else class="text-center padding-top-xl"><text>暂无内容</text></view>
 		<navTab :selection='0' />
 	</view>
 </template>

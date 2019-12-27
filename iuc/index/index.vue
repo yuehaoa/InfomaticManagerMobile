@@ -116,20 +116,20 @@
 				],
 				labList: [
 					{
+						image: "../../static/申请机位.png",
+						text: "按个人申请",
+						source: "../roomView/labList?type=20"
+					},
+					{
+						image: "../../static/实验室列表.png",
+						text: "按团队申请",
+						source: "../roomView/labList?type=10"
+					}
+					/*{
 						image: "../../static/实验室列表.png",
 						text: "基础实验室",
 						source: "../roomView/labList?type=1"
-					},
-					{
-						image: "../../static/实验室列表.png",
-						text: "团队实验室",
-						source: "../roomView/labList?type=10"
-					},
-					{
-						image: "../../static/申请机位.png",
-						text: "个人实验室",
-						source: "../roomView/labList?type=20"
-					}
+					}*/
 				],
 				functionList: [{
 						image: "../../static/通讯录.png",
