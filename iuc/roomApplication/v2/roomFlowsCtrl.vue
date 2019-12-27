@@ -235,41 +235,14 @@
 						errors.push("请输入正确的电话号码");
 				}
 				if (errors.length > 0) {
-					uni.showToast({
-						title: errors[0],
-						icon: 'none',
-						position: 'center'
-					});
-					setTimeout(function() {
-						uni.hideToast();
-					}, 3000);
+					uni.showMessage(errors[0]);
 				} else {
 					uni.post("/api/workflow/SubmitInstance", { ...this.upLoad
 					}, msg => {
 						if (msg.success === true) {
-							uni.showToast({
-								title: '提交成功',
-								icon: 'success',
-								position: 'center'
-							});
-							setTimeout(function() {
-								uni.navigateBack({
-
-								});
-								uni.hideToast();
-							}, 1500);
+							uni.showMessage('提交成功', 1, '', 'success');
 						} else {
-							uni.showToast({
-								title: msg.msg,
-								icon: 'none',
-								position: 'center'
-							});
-							setTimeout(function() {
-								uni.navigateBack({
-
-								});
-								uni.hideToast();
-							}, 3000);
+							uni.showMessage(msg.msg);
 						}
 					})
 				}

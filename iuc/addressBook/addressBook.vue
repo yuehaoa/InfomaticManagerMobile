@@ -6,7 +6,7 @@
 				<block slot="content">通讯录</block>
 			</cu-custom>
 		</view>
-		<view class="cu-bar bg-white text-center">
+		<view class="cu-bar bg-white text-center padding-left">
 			点击号码可以直接播打或者保存到通讯录。
 		</view>
 		<view class="VerticalBox">

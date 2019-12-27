@@ -6,12 +6,12 @@
 		</cu-custom>
 		<view class="margin">
 			<view class="input-group">
-				<input class="solids-bottom margin-lr padding-left-sm" style="border-radius:30px;" 
-				focus=true v-bind:placeholder='preMobile' placeholder-class="text-lg" type="number" maxlength=11 v-model="telenum">
+				<input class="solids-bottom margin-lr padding-left-sm" style="border-radius:30px;" focus=true v-bind:placeholder='preMobile'
+				 placeholder-class="text-lg" type="number" maxlength=11 v-model="telenum">
 			</view>
 			<view class="text-lg margin-lr-lg margin-top-xs">请输入新手机号</view>
 			<view class="padding flex flex-direction margin-top-lg">
-				<button class="cu-btn bg-blue lg" v-on:click="Modifytele" >保存</button>
+				<button class="cu-btn bg-blue lg" v-on:click="Modifytele">保存</button>
 			</view>
 		</view>
 	</view>
@@ -19,55 +19,41 @@
 
 <script>
 	let app = require("@/config");
-	export default
-	{
-		data() 
-		{
+	export default {
+		data() {
 			return {
-				preMobile:'',
+				preMobile: '',
 				telenum: '',
-				currentUserGuid:'',
-				tip:''
+				currentUserGuid: '',
+				tip: ''
 			};
 		},
-		onLoad()
-		{
+		onLoad() {
 			this.currentUserGuid = app.userInfo.token;
 			uni.getStorage({
-				key:'userInfo',
-				success:(res)=>{
-					this.preMobile=res.data.Mobile;
+				key: 'userInfo',
+				success: (res) => {
+					this.preMobile = res.data.Mobile;
 				}
 			});
 		},
-		methods:
-		{
-			Modifytele()
-			{
+		methods: {
+			Modifytele() {
 				let currentUserGuid = this.currentUserGuid;
 				let mobile = this.telenum;
-				uni.post("/uc/ModifyMobile",{currentUserGuid,mobile},msg=>{
-					if(msg.success) {
-						this.tip=msg.msg;
-						uni.showToast({
-								icon: 'none',
-								title: this.tip,
-								duration:3000,
-								position:'center',
-							})
-							this.preMobile=this.telenum;
-						}
-						else {
-							this.tip=msg.msg;
-							uni.showToast({
-									icon: 'none',
-									title: this.tip,
-									duration:3000,
-									position:'center',
-								})
-						}
+				uni.post("/uc/ModifyMobile", {
+					currentUserGuid,
+					mobile
+				}, msg => {
+					if (msg.success) {
+						this.tip = msg.msg;
+						uni.showMessage(this.tip);
+						this.preMobile = this.telenum;
+					} else {
+						this.tip = msg.msg;
+						uni.showMessage(this.tip);
 					}
-					);
+				});
 			}
 		}
 	}
@@ -78,4 +64,3 @@
 		background-color: #FFFFFF;
 	}
 </style>
-
