@@ -196,6 +196,12 @@
 							detail: true
 						}, msg => {
 							this.io = msg;
+							for (let role in this.io.data.OwnerRoles) {
+								if (this.io.data.OwnerRoles[role] === "老师") {
+									this.isStudent = false;
+									break;
+								}
+							}
 							if (this.io.intstanceState === 5) {
 								for (let index in this.io.allSteps) {
 									if (this.io.allSteps[index].status === 0) {
@@ -217,6 +223,20 @@
 			}
 		},
 		methods: {
+			formValidate() {
+				let errors = [];
+				if (this.isStudent && this.io.data.GuideTeacherId === "00000000-0000-0000-0000-000000000000" && this.io.currentStep ===
+					"填写申请表") {
+					errors.push("必须选择指导老师");
+				}
+				if (this.upLoad.Telephone !== undefined && this.io.currentStep ===
+					"填写申请表") {
+					var pat = new RegExp('^(13[0-9]|14[5|7]|15[0|1|2|3|4|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\\d{8}$');
+					if (pat.test(this.upLoad.Telephone) === false)
+						errors.push("请输入正确的电话号码");
+				}
+				return errors;
+			},
 			onSubmit(item) {
 				if (item) {
 					this.io.data[item.Field] = item.Value;
@@ -224,52 +244,16 @@
 				this.io.shouldUpload.forEach(value => {
 					this.upLoad[value] = this.io[value] || this.io.data[value]
 				});
-				let errors = [];
-				if (this.isStudent && this.io.data.GuideTeacherId === "00000000-0000-0000-0000-000000000000" && this.io.currentStep ===
-					"填写申请表") {
-					errors.push("必须选择指导老师");
-				}
-				if (this.upLoad.Telephone !== undefined) {
-					var pat = new RegExp('^(13[0-9]|14[5|7]|15[0|1|2|3|4|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\\d{8}$');
-					if (pat.test(this.upLoad.Telephone) === false)
-						errors.push("请输入正确的电话号码");
-				}
+				let errors = this.formValidate();
 				if (errors.length > 0) {
-					uni.showToast({
-						title: errors[0],
-						icon: 'none',
-						position: 'center'
-					});
-					setTimeout(function() {
-						uni.hideToast();
-					}, 3000);
+					uni.showMessage(errors[0]);
 				} else {
 					uni.post("/api/workflow/SubmitInstance", { ...this.upLoad
 					}, msg => {
 						if (msg.success === true) {
-							uni.showToast({
-								title: '提交成功',
-								icon: 'success',
-								position: 'center'
-							});
-							setTimeout(function() {
-								uni.navigateBack({
-
-								});
-								uni.hideToast();
-							}, 1500);
+							uni.showMessage('提交成功', 1, '', 'success');
 						} else {
-							uni.showToast({
-								title: msg.msg,
-								icon: 'none',
-								position: 'center'
-							});
-							setTimeout(function() {
-								uni.navigateBack({
-
-								});
-								uni.hideToast();
-							}, 3000);
+							uni.showMessage(msg.msg);
 						}
 					})
 				}

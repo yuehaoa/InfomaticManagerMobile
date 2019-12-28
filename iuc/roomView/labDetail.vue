@@ -107,17 +107,7 @@
 					if (msg.success) {
 						this.getData();
 					} else {
-						uni.showToast({
-							icon: 'none',
-							title: msg.msg,
-							position: 'center'
-						});
-						setTimeout(function() {
-							uni.navigateBack({
-
-							});
-							uni.hideToast();
-						}, 1500);
+						uni.showMessage(msg.msg);
 					}
 				})
 			},
@@ -128,17 +118,7 @@
 					if (msg.success) {
 						this.getData();
 					} else {
-						uni.showToast({
-							icon: 'none',
-							title: msg.msg,
-							position: 'center'
-						});
-						setTimeout(function() {
-							uni.navigateBack({
-
-							});
-							uni.hideToast();
-						}, 1500);
+						uni.showMessage(msg.msg);
 					}
 				})
 			}
