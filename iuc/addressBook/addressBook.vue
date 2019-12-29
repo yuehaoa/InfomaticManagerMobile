@@ -24,17 +24,17 @@
 							<text class="cuIcon-title text-informatic-brown"></text> {{dptName}}</view>
 					</view>
 					<view class="cu-list menu">
-						<view class="cu-item" v-for="(person,index) in depart" :key="index">
-							<view class="cu-avatar round lg margin-right-sm margin-tb-sm" :style="'background-image:url('+person.Avatar+');'"></view>
+						<view class="cu-item padding-left" style="padding-top: 10rpx;padding-bottom: 10rpx" v-for="(person,index) in depart" :key="index">
+							<view class="cu-avatar mid round margin-tb-sm margin-lr" :style="'background-image:url('+person.Avatar+');'"></view>
 							<view class="content">
-								<view class="flex">
-									<view class="text-informatic-brown text-bold text-xl">{{person.RealName}}</view>
-									<view class="text-grey padding-left-sm text-df">{{person.Address}}</view>
+								<view class="flex justify-between">
+									<view class="text-informatic-brown text-bold text-xl"><view class="justify-between">{{person.RealName}}</view></view>
+									<view class="text-grey text-xs padding-right-sm">{{person.Address}}</view>
 								</view>
-								<view class="text-black text-sm" style="margin-bottom: -12rpx;">
+								<view class="text-black" style="margin-bottom: -12rpx;">
 									<text class="cuIcon-phone text-black" @click="toTel(person.Mobile)">{{person.Mobile}}</text>
 								</view>
-								<view class="text-black text-sm" v-if="person.Telephone">
+								<view class="text-black" v-if="person.Telephone">
 									<text class="cuIcon-dianhua text-black" @click="toTel(person.Telephone)">{{person.Telephone}}</text>
 								</view>
 							</view>
@@ -140,6 +140,11 @@
 		height: 50px;
 		line-height: 18px;
 		position: relative;
+	}
+	.cu-avatar.mid {
+		width: 87upx;
+		height: 87upx;
+		font-size: 2em;
 	}
 
 	.VerticalNav.nav .cu-item.cur {
