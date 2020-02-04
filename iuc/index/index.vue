@@ -96,40 +96,40 @@
 				mine: [{
 						image: "../../static/我的申请.png",
 						text: "我的申请",
-						source: "../roomApplication/v2/myApplication"
+						source: "../alert/developing"
 					},
 					{
 						image: "../../static/我的待办.png",
 						text: "我的待办",
-						source: "../roomApplication/v2/todoList",
+						source: "../alert/developing",
 					},
 					{
 						image: "../../static/我的参与.png",
 						text: "我的参与",
-						source: "../roomApplication/v2/myAttend",
+						source: "../alert/developing",
 					},
 					{
 						image: "../../static/扫一扫.png",
 						text: "扫一扫",
-						soure: "../roomApplication/v1/myInvolve"
+						source: "../alert/developing"
 					}
 				],
 				labList: [
 					{
+						image: "../../static/申请机位.png",
+						text: "按个人申请",
+						source: "../alert/developing"
+					},
+					{
+						image: "../../static/实验室列表.png",
+						text: "按团队申请",
+						source: "../alert/developing"
+					}
+					/*{
 						image: "../../static/实验室列表.png",
 						text: "基础实验室",
 						source: "../roomView/labList?type=1"
-					},
-					{
-						image: "../../static/实验室列表.png",
-						text: "团队实验室",
-						source: "../roomView/labList?type=10"
-					},
-					{
-						image: "../../static/申请机位.png",
-						text: "个人实验室",
-						source: "../roomView/labList?type=20"
-					}
+					}*/
 				],
 				functionList: [{
 						image: "../../static/通讯录.png",

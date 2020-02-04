@@ -6,67 +6,53 @@
 		</cu-custom>
 		<view class="margin">
 			<view class="input-group">
-				<input class="solids-bottom margin-lr padding-left-sm" style="border-radius:30px;" 
-				focus=true :placeholder='preAge' placeholder-class="text-lg" type="number" maxlength=3 v-model="age">
+				<input class="solids-bottom margin-lr padding-left-sm" style="border-radius:30px;" focus=true :placeholder='preAge'
+				 placeholder-class="text-lg" type="number" maxlength=3 v-model="age">
 			</view>
 			<view class="margin-lr-lg text-lg margin-top-xs">请输入新年龄</view>
 			<view class="padding flex flex-direction margin-top-lg">
-				<button class="cu-btn bg-blue lg" v-on:click="Modifyage" >保存</button>
+				<button class="cu-btn bg-blue lg" v-on:click="Modifyage">保存</button>
 			</view>
 		</view>
 	</view>
 </template>
 <script>
 	let app = require("@/config");
-	export default
-	{
-		data() 
-		{
+	export default {
+		data() {
 			return {
-				preAge:'',
+				preAge: '',
 				age: '',
-				currentUserGuid:'',
-				tip:''
+				currentUserGuid: '',
+				tip: ''
 			};
 		},
-		onLoad()
-		{
+		onLoad() {
 			this.currentUserGuid = app.userInfo.token;
 			uni.getStorage({
-				key:'userInfo',
-				success:(res)=>{
-					this.preAge=res.data.Grade;
+				key: 'userInfo',
+				success: (res) => {
+					this.preAge = res.data.Grade;
 				}
 			});
 		},
-		methods:
-		{
-			Modifyage()
-			{
+		methods: {
+			Modifyage() {
 				let currentUserGuid = this.currentUserGuid;
 				let grade = this.age;
-				uni.post("/uc/ModifyGrade",{currentUserGuid,grade},msg=>{
-					if(msg.success) {
-						this.tip=msg.msg;
-						uni.showToast({
-								icon: 'none',
-								title: this.tip,
-								duration:3000,
-								position:'center',
-							})
-							this.preage=this.age;
-						}
-						else {
-							this.tip=msg.msg;
-							uni.showToast({
-									icon: 'none',
-									title: this.tip,
-									duration:3000,
-									position:'center',
-								})
-						}
+				uni.post("/uc/ModifyGrade", {
+					currentUserGuid,
+					grade
+				}, msg => {
+					if (msg.success) {
+						this.tip = msg.msg;
+						uni.showMessage(this.tip);
+						this.preage = this.age;
+					} else {
+						this.tip = msg.msg;
+						uni.showMessage(this.tip);
 					}
-					);
+				});
 			}
 		}
 	}

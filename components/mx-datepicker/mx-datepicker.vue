@@ -516,10 +516,7 @@
 					if (this.isMultiSelect) {
 						let values = [],
 							dates = [];
-						if (this.checkeds.length < 2) return uni.showToast({
-							icon: 'none',
-							title: '请选择两个日期'
-						});
+						if (this.checkeds.length < 2) return uni.showMessage('请选择两个日期');
 						this.checkeds.forEach((date, index) => {
 							let newDate = new Date(date);
 							if (this.isContainTime) {

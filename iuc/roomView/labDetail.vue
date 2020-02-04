@@ -6,12 +6,12 @@
 		</cu-custom>
 		<labInfoCard class="margin-lr-xl" :lab="labInfo"></labInfoCard>
 		<view v-if="labInfo.RoomType===10" class="text-center">
-			<view v-if="applicationData.length===0&&labInfo.State!==1">
+			<view v-if="labInfo.RoomDisplayState!=='待填写'">
 				<button class="cu-btn bg-blue lg margin" @click="submit(labInfo.ID,'按团队申请实验室')">以团队申请该实验室</button>
 			</view>
 			<view v-else>
 				<!--view class="text-gray text-df margin">从{{applicationData[0].StartDate}}到{{applicationData[0].EndDate}}</view-->
-				<button disabled class="cu-btn bg-blue lg" type="">实验室已被占用</button>
+				<button disabled class="cu-btn bg-blue lg" type="">{{labInfo.RoomDisplayState}}</button>
 				</br>
 				<button v-if="app.checkPermission('ItemManager.ReleaseRoom')" class="cu-btn bg-blue lg margin-top" type="" @click="releaseRoom(labInfo.ID)">强制释放</button>
 			</view>
@@ -65,7 +65,7 @@
 					ID: this.labInfo.ID
 				}, msg => {
 					this.labInfo = msg.data;
-					this.applicationData = msg.applications;
+					this.applicationData = msg.useState;
 					if (this.labInfo.RoomType === 20) {
 						uni.post("/api/building/GetSeats", {
 							pid: this.labInfo.ID,
@@ -107,17 +107,7 @@
 					if (msg.success) {
 						this.getData();
 					} else {
-						uni.showToast({
-							icon: 'none',
-							title: msg.msg,
-							position: 'center'
-						});
-						setTimeout(function() {
-							uni.navigateBack({
-
-							});
-							uni.hideToast();
-						}, 1500);
+						uni.showMessage(msg.msg);
 					}
 				})
 			},
@@ -128,17 +118,7 @@
 					if (msg.success) {
 						this.getData();
 					} else {
-						uni.showToast({
-							icon: 'none',
-							title: msg.msg,
-							position: 'center'
-						});
-						setTimeout(function() {
-							uni.navigateBack({
-
-							});
-							uni.hideToast();
-						}, 1500);
+						uni.showMessage(msg.msg);
 					}
 				})
 			}

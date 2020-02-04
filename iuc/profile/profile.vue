@@ -67,7 +67,7 @@
 				}, {
 					name: "通讯录",
 					url: "../addressBook/addressBook",
-					cuIcon: "timefill"
+					cuIcon: "card"
 				}],
 				list: [{
 					name: "实验室列表",
