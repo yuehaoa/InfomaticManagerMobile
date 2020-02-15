@@ -111,7 +111,7 @@
 					{
 						image: "../../static/扫一扫.png",
 						text: "扫一扫",
-						soure: "../roomApplication/v1/myInvolve"
+						source: "../alert/developing"
 					}
 				],
 				labList: [
