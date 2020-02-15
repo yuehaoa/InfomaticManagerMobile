@@ -79,39 +79,9 @@
 				<view class="title">管理组审核时间</view>
 				<input v-model="io.data.ReviewTime" :disabled="io.fieldAccess.ReviewTime!=='w'||!io.isMyStep"></input>
 			</view>
-			<view class="cu-bar bg-white solids-bottom margin-top" v-show="io.fieldAccess.Director">
-				<view class="action text-xl">
-					<text class="cuIcon-title text-blue text-xl"></text>
-					<text class="text-bold text-xl">中心办公室审核</text>
-				</view>
-			</view>
-			<view class="cu-form-group" v-show="io.fieldAccess.Director">
-				<view class="title">中心办公室主任名称</view>
-				<input v-model="io.data.Director" :disabled="io.fieldAccess.Director!=='w'||!io.isMyStep"></input>
-			</view>
-			<view class="cu-form-group" v-show="io.fieldAccess.DirectorOpinion">
-				<view class="title">中心办公室主任意见</view>
-				<input v-model="io.data.DirectorOpinion" :disabled="io.fieldAccess.DirectorOpinion!=='w'||!io.isMyStep"></input>
-			</view>
 			<view class="cu-form-group" v-show="io.fieldAccess.ExpertOpinion">
 				<view class="title">办公会意见</view>
 				<input v-model="io.data.ExpertOpinion" placeholder="请填写" :disabled="io.fieldAccess.ExpertOpinion!=='w'||!io.isMyStep"></input>
-			</view>
-			<view class="cu-form-group" v-show="io.fieldAccess.DirectorTime">
-				<view class="title">中心办公室主任审核时间</view>
-				<input v-model="io.data.DirectorTime" :disabled="io.fieldAccess.DirectorTime!=='w'||!io.isMyStep"></input>
-			</view>
-			<view class="cu-form-group" v-show="io.fieldAccess.HandlerName">
-				<view class="title">实验室管理人员名称</view>
-				<input v-model="io.data.HandlerName" :disabled="io.fieldAccess.HandlerName!=='w'||!io.isMyStep"></input>
-			</view>
-			<view class="cu-form-group" v-show="io.fieldAccess.HandleOpinion">
-				<view class="title">实验室管理人员意见</view>
-				<input v-model="io.data.HandleOpinion" :disabled="io.fieldAccess.HandleOpinion!=='w'||!io.isMyStep"></input>
-			</view>
-			<view class="cu-form-group" v-show="io.fieldAccess.HandleTime">
-				<view class="title">实验室管理人员审核时间</view>
-				<input v-model="io.data.HandleTime" :disabled="io.fieldAccess.HandleTime!=='w'||!io.isMyStep"></input>
 			</view>
 		</form>
 		<timePicker :show="showPicker" type="rangetime" color="#6d3b5e" @cancel="selectDateTime()" @confirm="confirmDateTime" />

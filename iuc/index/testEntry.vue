@@ -1,12 +1,15 @@
 <template>
 	<view class="flex flex-direction padding">
 		<!-- <a href="javascript:;" class="cu-btn bg-red lg margin-top" @click="go('1d31882f-8983-422e-929e-6d081c7f7241','roomApplication')">以江南身份登录</a> -->
+		<!-- <a href="javascript:;" class="cu-btn bg-red lg margin-top" @click="go('1d31882f-8983-422e-929e-6d081c7f7241','roomApplication')">以江南身份登录</a> -->
 		<a href="javascript:;" class="cu-btn bg-red lg margin-top" @click="go('eed2dec4-a868-4696-b911-c70ca8f9f7d9','roomApplication')">以游客身份登录</a>
 		<a href="javascript:;" class="cu-btn bg-green lg margin-top" @click="go('5516da53-739f-454a-a3a9-7e7824987a6d','roomApplication')">以普通学生身份登录</a>
 		<a href="javascript:;" class="cu-btn bg-green lg margin-top" @click="go('d9824e8c-c998-45e2-8156-34d723049855','roomApplication')">以指导老师身份登录</a>
-		<a href="javascript:;" class="cu-btn bg-green lg margin-top" @click="go('63d57029-eb82-45e0-9b99-10a829912e0c','roomApplication')">以管理组老师身份登录</a>
-		<a href="javascript:;" class="cu-btn bg-green lg margin-top" @click="go('99cf2fcb-c7d9-4773-8cc2-b157157a7ee4','roomApplication')">以中心办公室主任身份登录</a>
+		<a href="javascript:;" class="cu-btn bg-green lg margin-top" @click="go('b15f7cdb-9f96-4041-a7b2-4cfeebabaa8d','roomApplication')">以管理组老师身份登录</a>
+		<a href="javascript:;" class="cu-btn bg-green lg margin-top" @click="go('63d57029-eb82-45e0-9b99-10a829912e0c','roomApplication')">以分管科创副主任身份登录</a>
+		<a href="javascript:;" class="cu-btn bg-green lg margin-top" @click="go('8094cf84-01e6-484d-bb01-04a299f5ef5b','roomApplication')">以分管实验室副主任身份登录</a>
 		<a href="javascript:;" class="cu-btn bg-green lg margin-top" @click="go('b15f7cdb-9f96-4041-a7b2-4cfeebabaa8d','roomApplication')">以实验室管理员身份登录</a>
+		<a href="javascript:;" class="cu-btn bg-green lg margin-top" @click="go('99cf2fcb-c7d9-4773-8cc2-b157157a7ee4','roomApplication')">以中心办公室主任身份登录</a>
 		<a href="javascript:;" class="cu-btn bg-blue lg margin-top" @click="goCreate">列表页面</a>
 		<a href="javascript:;" class="cu-btn bg-blue lg margin-top" @click="go('44213f8a-c90a-422b-88c0-815f4de5a000','softwareInstall')">以管理员身份登录</a>
 		<a href="javascript:;" class="cu-btn bg-blue lg margin-top" @click="go('d9824e8c-c998-45e2-8156-34d723049855','softwareInstall')">以普通老师身份登录</a>
