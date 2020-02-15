@@ -21,7 +21,7 @@
 				<text class="cuIcon-title text-blue text-xl"></text>
 				<text class="text-bold text-xl">机位列表</text>
 			</view>
-			<view class="cu-list menu">
+			<view v-if="applicationData.length > 0" class="cu-list menu">
 				<view class="cu-item" v-for="(item,index) in applicationData" :key="index">
 					<view class="content">
 						<text class="cuIcon-btn text-olive"></text>
@@ -39,6 +39,7 @@
 					</view>
 				</view>
 			</view>
+			<view v-else class="text-center padding-top-xl"><text>暂无内容</text></view>
 		</view>
 		<view v-else class="margin-lr-xl padding-lr-xl">
 			<image mode="aspectFit" src="../../static/无需申请.png"></image>
