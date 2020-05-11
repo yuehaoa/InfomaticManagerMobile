@@ -96,17 +96,17 @@
 				mine: [{
 						image: "../../static/我的申请.png",
 						text: "我的申请",
-						source: "../alert/developing"
+						source: "../roomApplication/v2/myApplication"
 					},
 					{
 						image: "../../static/我的待办.png",
 						text: "我的待办",
-						source: "../alert/developing",
+						source: "../roomApplication/v2/todoList",
 					},
 					{
 						image: "../../static/我的参与.png",
 						text: "我的参与",
-						source: "../alert/developing",
+						source: "../roomApplication/v2/myAttend",
 					},
 					{
 						image: "../../static/扫一扫.png",
@@ -118,12 +118,12 @@
 					{
 						image: "../../static/申请机位.png",
 						text: "按个人申请",
-						source: "../alert/developing"
+						source: "../roomView/labList?type=20"
 					},
 					{
 						image: "../../static/实验室列表.png",
 						text: "按团队申请",
-						source: "../alert/developing"
+						source: "../roomView/labList?type=10"
 					}
 					/*{
 						image: "../../static/实验室列表.png",

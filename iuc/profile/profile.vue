@@ -71,7 +71,7 @@
 				}],
 				list: [{
 					name: "实验室列表",
-					url: "../roomView/labList",
+					url: "../roomView/labList?type=-1",
 					cuIcon: "presentfill"
 				}, {
 					name: "测试入口",
